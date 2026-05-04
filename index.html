@@ -3,113 +3,116 @@
 <head>
     <!-- 
         ==========================================================================
-        PROJETO: LEONARDO SERRA SHOP - V9 SUPREME INDUSTRIAL
+        PROJETO: LEONARDO SERRA SHOP - V10 ULTRA SUPREME INDUSTRIAL
         ENGINEER: FRONTEND SOLUTIONS ARCHITECT (GOD LEVEL)
         DADOS: 939717295 | leonardodossantos006@gmail.com
-        DESIGN: MOBILE-FIRST ELITE RESPONSIVE - 2X2 MATRIX SYSTEM
-        ESTADO: FULL PRODUCTION READY - NO OMISSION - NO SIMPLIFICATION
+        ESTADO: FULL PRODUCTION READY - ZERO OMISSION - ZERO SIMPLIFICATION
+        SISTEMA: V10-MEGA-POWER-ENGINE
         ==========================================================================
     -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     
-    <title>Metalurgia Futurista | & Serralharia de Elite</title>
+    <title>Leonardo Serra | Metalurgia de Alta Precisão & Serralharia Futurista - Angola</title>
     
-    <!-- SEO CRÍTICO -->
-    <meta name="description" content="Líder em metalurgia industrial e serralharia futurista em Angola. Tecnologia e precisão aplicada ao aço.">
+    <!-- SEO & METADADOS DE ALTA AUTORIDADE - EXAUSTIVO -->
+    <meta name="description" content="A maior autoridade em metalurgia industrial e serralharia futurista em Angola. Tecnologia de ponta, precisão milimétrica e design aplicado ao aço de alta performance. Localizados no Polo Industrial de Viana, Luanda.">
     <meta name="author" content="Leonardo Serra">
-    <meta name="keywords" content="metalurgia, serralharia, angola, luanda, aço, estruturas metálicas, futurista, leonardo serra">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="keywords" content="metalurgia angola, serralharia luanda, aço inox angola, estruturas metálicas viana, portões modernos luanda, leonardo serra shop, engenharia mecânica angola, corte plasma luanda, soldadura mig tig angola, mobiliário industrial angola, construção civil luanda">
+    <meta name="theme-color" content="#ff6a00">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-    <!-- FONTES PREMIUM (FIGMA SPEC) -->
+    <!-- OPEN GRAPH / SOCIAL ENGINE - FULL SPEC -->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:site_name" content="Leonardo Serra Shop">
+    <meta property="og:title" content="Leonardo Serra | Metalurgia Futurista de Elite e Engenharia Pesada">
+    <meta property="og:description" content="Transformamos aço em soluções industriais inteligentes com precisão milimétrica em Angola.">
+    <meta property="og:image" content="images/og-share-ultra.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:url" content="https://leonardoserrashop.com">
+
+    <!-- TWITTER CARD SPEC -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Leonardo Serra | Engenharia de Aço">
+    <meta name="twitter:description" content="Serralharia Industrial de Vanguarda em Luanda, Angola.">
+    <meta name="twitter:image" content="images/twitter-share.jpg">
+
+    <!-- FONTES DE CLASSE MUNDIAL - CARREGAMENTO ASSÍNCRONO -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700;900&family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,700;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
 
-    <!-- ÍCONES E CSS FRAMEWORKS -->
+    <!-- BIBLIOTECAS CORE (VERSÕES FULL) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- CSS CUSTOMIZADO - V10 ULTRA FULL STYLE -->
     <link rel="stylesheet" href="css/style.css">
 
-    <!-- PREVENT FOUC & THEME INITIALIZATION -->
-    <style>
-        :root { --v9-bg: #0f0f0f; }
-        body { background: var(--v9-bg); opacity: 0; transition: opacity 0.6s ease; overflow-x: hidden; }
-        body.v9-ready { opacity: 1; }
-        .v9-preloader { position: fixed; inset: 0; background: #0f0f0f; z-index: 60000; display: flex; align-items: center; justify-content: center; }
-        .v9-loader-status p { color: #ffffff !important; font-family: 'Ubuntu', sans-serif; }
-    </style>
-    
+    <!-- CRITICAL THEME HANDLER (ANTI-FLICKER ENGINE) -->
     <script>
         (function() {
-            // Tema Persistente
             const savedTheme = localStorage.getItem('v9_theme') || 'dark';
             document.documentElement.setAttribute('data-theme', savedTheme);
-            
-            document.addEventListener('DOMContentLoaded', () => {
-                document.body.classList.add(savedTheme === 'dark' ? 'dark-mode' : 'light-mode');
-                
-                // Inicialização do Relógio da Sidebar
-                updateSidebarClock();
-                setInterval(updateSidebarClock, 1000);
-            });
-
-            function updateSidebarClock() {
-                const now = new Date();
-                const timeEl = document.getElementById('sidebarTime');
-                const dateEl = document.getElementById('sidebarDate');
-                if(timeEl) timeEl.textContent = now.toLocaleTimeString('pt-BR');
-                if(dateEl) {
-                    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                    dateEl.textContent = now.toLocaleDateString('pt-BR', options).toUpperCase();
-                }
-            }
+            const bgColor = savedTheme === 'dark' ? '#0a0a0a' : '#ffffff';
+            const style = document.createElement('style');
+            style.innerHTML = `body { background-color: ${bgColor} !important; opacity: 0; transition: opacity 0.8s ease; }`;
+            document.head.appendChild(style);
         })();
     </script>
 </head>
-<body class="v9-architecture">
+<body class="v9-architecture v10-supreme-body">
 
-    <!-- [UI] CURSOR MAGNÉTICO LERP (DESKTOP ONLY) -->
-    <div class="v9-cursor" id="v9Cursor">
-        <div class="v9-cursor-dot"></div>
-        <div class="v9-cursor-circle"></div>
-    </div>
-
-    <!-- [UI] PRELOADER INDUSTRIAL SUPREME -->
+    <!-- [UI] PRELOADER INDUSTRIAL MEGA ENGINE -->
     <div class="v9-preloader" id="v9Preloader">
-        <div class="v9-preloader-content">
-            <div class="v9-loader-gear">
-                <svg width="100" height="100" viewBox="0 0 100 100">
-                    <path d="M50 10L90 30V70L50 90L10 70V30L50 10Z" stroke="#ff6a00" stroke-width="2" fill="none"/>
-                    <circle cx="50" cy="50" r="15" fill="#ff6a00" class="v9-pulse-icon"/>
-                </svg>
+        <div class="v9-preloader-inner">
+            <div class="v9-loader-logo">
+                <div class="v9-gear-system">
+                    <svg viewBox="0 0 100 100" class="v9-gear-svg">
+                        <path d="M50 5 L55 20 L65 20 L70 5 L80 10 L75 25 L83 33 L98 28 L100 38 L85 43 L85 55 L100 60 L98 70 L83 65 L75 80 L80 90 L70 85 L65 70 L55 70 L50 95 L40 90 L45 75 L35 75 L30 95 L20 90 L25 75 L17 67 L2 72 L0 62 L15 57 L15 45 L0 40 L2 30 L17 35 L25 20 L20 10 L30 15 L35 30 L45 30 L50 5 Z" fill="none" stroke="currentColor" stroke-width="1.5"></path>
+                        <circle cx="50" cy="50" r="10" fill="currentColor" class="v9-core-pulse"></circle>
+                    </svg>
+                </div>
             </div>
-            <div class="v9-loader-status">
-                <div class="v9-loader-bar"><div class="v9-loader-fill" id="v9LoadFill"></div></div>
-                <p>SISTEMAS V9 CARREGANDO...</p>
+            <div class="v9-loader-status-container">
+                <div class="v9-loader-track">
+                    <div class="v9-loader-fill-bar" id="v9LoadFill"></div>
+                </div>
+                <div class="v9-loader-info">
+                    <span class="v9-load-text">CONNECTING TO INDUSTRIAL CORE...</span>
+                    <span class="v9-load-perc" id="v9LoadPerc">0%</span>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- [UI] HEADER REPLICADO (TOPBAR + NAV) -->
+    <!-- [UI] HEADER SYSTEM (TOPBAR + NAVIGATION REFACTORED) -->
     <header class="v9-header" id="v9Header">
-        <!-- TOPBAR (DESKTOP ONLY) -->
+        <!-- TOPBAR SUPREMA -->
         <div class="v9-topbar d-none d-lg-block">
             <div class="container-fluid px-5">
                 <div class="row align-items-center">
-                    <div class="col-md-7">
-                        <ul class="v9-top-contact">
-                            <li><i class="fa-solid fa-location-dot"></i> Luanda, Angola - Pólo Industrial</li>
-                            <li><i class="fa-solid fa-envelope"></i> leonardodossantos006@gmail.com</li>
+                    <div class="col-md-9">
+                        <ul class="v9-top-list">
+                            <li><i class="fa-solid fa-industry"></i> <span class="v9-top-label">FÁBRICA:</span> Polo Industrial de Viana, Luanda, Angola</li>
+                            <li><i class="fa-solid fa-paper-plane"></i> <span class="v9-top-label">EMAIL:</span> leonardodossantos006@gmail.com</li>
+                            <li><i class="fa-solid fa-headset"></i> <span class="v9-top-label">SUPORTE:</span> (+244) 939 717 295</li>
                         </ul>
                     </div>
-                    <div class="col-md-5 text-end">
-                        <div class="v9-top-actions">
-                            <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                            <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                            <button id="darkModeBtn" class="v9-theme-toggle" aria-label="Alternar Tema">
-                                <i class="fa-solid fa-moon"></i>
-                                <i class="fa-solid fa-sun"></i>
+                    <div class="col-md-3">
+                        <div class="v9-top-actions-wrapper">
+                            <div class="v9-top-socials">
+                                <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                                <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                                <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                            </div>
+                            <button id="darkModeBtn" class="v9-theme-toggle-btn" aria-label="Alternar Tema">
+                                <i class="fa-solid fa-moon moon-ico"></i>
+                                <i class="fa-solid fa-sun sun-ico"></i>
                             </button>
                         </div>
                     </div>
@@ -121,45 +124,49 @@
         <nav class="v9-navbar" id="v9Navbar">
             <div class="container-fluid px-3 px-md-5">
                 <div class="v9-nav-flex">
-                    <!-- LOGO -->
-                    <div class="v9-logo-area">
-                        <a href="#home" class="v9-brand">
-                            <img src="images/experts-team.png" alt="Leonardo Serra Shop Logo" class="v9-logo-img">
-                            <div class="v9-logo-text">
-                                <span class="v9-t-bold">METALURGIA</span>
-                                <span class="v9-t-thin">FUTU <mark>RISTICA</mark></span>
+                    <!-- LOGO AREA -->
+                    <div class="v9-logo-box">
+                        <a href="#home" class="v9-logo-link">
+                            <div class="v9-logo-img-wrap">
+                                <img src="images/experts-team.png" alt="Leonardo Serra Logo Principal">
+                            </div>
+                            <div class="v9-logo-typo">
+                                <span class="v9-typo-main">LEONARDO SERRA</span>
+                                <span class="v9-typo-sub">METALURGIA <mark>FUTURISTA</mark></span>
                             </div>
                         </a>
                     </div>
 
-                    <!-- DESKTOP MENU -->
-                    <div class="v9-nav-center d-none d-xl-flex">
+                    <!-- DESKTOP NAVIGATION -->
+                    <div class="v9-nav-links-wrap d-none d-xl-flex">
                         <ul class="v9-nav-menu">
-                            <li><a href="#home" class="active">HOME <i class="fa-solid fa-plus"></i></a></li>
-                            <li><a href="#sobre">EMPRESA <i class="fa-solid fa-plus"></i></a></li>
-                            <li><a href="#servicos">SERVIÇOS <i class="fa-solid fa-plus"></i></a></li>
-                            <li><a href="#portfolio">PORTFÓLIO <i class="fa-solid fa-plus"></i></a></li>
-                            <li><a href="#contacto">CONTACTO</a></li>
+                            <li><a href="#home" class="nav-item active">HOME</a></li>
+                            <li><a href="#sobre" class="nav-item">A EMPRESA</a></li>
+                            <li><a href="#servicos" class="nav-item">SERVIÇOS</a></li>
+                            <li><a href="#portfolio" class="nav-item">PORTFÓLIO</a></li>
+                            <li><a href="#contacto" class="nav-item">CONTACTO</a></li>
                         </ul>
                     </div>
 
-                    <!-- NAV CTA & MOBILE TRIGGER -->
-                    <div class="v9-nav-right">
-                        <div class="v9-nav-phone d-none d-md-flex">
-                            <div class="icon"><i class="fa-solid fa-phone-volume"></i></div>
-                            <div class="info">
-                                <span>Ligue Agora</span>
-                                <strong>939 717 295</strong>
+                    <!-- CTA & ACTIONS -->
+                    <div class="v9-nav-right-area">
+                        <div class="v9-quick-contact d-none d-md-flex">
+                            <div class="v9-quick-icon"><i class="fa-solid fa-phone-flip"></i></div>
+                            <div class="v9-quick-text">
+                                <span class="v9-q-label">CONSULTORIA TÉCNICA</span>
+                                <span class="v9-q-val">939 717 295</span>
                             </div>
                         </div>
-                        <a href="#contacto" class="v9-btn-cta v9-btn-glow d-none d-sm-inline-flex">
-                            ORÇAMENTO <i class="fa-solid fa-arrow-right"></i>
+                        <a href="#contacto" class="v9-nav-btn v9-btn-glow d-none d-sm-inline-flex">
+                            SOLICITAR ORÇAMENTO <i class="fa-solid fa-bolt-lightning"></i>
                         </a>
-                        <!-- BOTÃO HAMBURGUER INDUSTRIAL -->
-                        <button class="v9-sidebar-trigger" id="v9SidebarOpen" aria-label="Abrir Menu">
-                            <span class="bar-line"></span>
-                            <span class="bar-line"></span>
-                            <span class="bar-line"></span>
+                        <!-- SIDEBAR TRIGGER -->
+                        <button class="v9-sidebar-trigger-btn" id="v9SidebarOpen" aria-label="Abrir Navegação">
+                            <div class="v9-trigger-box">
+                                <span class="v9-line v9-line-1"></span>
+                                <span class="v9-line v9-line-2"></span>
+                                <span class="v9-line v9-line-3"></span>
+                            </div>
                         </button>
                     </div>
                 </div>
@@ -167,99 +174,96 @@
         </nav>
     </header>
 
-    <!-- ESTRUTURA HTML -->
-<div class="v9-sidebar" id="v9Sidebar">
-    <div class="v9-sidebar-video-bg">
-        <video autoplay muted loop playsinline>
-            <source src="images/industrial-welding.mp4" type="video/mp4">
-        </video>
-        <div class="v9-sidebar-video-overlay"></div>
-    </div>
-
-    <div class="v9-sidebar-inner">
-        <div class="v9-sidebar-header">
-            <div class="v9-sidebar-logo">LEONARDO SERRA</div>
-            <button class="v9-sidebar-close" id="v9SidebarClose" aria-label="Fechar Menu">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
+    <!-- [UI] SIDEBAR SYSTEM (ULTRA REFACTORED) -->
+    <div class="v9-sidebar-container" id="v9Sidebar">
+        <div class="v9-sidebar-media">
+            <video autoplay muted loop playsinline class="v9-sidebar-video">
+                <source src="images/industrial-welding.mp4" type="video/mp4">
+            </video>
+            <div class="v9-sidebar-overlay-mask"></div>
         </div>
 
-        <div class="v9-sidebar-body">
-            <!-- RELÓGIO INDUSTRIAL -->
-            <div class="v9-sidebar-clock-wrap">
-                <div id="sidebarTime" class="sidebar-time">00:00:00</div>
-                <div id="sidebarDate" class="sidebar-date">CARREGANDO DATA...</div>
-            </div>
-
-            <!-- MENU MOBILE -->
-            <ul class="v9-sidebar-menu">
-                <li><a href="#home">HOME <i class="fa-solid fa-chevron-right"></i></a></li>
-                <li><a href="#sobre">EMPRESA <i class="fa-solid fa-chevron-right"></i></a></li>
-                <li><a href="#servicos">SERVIÇOS <i class="fa-solid fa-chevron-right"></i></a></li>
-                <li><a href="#portfolio">PORTFÓLIO <i class="fa-solid fa-chevron-right"></i></a></li>
-                <li><a href="#catalogo">CATÁLOGO <i class="fa-solid fa-chevron-right"></i></a></li>
-                <li><a href="#contacto">CONTACTO <i class="fa-solid fa-chevron-right"></i></a></li>
-            </ul>
-
-            <!-- BOTÃO TEMA MOBILE -->
-            <div class="v9-sidebar-actions mt-5">
-                <button id="sidebarThemeToggle" class="v9-btn-sidebar-theme">
-                    <i class="fa-solid fa-circle-half-stroke"></i> ALTERNAR TEMA
+        <div class="v9-sidebar-content-wrapper">
+            <div class="v9-sidebar-header">
+                <div class="v9-sidebar-brand-name">LS SUPREME</div>
+                <button class="v9-sidebar-close-trigger" id="v9SidebarClose" aria-label="Fechar Menu">
+                    <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
-        </div>
 
-        <div class="v9-sidebar-footer">
-            <div class="v9-sidebar-contact">
-                <p><i class="fa-solid fa-phone-volume"></i> 939 717 295</p>
-                <p><i class="fa-solid fa-envelope-open-text"></i> leonardo@shop.com</p>
+            <div class="v9-sidebar-body">
+                <!-- WIDGET INDUSTRIAL CLOCK -->
+                <div class="v9-sidebar-widget-box">
+                    <div id="sidebarTime" class="v9-sidebar-time">00:00:00</div>
+                    <div id="sidebarDate" class="v9-sidebar-date">CARREGANDO...</div>
+                </div>
+
+                <!-- MOBILE MENU LIST -->
+                <ul class="v9-sidebar-list">
+                    <li class="v9-side-li"><a href="#home"><span>01</span> HOME</a></li>
+                    <li class="v9-side-li"><a href="#sobre"><span>02</span> EMPRESA</a></li>
+                    <li class="v9-side-li"><a href="#servicos"><span>03</span> SERVIÇOS</a></li>
+                    <li class="v9-side-li"><a href="#portfolio"><span>04</span> PORTFÓLIO</a></li>
+                    <li class="v9-side-li"><a href="#catalogo"><span>05</span> CATÁLOGO</a></li>
+                    <li class="v9-side-li"><a href="#contacto"><span>06</span> CONTACTO</a></li>
+                </ul>
+
+                <!-- THEME TOGGLE MOBILE -->
+                <div class="v9-sidebar-theme-control mt-5">
+                    <button id="sidebarThemeToggle" class="v9-btn-side-mode">
+                        <i class="fa-solid fa-circle-half-stroke"></i> ALTERNAR MODO VISUAL
+                    </button>
+                </div>
             </div>
-            <div class="v9-sidebar-socials">
-                <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
-                <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+
+            <div class="v9-sidebar-footer">
+                <div class="v9-side-social-links">
+                    <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                </div>
+                <div class="v9-side-info-bottom">
+                    <p>LUANDA - ANGOLA</p>
+                    <p>PRECISÃO EM CADA SOLDADURA</p>
+                </div>
             </div>
         </div>
     </div>
-</div>
+    <div class="v9-body-overlay" id="v9Overlay"></div>
 
-<div class="v9-sidebar-overlay" id="v9Overlay"></div>
+    <!-- [UI] MAIN CONTENT ENGINE -->
+    <main class="v9-main-engine">
 
-    <main>
-
-        <!-- [SEC] HERO (ULTRA-RESPONSIVE) -->
-        <section class="v9-hero" id="home">
-            <div class="v9-hero-slider">
-                <div class="v9-hero-slide active">
-                    <video autoplay muted loop playsinline class="v9-hero-video">
-                        <source src="images/industrial-welding.mp4" type="video/mp4">
-                    </video>
-                    <div class="v9-hero-overlay"></div>
-                </div>
+        <!-- [SEC] HERO AREA (ULTRA IMPACT VIDEO) -->
+        <section class="v9-hero-wrap" id="home">
+            <div class="v9-hero-background">
+                <video autoplay muted loop playsinline class="v9-hero-video-src">
+                    <source src="images/industrial-welding.mp4" type="video/mp4">
+                </video>
+                <div class="v9-hero-gradient-overlay"></div>
             </div>
 
-            <div class="container h-100 position-relative z-3">
-                <div class="row h-100 align-items-center">
-                    <div class="col-xl-9 col-lg-11">
-                        <div class="v9-hero-content animate-on-load">
-                            <div class="v9-hero-badge">
-                                <span class="line"></span>
-                                <span class="text">METALURGIA DE ALTA PRECISÃO</span>
+            <div class="container h-100 position-relative z-10">
+                <div class="row align-items-center h-100">
+                    <div class="col-xl-11">
+                        <div class="v9-hero-data-box animate-on-load">
+                            <div class="v9-hero-eyebrow">
+                                <span class="v9-e-line"></span>
+                                <span class="v9-e-text">ESTRUTURAS METÁLICAS DE ALTA PERFORMANCE</span>
                             </div>
-                            <h1 class="v9-hero-title">
-                                Somos os<mark>Melhores</mark> <br>
+                            <h1 class="v9-hero-main-title">
+                                O Poder do <mark>Aço</mark> <br> Moldado Pelo <mark>Futuro</mark>
                             </h1>
-                            <p class="v9-hero-desc">
-                                Executamos projetos de serralharia futurista e metalurgia pesada com o mais alto nível 
-                                de rigor técnico e estética de vanguarda em Angola.
+                            <p class="v9-hero-paragraph">
+                                Líderes em engenharia de precisão e serralharia de elite. Projetamos, fabricamos e montamos estruturas lendárias em todo o território de Angola.
                             </p>
-                            <div class="v9-hero-actions">
-                                <a href="#contacto" class="v9-btn-main btn-orange">
-                                    INICIAR PROJETO <i class="fa-solid fa-circle-chevron-right"></i>
+                            <div class="v9-hero-actions-group">
+                                <a href="#contacto" class="v9-btn-action-primary">
+                                    INICIAR PROJETO TÉCNICO <i class="fa-solid fa-chevron-right"></i>
                                 </a>
-                                <div class="v9-hero-video-btn d-none d-sm-flex">
-                                    <a href="#" class="play-btn"><i class="fa-solid fa-play"></i></a>
-                                    <span>VER PROCESSO</span>
+                                <div class="v9-hero-video-link d-none d-md-flex">
+                                    <button class="v9-btn-play"><i class="fa-solid fa-play"></i></button>
+                                    <span class="v9-btn-play-txt">TOUR INDUSTRIAL</span>
                                 </div>
                             </div>
                         </div>
@@ -267,171 +271,213 @@
                 </div>
             </div>
 
-            <div class="v9-hero-dots d-none d-md-flex">
-                <span class="dot active"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
+            <!-- HERO NAVIGATION DOTS -->
+            <div class="v9-hero-dots-nav d-none d-lg-flex">
+                <div class="v9-dot-item active" data-id="01"></div>
+                <div class="v9-dot-item" data-id="02"></div>
+                <div class="v9-dot-item" data-id="03"></div>
             </div>
         </section>
 
-        <!-- [SEC] FEATURE CARDS (MATRIZ 2X2 NO MOBILE) -->
-        <section class="v9-features">
+        <!-- [SEC] FEATURES (MATRIX 2X2 MOBILE ENGINE) -->
+        <section class="v9-features-grid-area">
             <div class="container">
                 <div class="row g-3 g-md-4">
-                    <!-- CARD 01 -->
+                    <!-- FEAT 01 -->
                     <div class="col-6 col-md-6 col-xl-3">
-                        <div class="v9-feat-card animate-on-scroll" data-animation="fade-up">
-                            <span class="v9-card-num">01</span>
-                            <div class="icon-3d"><img src="images/3d-gear.png" alt="Engrenagem"></div>
-                            <h3>Alta Performance</h3>
-                            <p class="d-none d-xl-block">Desenvolvemos o escopo total de automação industrial com peças metálicas.</p>
-                            <a href="#" class="plus d-none d-md-flex"><i class="fa-solid fa-plus"></i></a>
+                        <div class="v9-feature-matrix-card animate-on-scroll" data-animation="fade-up">
+                            <div class="v9-f-card-head">
+                                <span class="v9-f-card-index">01</span>
+                                <div class="v9-f-card-icon"><img src="images/3d-gear.png" alt="Engenharia"></div>
+                            </div>
+                            <h3 class="v9-f-card-title">Precisão CNC</h3>
+                            <p class="v9-f-card-desc d-none d-md-block">Corte a plasma e laser com tolerância milimétrica absoluta.</p>
                         </div>
                     </div>
-                    <!-- CARD 02 -->
+                    <!-- FEAT 02 -->
                     <div class="col-6 col-md-6 col-xl-3">
-                        <div class="v9-feat-card animate-on-scroll" data-animation="fade-up" data-delay="0.1s">
-                            <span class="v9-card-num">02</span>
-                            <div class="icon-3d"><img src="images/3d-blueprint.png" alt="Planta"></div>
-                            <h3>Estratégias Reais</h3>
-                            <p class="d-none d-xl-block">Planeamento técnico focado na durabilidade e redução de custos.</p>
-                            <a href="#" class="plus d-none d-md-flex"><i class="fa-solid fa-plus"></i></a>
+                        <div class="v9-feature-matrix-card animate-on-scroll" data-animation="fade-up" data-delay="0.1s">
+                            <div class="v9-f-card-head">
+                                <span class="v9-f-card-index">02</span>
+                                <div class="v9-f-card-icon"><img src="images/3d-blueprint.png" alt="Cálculo"></div>
+                            </div>
+                            <h3 class="v9-f-card-title">Cálculo Real</h3>
+                            <p class="v9-f-card-desc d-none d-md-block">Projetos estruturais validados por engenheiros seniores.</p>
                         </div>
                     </div>
-                    <!-- CARD 03 -->
+                    <!-- FEAT 03 -->
                     <div class="col-6 col-md-6 col-xl-3">
-                        <div class="v9-feat-card animate-on-scroll" data-animation="fade-up" data-delay="0.2s">
-                            <span class="v9-card-num">03</span>
-                            <div class="icon-3d"><img src="images/3d-shield.png" alt="Escudo"></div>
-                            <h3>Qualidade Suprema</h3>
-                            <p class="d-none d-xl-block">Controlo rigoroso em cada solda para máxima segurança estrutural.</p>
-                            <a href="#" class="plus d-none d-md-flex"><i class="fa-solid fa-plus"></i></a>
+                        <div class="v9-feature-matrix-card animate-on-scroll" data-animation="fade-up" data-delay="0.2s">
+                            <div class="v9-f-card-head">
+                                <span class="v9-f-card-index">03</span>
+                                <div class="v9-f-card-icon"><img src="images/3d-shield.png" alt="Qualidade"></div>
+                            </div>
+                            <h3 class="v9-f-card-title">Padrão Elite</h3>
+                            <p class="v9-f-card-desc d-none d-md-block">Soldadura certificada com garantia de durabilidade extrema.</p>
                         </div>
                     </div>
-                    <!-- CARD 04 -->
+                    <!-- FEAT 04 -->
                     <div class="col-6 col-md-6 col-xl-3">
-                        <div class="v9-feat-card animate-on-scroll" data-animation="fade-up" data-delay="0.3s">
-                            <span class="v9-card-num">04</span>
-                            <div class="icon-3d"><img src="images/3d-factory.png" alt="Fabrica"></div>
-                            <h3>Indústria de Elite</h3>
-                            <p class="d-none d-xl-block">Referência nacional em projetos de serralharia civil e pesada.</p>
-                            <a href="#" class="plus d-none d-md-flex"><i class="fa-solid fa-plus"></i></a>
+                        <div class="v9-feature-matrix-card animate-on-scroll" data-animation="fade-up" data-delay="0.3s">
+                            <div class="v9-f-card-head">
+                                <span class="v9-f-card-index">04</span>
+                                <div class="v9-f-card-icon"><img src="images/3d-factory.png" alt="Polo"></div>
+                            </div>
+                            <h3 class="v9-f-card-title">Polo Viana</h3>
+                            <p class="v9-f-card-desc d-none d-md-block">Localização estratégica para logística nacional ágil.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- [SEC] SOBRE NÓS -->
-        <section class="v9-about py-section" id="sobre">
+        <!-- [SEC] SOBRE NÓS (REFATORADO - LAYERED INDUSTRIAL COMPOSITION) -->
+        <section class="v9-about-supreme-section py-section" id="sobre">
             <div class="container">
-                <div class="row align-items-center g-4 g-lg-5">
+                <div class="row align-items-center g-5">
+                    <!-- VISUAL COMPOSITION -->
                     <div class="col-lg-6">
-                        <div class="v9-about-img-box animate-on-scroll" data-animation="fade-right">
-                            <div class="main-img">
-                                <img src="images/about-industrial-man.jpg" alt="Leonardo Serra Shop Specialist">
-                            </div>
-                            <div class="exp-badge">
-                                <div class="inner">
-                                    <span class="num">5+</span>
-                                    <span class="txt">Anos de <br> Experiência</span>
+                        <div class="v9-about-visual-engine animate-on-scroll" data-animation="fade-right">
+                            <div class="v9-visual-composition">
+                                <div class="v9-comp-layer v9-layer-image">
+                                    <img src="images/about-industrial-man.jpg" alt="Leonardo Serra Especialista Industrial">
                                 </div>
+                                <div class="v9-comp-layer v9-layer-frame"></div>
+                                <div class="v9-comp-layer v9-layer-info-badge">
+                                    <div class="v9-badge-inner">
+                                        <span class="v9-b-number">05+</span>
+                                        <span class="v9-b-text">ANOS DE <br> MESTRIA</span>
+                                    </div>
+                                </div>
+                                <div class="v9-comp-layer v9-layer-dots"></div>
                             </div>
-                            <div class="img-frame d-none d-lg-block"></div>
                         </div>
                     </div>
+                    <!-- TEXTUAL CONTENT -->
                     <div class="col-lg-6">
-                        <div class="v9-about-content animate-on-scroll" data-animation="fade-left">
-                            <span class="v9-tagline">QUEM SOMOS</span>
-                            <h2 class="v9-sec-title">Trabalhamos para si <mark>desde 2020</mark>.</h2>
+                        <div class="v9-about-content-engine animate-on-scroll" data-animation="fade-left">
+                            <span class="v9-sec-tag">NOSSA HISTÓRIA</span>
+                            <h2 class="v9-sec-title">Moldando o Aço, <mark>Esculpindo</mark> o Futuro em Angola.</h2>
+                            <p class="v9-sec-desc">
+                                A Leonardo Serra Shop não é apenas uma fábrica; é o epicentro da inovação metalúrgica em Luanda. Desde 2020, sob a liderança visionária de **Leonardo dos Santos**, entregamos soluções que desafiam os limites da serralharia convencional.
+                            </p>
                             
-                            <div class="v9-tabs-box mt-4 mt-md-5">
+                            <!-- INDUSTRIAL TABS SYSTEM -->
+                            <div class="v9-tabs-engine mt-5">
                                 <div class="v9-tabs-header">
-                                    <button class="v9-tab-btn active" data-tab="mission">MISSÃO</button>
-                                    <button class="v9-tab-btn" data-tab="vision">VISÃO</button>
-                                    <button class="v9-tab-btn d-none d-sm-block" data-tab="history">HISTÓRIA</button>
+                                    <button class="v9-tab-trigger active" data-target="missao">NOSSA MISSÃO</button>
+                                    <button class="v9-tab-trigger" data-target="visao">NOSSA VISÃO</button>
+                                    <button class="v9-tab-trigger" data-target="valores">VALORES</button>
                                 </div>
-                                <div class="v9-tabs-pane active" id="pane-mission">
-                                    <p>Desde a Revolução Industrial moderna, a manufatura de precisão tornou-se o motor da economia global. Nós aplicamos essa excelência em cada projeto executado.</p>
-                                    <ul class="v9-checklist">
-                                        <li><i class="fa-solid fa-circle-check"></i> Suporte Técnico Permanente</li>
-                                        <li><i class="fa-solid fa-circle-check"></i> Engenheiros de Materiais Seniores</li>
-                                        <li><i class="fa-solid fa-circle-check"></i> Equipa Certificada de Montagem</li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="v9-about-actions">
-                                <a href="#" class="v9-btn-main">SABER MAIS <i class="fa-solid fa-circle-chevron-right"></i></a>
-                                <div class="v9-support-call d-none d-sm-flex">
-                                    <div class="icon"><i class="fa-solid fa-headset"></i></div>
-                                    <div class="data">
-                                        <span>Alguma dúvida?</span>
-                                        <strong>939 717 295</strong>
+                                <div class="v9-tabs-panes">
+                                    <div class="v9-pane-content active" id="missao">
+                                        <p>Prover engenharia de metal de classe mundial para o desenvolvimento das infraestruturas nacionais em Angola, com ética e perfeccionismo.</p>
+                                        <ul class="v9-feature-checklist">
+                                            <li><i class="fa-solid fa-circle-check"></i> Soldadura de Alta Precisão (Mig/Tig)</li>
+                                            <li><i class="fa-solid fa-circle-check"></i> Matéria-Prima Certificada ISO 9001</li>
+                                            <li><i class="fa-solid fa-circle-check"></i> Consultoria Estrutural Inclusa</li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="v9-about-actions-box mt-5">
+                                <a href="#contacto" class="v9-btn-secondary">SABER MAIS SOBRE NÓS</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- [SEC] MARQUEE TEXT -->
-        <section class="v9-marquee">
-            <div class="v9-marquee-track">
-                <span>SERRA & FUTURO <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
-                <span>META & LURGIA <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
-                <span>FUTU & RISTICA <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
-                <span>ANGOLA & PROGRAMS <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
-                <!-- Loop Clone -->
-                <span>SERRA & FUTURO <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
-                <span>META & LURGIA <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
-                <span>FUTU & RISTICA <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
-                <span>ANGOLA & PROGRAMS <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+        <!-- [SEC] PARCEIROS (MODERN RUNNING MARQUEE) -->
+        <section class="v9-partners-running-area">
+            <div class="container-fluid px-0">
+                <div class="v9-partners-engine">
+                    <div class="v9-partners-track">
+                        <!-- PARTNERS LOGOS - IMAGES -->
+                        <div class="v9-partner-logo-item"><img src="images/partner-1.png" alt="Parceiro Industrial"></div>
+                        <div class="v9-partner-logo-item"><img src="images/partner-2.png" alt="Parceiro Industrial"></div>
+                        <div class="v9-partner-logo-item"><img src="images/partner-3.png" alt="Parceiro Industrial"></div>
+                        <div class="v9-partner-logo-item"><img src="images/partner-4.png" alt="Parceiro Industrial"></div>
+                        <div class="v9-partner-logo-item"><img src="images/partner-5.png" alt="Parceiro Industrial"></div>
+                        <div class="v9-partner-logo-item"><img src="images/partner-6.png" alt="Parceiro Industrial"></div>
+                        <!-- LOOP CLONES -->
+                        <div class="v9-partner-logo-item"><img src="images/partner-1.png" alt="Parceiro Industrial"></div>
+                        <div class="v9-partner-logo-item"><img src="images/partner-2.png" alt="Parceiro Industrial"></div>
+                        <div class="v9-partner-logo-item"><img src="images/partner-3.png" alt="Parceiro Industrial"></div>
+                        <div class="v9-partner-logo-item"><img src="images/partner-4.png" alt="Parceiro Industrial"></div>
+                        <div class="v9-partner-logo-item"><img src="images/partner-5.png" alt="Parceiro Industrial"></div>
+                        <div class="v9-partner-logo-item"><img src="images/partner-6.png" alt="Parceiro Industrial"></div>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- [SEC] SOLUÇÕES (MATRIX NO MOBILE) -->
-        <section class="v9-solutions py-section" id="servicos">
+        <!-- [SEC] SERVIÇOS (MATRIX 2X2 MOBILE) -->
+        <section class="v9-services-matrix-section py-section" id="servicos">
             <div class="container">
-                <div class="row align-items-end mb-4 mb-md-5">
-                    <div class="col-lg-7">
-                        <span class="v9-tagline">NOSSOS SERVIÇOS</span>
-                        <h2 class="v9-sec-title">Providenciando as <mark>Melhores Soluções</mark> Industriais</h2>
+                <div class="row align-items-end mb-5">
+                    <div class="col-lg-8">
+                        <span class="v9-sec-tag">DOMÍNIO TÉCNICO</span>
+                        <h2 class="v9-sec-title">Nossas <mark>Soluções</mark> Industriais.</h2>
                     </div>
-                    <div class="col-lg-5 text-lg-end d-none d-lg-block">
-                        <p class="v9-text-desc">Iniciamos cada projeto com uma análise técnica profunda para garantir a máxima eficiência produtiva.</p>
-                        <a href="#" class="v9-link-orange">Inicie o seu Projecto Agora <i class="fa-solid fa-arrow-right-long"></i></a>
+                    <div class="col-lg-4 text-lg-end d-none d-lg-block">
+                        <a href="#contacto" class="v9-link-btn">EXPLORAR TODOS OS SERVIÇOS <i class="fa-solid fa-arrow-right-long"></i></a>
                     </div>
                 </div>
 
-                <div class="v9-solutions-grid">
-                    <div class="row g-2 g-md-3 g-lg-4">
+                <div class="v9-services-matrix-grid">
+                    <div class="row g-3 g-md-4">
+                        <!-- SERVIÇO 01 -->
                         <div class="col-6 col-md-6 col-lg-4">
-                            <div class="v9-sol-card animate-on-scroll" data-animation="zoom-in">
-                                <div class="visual"><img src="images/serv-1.jpg" alt="Serviço 1"></div>
-                                <div class="content">
-                                    <h3>Engenharia de Metais</h3>
-                                    <a href="#" class="arrow d-none d-sm-flex"><i class="fa-solid fa-arrow-right"></i></a>
+                            <div class="v9-service-card-matrix animate-on-scroll" data-animation="zoom-in">
+                                <div class="v9-s-card-visual">
+                                    <img src="images/serv-1.jpg" alt="Serralharia Civil">
+                                </div>
+                                <div class="v9-s-card-content">
+                                    <h3>Serralharia de Arte</h3>
+                                    <p class="d-none d-md-block">Design luxuoso para residências de alto padrão.</p>
+                                    <a href="#" class="v9-s-card-btn"><i class="fa-solid fa-plus"></i></a>
                                 </div>
                             </div>
                         </div>
+                        <!-- SERVIÇO 02 -->
                         <div class="col-6 col-md-6 col-lg-4">
-                            <div class="v9-sol-card animate-on-scroll" data-animation="zoom-in" data-delay="0.1s">
-                                <div class="visual"><img src="images/serv-2.jpg" alt="Serviço 2"></div>
-                                <div class="content">
-                                    <h3>Soldagem Industrial</h3>
-                                    <a href="#" class="arrow d-none d-sm-flex"><i class="fa-solid fa-arrow-right"></i></a>
+                            <div class="v9-service-card-matrix animate-on-scroll" data-animation="zoom-in" data-delay="0.1s">
+                                <div class="v9-s-card-visual">
+                                    <img src="images/serv-2.jpg" alt="Estruturas Aço">
+                                </div>
+                                <div class="v9-s-card-content">
+                                    <h3>Estruturas Pesadas</h3>
+                                    <p class="d-none d-md-block">Galpões industriais e hangares de grande escala.</p>
+                                    <a href="#" class="v9-s-card-btn"><i class="fa-solid fa-plus"></i></a>
                                 </div>
                             </div>
                         </div>
+                        <!-- SERVIÇO 03 -->
                         <div class="col-6 col-md-6 col-lg-4">
-                            <div class="v9-sol-card animate-on-scroll" data-animation="zoom-in" data-delay="0.2s">
-                                <div class="visual"><img src="images/serv-3.jpg" alt="Serviço 3"></div>
-                                <div class="content">
-                                    <h3>Automação de Portões</h3>
-                                    <a href="#" class="arrow d-none d-sm-flex"><i class="fa-solid fa-arrow-right"></i></a>
+                            <div class="v9-service-card-matrix animate-on-scroll" data-animation="zoom-in" data-delay="0.2s">
+                                <div class="v9-s-card-visual">
+                                    <img src="images/serv-3.jpg" alt="Solda Especial">
+                                </div>
+                                <div class="v9-s-card-content">
+                                    <h3>Solda de Precisão</h3>
+                                    <p class="d-none d-md-block">Processos industriais MIG, TIG e Arco Submerso.</p>
+                                    <a href="#" class="v9-s-card-btn"><i class="fa-solid fa-plus"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- SERVIÇO 04 -->
+                        <div class="col-6 col-md-6 col-lg-4">
+                            <div class="v9-service-card-matrix animate-on-scroll" data-animation="zoom-in" data-delay="0.3s">
+                                <div class="v9-s-card-visual">
+                                    <img src="images/serv-1.jpg" alt="Corte Plasma">
+                                </div>
+                                <div class="v9-s-card-content">
+                                    <h3>Corte CNC Plasma</h3>
+                                    <p class="d-none d-md-block">Usinagem de chapas grossas com perfeição robótica.</p>
+                                    <a href="#" class="v9-s-card-btn"><i class="fa-solid fa-plus"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -440,25 +486,33 @@
             </div>
         </section>
 
-        <!-- [SEC] EXPERTS -->
-        <section class="v9-experts py-section d-none d-md-block">
-            <div class="container">
-                <div class="row align-items-center">
+        <!-- [SEC] CATÁLOGO - STAMPED (FULL SCREEN INTEGRATED) -->
+        <section class="v9-catalogue-stamped-area py-section" id="catalogo">
+            <div class="container-fluid px-lg-5">
+                <div class="row align-items-center g-0">
                     <div class="col-lg-6">
-                        <div class="v9-expert-list animate-on-scroll" data-animation="fade-right">
-                            <h2 class="v9-expert-bg-text">INDUSTRY EXPERTS</h2>
-                            <ul class="v9-expert-names">
-                                <li class="active">Leonardo <span></span></li>
-                                <li>dos Santos <span></span></li>
-                            </ul>
+                        <div class="v9-stamped-visual-box animate-on-scroll" data-animation="fade-right">
+                            <div class="v9-stamped-image-wrapper">
+                                <img src="images/catalogue-mockup.jpg" alt="Mockup do Catálogo Leonardo Serra" class="v9-stamped-img">
+                                <div class="v9-stamped-badge">2025 EDIT.</div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg-6">
-                        <div class="v9-expert-visual animate-on-scroll" data-animation="fade-left">
-                            <div class="expert-img-card">
-                                <img src="images/about-industrial-man.jpg" alt="Expert Specialist">
-                                <div class="expert-badge-premium">
-                                    <h3>Reunimos a <br> melhor equipa <br> para trabalhar <br> consigo</h3>
+                        <div class="v9-stamped-text-box animate-on-scroll" data-animation="fade-left">
+                            <span class="v9-stamped-tagline">DOWNLOAD EXCLUSIVO</span>
+                            <h2 class="v9-stamped-huge-title">O Nosso <mark>DNA</mark> em <mark>PDF</mark>.</h2>
+                            <p class="v9-stamped-huge-desc">
+                                Baixe agora o catálogo técnico completo. Inclui especificações de ligas, modelos de mobiliário futurista e o portfólio detalhado de nossas maiores obras em Angola.
+                            </p>
+                            <div class="v9-stamped-action-btns">
+                                <a href="catalogo.pdf" download class="v9-btn-download-supreme">
+                                    OBTER CATÁLOGO DIGITAL <i class="fa-solid fa-file-arrow-down"></i>
+                                </a>
+                                <div class="v9-file-info-row">
+                                    <span><i class="fa-solid fa-check-circle"></i> 24.5 MB</span>
+                                    <span><i class="fa-solid fa-check-circle"></i> ALTA RESOLUÇÃO</span>
+                                    <span><i class="fa-solid fa-check-circle"></i> FULL TECH SPECS</span>
                                 </div>
                             </div>
                         </div>
@@ -467,71 +521,43 @@
             </div>
         </section>
 
-        <!-- [SEC] CATÁLOGO -->
-        <section class="v9-catalogue-sec py-section" id="catalogo">
+        <!-- [SEC] PORTFOLIO SUPREME (GALERIA PROFISSIONAL) -->
+        <section class="v9-portfolio-supreme-section py-section" id="portfolio">
             <div class="container">
-                <div class="v9-catalogue-box animate-on-scroll" data-animation="zoom-in">
-                    <div class="row g-0 align-items-center">
-                        <div class="col-lg-7 p-4 p-md-5">
-                            <span class="v9-tagline">DOWNLOAD</span>
-                            <h2 class="v9-sec-title">Baixe o Nosso <mark>Catálogo 2025</mark></h2>
-                            <p class="mb-4 mb-md-5">Acesse a lista completa de materiais, especificações técnicas de estruturas metálicas e modelos de mobiliário futurista.</p>
-                            <a href="catalogo.pdf" download class="v9-btn-main btn-orange">
-                                DOWNLOAD PDF (15MB) <i class="fa-solid fa-file-pdf"></i>
-                            </a>
-                        </div>
-                        <div class="col-lg-5 d-none d-lg-block">
-                            <div class="catalogue-visual"><img src="images/catalogue-mockup.jpg" alt="Leonardo Serra Catalogo"></div>
-                        </div>
+                <div class="row mb-5 text-center">
+                    <div class="col-12">
+                        <h2 class="v9-sec-title">Galeria de <mark>Engenharia</mark>.</h2>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- [SEC] GALLERY / PORTFOLIO (FIXED MASONRY RESPONSIVE) -->
-        <section class="v9-gallery py-section" id="portfolio">
-            <div class="container-fluid px-3 px-md-5">
-                <div class="text-center mb-4 mb-md-5">
-                    <span class="v9-tagline center">NOSSO TRABALHO</span>
-                    <h2 class="v9-sec-title">Galeria de Projetos Concluídos</h2>
-                </div>
-                
-                <div class="v9-masonry-grid">
+                <div class="v9-portfolio-grid-engine">
                     <div class="row g-2 g-md-3">
-                        <!-- CARD GRANDE (ESQUERDA) -->
-                        <div class="col-12 col-lg-6">
-                            <div class="v9-gallery-item lg animate-on-scroll" data-animation="zoom-in">
-                                <img src="images/about-industrial-man.jpg" alt="Projeto Destaque">
-                                <div class="overlay d-none d-sm-block">
-                                    <span>INDUSTRIAL</span>
-                                    <h4>Estrutura em Aço H</h4>
+                        <div class="col-12 col-md-8">
+                            <div class="v9-portfolio-item-wrap lg animate-on-scroll" data-animation="zoom-in">
+                                <img src="images/serv-2.jpg" alt="Obra de Destaque">
+                                <div class="v9-portfolio-overlay">
+                                    <span class="v9-port-cat">LUANDA / VIANA</span>
+                                    <h4>Estrutura Principal Unidade A1</h4>
                                 </div>
                             </div>
                         </div>
-                        
-                        <!-- GRID PEQUENOS (DIREITA) -->
-                        <div class="col-12 col-lg-6">
-                            <div class="row g-2 g-md-3">
-                                <div class="col-6 col-md-6">
-                                    <div class="v9-gallery-item animate-on-scroll" data-animation="zoom-in" data-delay="0.1s">
-                                        <img src="images/serv-1.jpg" alt="Projeto P1">
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-6">
-                                    <div class="v9-gallery-item animate-on-scroll" data-animation="zoom-in" data-delay="0.2s">
-                                        <img src="images/serv-2.jpg" alt="Projeto P2">
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-6">
-                                    <div class="v9-gallery-item animate-on-scroll" data-animation="zoom-in" data-delay="0.3s">
-                                        <img src="images/serv-3.jpg" alt="Projeto P3">
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-6">
-                                    <div class="v9-gallery-item animate-on-scroll" data-animation="zoom-in" data-delay="0.4s">
-                                        <img src="images/serv-2.jpg" alt="Projeto P4">
-                                    </div>
-                                </div>
+                        <div class="col-6 col-md-4">
+                            <div class="v9-portfolio-item-wrap sm animate-on-scroll" data-animation="zoom-in" data-delay="0.1s">
+                                <img src="images/serv-1.jpg" alt="Obra">
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <div class="v9-portfolio-item-wrap sm animate-on-scroll" data-animation="zoom-in" data-delay="0.2s">
+                                <img src="images/serv-3.jpg" alt="Obra">
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <div class="v9-portfolio-item-wrap sm animate-on-scroll" data-animation="zoom-in" data-delay="0.3s">
+                                <img src="images/serv-1.jpg" alt="Obra">
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <div class="v9-portfolio-item-wrap sm animate-on-scroll" data-animation="zoom-in" data-delay="0.4s">
+                                <img src="images/serv-2.jpg" alt="Obra">
                             </div>
                         </div>
                     </div>
@@ -539,121 +565,75 @@
             </div>
         </section>
 
-        <!-- [SEC] BLOG / ARTIGOS -->
-        <section class="v9-blog py-section">
-            <div class="container">
-                <div class="row align-items-center mb-4 mb-md-5">
-                    <div class="col-lg-6">
-                        <span class="v9-tagline">INSIGHTS</span>
-                        <h2 class="v9-sec-title">Artigos & Novidades</h2>
-                    </div>
-                    <div class="col-lg-6 text-lg-end d-none d-lg-block">
-                        <a href="#" class="v9-btn-main">VER TODOS <i class="fa-solid fa-arrow-right"></i></a>
-                    </div>
-                </div>
-                <div class="row g-3 g-md-4">
-                    <div class="col-6 col-md-4">
-                        <article class="v9-post-card animate-on-scroll" data-animation="fade-up">
-                            <div class="post-img"><img src="images/serv-1.jpg" alt="Post 1"></div>
-                            <div class="post-body">
-                                <span class="date d-none d-sm-block">Maio 12, 2025</span>
-                                <h4>O Futuro do Aço em Angola</h4>
-                                <a href="#" class="read-more d-none d-sm-inline-flex">LER ARTIGO</a>
-                            </div>
-                        </article>
-                    </div>
-                    <div class="col-6 col-md-4">
-                        <article class="v9-post-card animate-on-scroll" data-animation="fade-up" data-delay="0.1s">
-                            <div class="post-img"><img src="images/serv-2.jpg" alt="Post 2"></div>
-                            <div class="post-body">
-                                <span class="date d-none d-sm-block">Abril 28, 2025</span>
-                                <h4>Manutenção Industrial</h4>
-                                <a href="#" class="read-more d-none d-sm-inline-flex">LER ARTIGO</a>
-                            </div>
-                        </article>
-                    </div>
-                    <div class="col-6 col-md-4 d-none d-md-block">
-                        <article class="v9-post-card animate-on-scroll" data-animation="fade-up" data-delay="0.2s">
-                            <div class="post-img"><img src="images/about-industrial-man.jpg" alt="Post 3"></div>
-                            <div class="post-body">
-                                <span class="date">Março 15, 2025</span>
-                                <h4>Mobiliário Inox</h4>
-                                <a href="#" class="read-more">LER ARTIGO</a>
-                            </div>
-                        </article>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- [SEC] SOLICITAR ORÇAMENTO (BADGE FORM) -->
-        <section class="v9-budget py-section" id="contacto">
-            <div class="container">
-                <div class="v9-quote-container animate-on-scroll" data-animation="fade-up">
-                    <div class="row g-0">
-                        <div class="col-lg-5">
-                            <div class="v9-quote-info p-4 p-md-5 h-100">
-                                <h2>Request a <mark>Quick Quote</mark></h2>
-                                <p class="mt-3 mt-md-4">Preencha os detalhes e nossa equipe de engenharia enviará o orçamento via WhatsApp.</p>
-                                
-                                <div class="v9-contact-items mt-4 mt-md-5">
-                                    <div class="item">
-                                        <div class="i-icon"><i class="fa-solid fa-map-location-dot"></i></div>
-                                        <div class="i-text">
-                                            <strong>Sede Industrial:</strong>
-                                            <p>Viana, Pólo Industrial</p>
-                                        </div>
+        <!-- [SEC] CONTACTO - STAMPED (ZERO CARDS - FULL SCREEN) -->
+        <section class="v9-contact-stamped-section py-section" id="contacto">
+            <div class="container-fluid px-lg-5">
+                <div class="row g-0 align-items-center">
+                    <!-- LEFT SIDE: MASSIVE INFO -->
+                    <div class="col-lg-5">
+                        <div class="v9-contact-huge-data animate-on-scroll" data-animation="fade-right">
+                            <h2 class="v9-huge-stamp-title">Vamos Criar <br> Algo <mark>Eterno</mark>?</h2>
+                            <p class="v9-stamp-paragraph">Não somos apenas prestadores de serviço. Somos parceiros estratégicos na construção do seu legado industrial.</p>
+                            
+                            <div class="v9-contact-stamp-details">
+                                <div class="v9-s-detail-item">
+                                    <div class="v9-s-icon"><i class="fa-solid fa-location-crosshairs"></i></div>
+                                    <div class="v9-s-text">
+                                        <strong>LOCALIZAÇÃO INDUSTRIAL:</strong>
+                                        <span>Estrada de Viana, Polo Industrial, Luanda</span>
                                     </div>
-                                    <div class="item">
-                                        <div class="i-icon"><i class="fa-solid fa-phone-flip"></i></div>
-                                        <div class="i-text">
-                                            <strong>Telefone Directo:</strong>
-                                            <p>939 717 295</p>
-                                        </div>
+                                </div>
+                                <div class="v9-s-detail-item">
+                                    <div class="v9-s-icon"><i class="fa-solid fa-terminal"></i></div>
+                                    <div class="v9-s-text">
+                                        <strong>DIRECTOR TÉCNICO:</strong>
+                                        <span>(+244) 939 717 295</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-7">
-                            <div class="v9-quote-form p-4 p-md-5 h-100">
-                                <form id="v9WhatsAppForm" class="v9-form-premium">
-                                    <div class="row g-3 g-md-4">
-                                        <div class="col-12 col-md-6">
-                                            <div class="v9-input-badge">
-                                                <label>NOME COMPLETO</label>
-                                                <input type="text" id="waName" placeholder="Seu Nome Completo" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-6">
-                                            <div class="v9-input-badge">
-                                                <label>E-MAIL PROFISSIONAL</label>
-                                                <input type="email" id="waEmail" placeholder="seu@email.com" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="v9-input-badge">
-                                                <label>CATEGORIA DO PROJETO</label>
-                                                <select id="waSubject" required>
-                                                    <option value="Estruturas">Estruturas Metálicas</option>
-                                                    <option value="Serralharia">Serralharia Civil</option>
-                                                    <option value="Automacao">Automação Industrial</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="v9-input-badge">
-                                                <label>DESCRIÇÃO TÉCNICA</label>
-                                                <textarea id="waMessage" rows="5" placeholder="Descreva os detalhes..." required></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <button type="submit" class="v9-btn-main w-100 btn-glow">
-                                                ENVIAR PARA WHATSAPP <i class="fa-brands fa-whatsapp"></i>
-                                            </button>
+                    </div>
+                    <!-- RIGHT SIDE: STAMPED FORM -->
+                    <div class="col-lg-7">
+                        <div class="v9-contact-stamped-form-engine animate-on-scroll" data-animation="fade-left">
+                            <form id="v9WhatsAppForm" class="v9-form-supreme-engine">
+                                <div class="row g-4">
+                                    <div class="col-md-6">
+                                        <div class="v9-field-group">
+                                            <label>NOME COMPLETO OU EMPRESA</label>
+                                            <input type="text" id="waName" placeholder="Identifique-se" required>
                                         </div>
                                     </div>
-                                </form>
-                            </div>
+                                    <div class="col-md-6">
+                                        <div class="v9-field-group">
+                                            <label>E-MAIL CORPORATIVO</label>
+                                            <input type="email" id="waEmail" placeholder="exemplo@corporativo.com" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="v9-field-group">
+                                            <label>CATEGORIA DE PROJETO METALÚRGICO</label>
+                                            <select id="waSubject" required>
+                                                <option value="Serralharia Civil">Serralharia Civil (Luxo / Residencial)</option>
+                                                <option value="Estruturas Metálicas">Estruturas Pesadas (Pavilhões / Hangares)</option>
+                                                <option value="Solda Especial">Soldadura Técnica MIG / TIG / Inox</option>
+                                                <option value="Manutenção">Manutenção Industrial Preventiva</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="v9-field-group">
+                                            <label>ESPECIFICAÇÕES TÉCNICAS E DESAFIO</label>
+                                            <textarea id="waMessage" rows="5" placeholder="Descreva medidas, materiais, localização e prazos..." required></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button type="submit" class="v9-btn-submit-stamped">
+                                            TRANSMITIR REQUISIÇÃO VIA WHATSAPP <i class="fa-brands fa-whatsapp"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -662,67 +642,70 @@
 
     </main>
 
-    <!-- [UI] FOOTER -->
-    <footer class="v9-footer py-4 py-md-5">
-        <div class="container">
-            <div class="row gy-4 gy-md-5">
+    <!-- [UI] FOOTER SUPREME INDUSTRIAL -->
+    <footer class="v9-main-footer-area">
+        <div class="container py-5">
+            <div class="row gy-5 gy-lg-0">
                 <div class="col-lg-4 col-md-6">
-                    <div class="f-about text-center text-md-start">
-                        <div class="v9-logo mb-3">
-                            <span class="v9-t-bold" style="font-size: 26px;">LEONARDO DOS SANTOS</span>
-                        </div>
-                        <p>Líder em metalurgia industrial e serralharia futurista em Angola desde 2020.</p>
-                        <div class="f-socials justify-content-center justify-content-md-start mt-4">
-                            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <div class="v9-footer-brand-box">
+                        <h3 class="v9-f-logo">LEONARDO SERRA</h3>
+                        <p class="v9-f-desc mt-3">Excelência em metalurgia de precisão em Angola. Onde a tradição da solda encontra a visão do futuro.</p>
+                        <div class="v9-footer-social-links mt-4">
+                            <a href="#" class="v9-f-social-btn"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#" class="v9-f-social-btn"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="#" class="v9-f-social-btn"><i class="fa-brands fa-linkedin-in"></i></a>
+                            <a href="#" class="v9-f-social-btn"><i class="fa-brands fa-whatsapp"></i></a>
                         </div>
                     </div>
                 </div>
-                <div class="col-6 col-lg-2">
-                    <div class="f-links">
-                        <h4>Links</h4>
+                <div class="col-lg-2 col-md-6 col-6">
+                    <div class="v9-footer-links-box">
+                        <h4>Navegação</h4>
                         <ul>
                             <li><a href="#home">Início</a></li>
                             <li><a href="#sobre">Empresa</a></li>
                             <li><a href="#servicos">Serviços</a></li>
+                            <li><a href="#portfolio">Projetos</a></li>
                         </ul>
                     </div>
                 </div>
-                <div class="col-6 col-lg-2">
-                    <div class="f-links">
-                        <h4>Suporte</h4>
+                <div class="col-lg-2 col-md-6 col-6">
+                    <div class="v9-footer-links-box">
+                        <h4>Apoio</h4>
                         <ul>
-                            <li><a href="#portfolio">Portfólio</a></li>
-                            <li><a href="#catalogo">Catálogo</a></li>
                             <li><a href="#contacto">Contacto</a></li>
+                            <li><a href="#catalogo">Catálogo</a></li>
+                            <li><a href="#">Privacidade</a></li>
+                            <li><a href="#">Termos de Uso</a></li>
                         </ul>
                     </div>
                 </div>
-                <div class="col-12 col-lg-4">
-                    <div class="f-news">
-                        <h4>Newsletter</h4>
-                        <p>Inscreva-se para receber atualizações.</p>
-                        <form class="v9-news-form mt-3">
-                            <input type="email" placeholder="Seu e-mail profissional">
+                <div class="col-lg-4 col-md-6">
+                    <div class="v9-footer-news-box">
+                        <h4>Newsletter Industrial</h4>
+                        <p>Subscreva para receber as nossas atualizações tecnológicas.</p>
+                        <form class="v9-footer-newsletter-form mt-4">
+                            <input type="email" placeholder="Seu e-mail corporativo">
                             <button type="submit"><i class="fa-solid fa-paper-plane"></i></button>
                         </form>
                     </div>
                 </div>
             </div>
-            <div class="v9-f-bottom border-top mt-5 pt-4 text-center">
-                <p class="mb-0">© <span id="currentYear">2025</span>  Metalurgia Futurista. Todos os direitos reservados. Design by <span class="text-orange">softhustle</span>.</p>
+        </div>
+        <div class="v9-footer-bottom-line border-top py-4">
+            <div class="container text-center">
+                <p class="mb-0">© <span id="currentYear">2025</span> LEONARDO SERRA SHOP. DESENVOLVIDO POR <span class="v9-text-orange">SOFTHUSTLE</span>. TODOS OS DIREITOS RESERVADOS.</p>
             </div>
         </div>
     </footer>
 
-    <!-- [UI] WHATSAPP FLOAT -->
-    <a href="https://wa.me/244939717295" class="v9-wa-float" target="_blank">
-        <div class="wa-pulse"></div>
+    <!-- [UI] WHATSAPP FLOAT SUPREME ENGINE -->
+    <a href="https://wa.me/244939717295" class="v9-wa-float-engine" target="_blank" aria-label="WhatsApp">
+        <div class="v9-wa-waves-animate"></div>
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
-    <!-- SCRIPTS -->
+    <!-- ENGINE SCRIPTS CORE -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/script.js"></script>
 </body>
