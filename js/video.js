@@ -52,3 +52,25 @@ player.ontimeupdate = () => {
 document.addEventListener('keydown', (e) => {
     if (e.key === "Escape") closeVideoModal();
 });
+
+/**
+ * ENGINE DE ALTERNÂNCIA DE TEMA (BOTÃO FLUTUANTE)
+ */
+const themeToggleBtn = document.getElementById('themeToggleFloat');
+const htmlRoot = document.documentElement;
+
+themeToggleBtn.addEventListener('click', () => {
+    // Pega o tema atual
+    const currentTheme = htmlRoot.getAttribute('data-theme');
+    
+    // Define o novo tema
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    // Aplica no HTML
+    htmlRoot.setAttribute('data-theme', newTheme);
+    
+    // Salva a preferência do usuário
+    localStorage.setItem('ls_theme', newTheme);
+    
+    console.log(`> Interface Leonardo Serra alterada para: ${newTheme.toUpperCase()}`);
+});
