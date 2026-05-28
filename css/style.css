@@ -2568,3 +2568,92 @@ body {
         justify-content: center;
     }
 }
+
+/* ================================================================
+   INTERFACE FLUTUANTE - ESTILIZAÇÃO UNITÁRIA
+   ================================================================ */
+.floating-interface-wrap {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espaço entre os botões */
+    z-index: 10001;
+}
+
+/* Base comum para os botões flutuantes (Herança de Estilo) */
+.theme-float-btn, .whatsapp-float-new {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    position: relative;
+    border: none;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+/* Estilo Específico: Alternador de Tema */
+.theme-float-btn {
+    background: var(--primary); /* Laranja da marca */
+    color: #fff;
+}
+
+/* Estilo Específico: WhatsApp */
+.whatsapp-float-new {
+    background: #25D366;
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Herança do Efeito Pulse */
+.theme-pulse, .whatsapp-pulse-new {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    border-radius: 50%;
+    z-index: -1;
+    animation: floatingPulse 2s infinite;
+}
+
+.theme-pulse { background: var(--primary); opacity: 0.4; }
+.whatsapp-pulse-new { background: #25D366; opacity: 0.4; }
+
+@keyframes floatingPulse {
+    0% { transform: scale(1); opacity: 0.4; }
+    100% { transform: scale(1.6); opacity: 0; }
+}
+
+/* Lógica de Ícones do Tema */
+[data-theme="dark"] .sun-icon { display: block; }
+[data-theme="dark"] .moon-icon { display: none; }
+
+[data-theme="light"] .sun-icon { display: none; }
+[data-theme="light"] .moon-icon { display: block; }
+
+/* Hover Effects */
+.theme-float-btn:hover, .whatsapp-float-new:hover {
+    transform: scale(1.1) translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+}
+
+.theme-float-btn:active {
+    transform: scale(0.9);
+}
+
+/* Responsividade Mobile */
+@media (max-width: 768px) {
+    .floating-interface-wrap {
+        bottom: 20px;
+        right: 20px;
+    }
+    .theme-float-btn, .whatsapp-float-new {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+}
