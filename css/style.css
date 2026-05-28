@@ -2,18 +2,18 @@
    VARIABLES GLOBAIS
    ============================================ */
 :root {
-    --primary: #f4c507;
-    --primary-rgb: 255, 106, 0;
+    --primary: #f2c508;
+    --primary-rgb: 242, 197, 8;
     --primary-dark: #e05a00;
-    --primary-light: #ff8533;
-    --primary-glow: rgba(244, 197, 7);
+    --primary-light: #f2c508;
+    --primary-glow: rgba(255, 106, 0, 0.25);
     --primary-glow-strong: rgba(255, 106, 0, 0.4);
     
     --bg-dark: #0a0a0a;
     --bg-dark-2: #111111;
     --bg-dark-3: #1a1a1a;
     --bg-light: #ffffff;
-    --bg-light-2: #f8fafc;
+    --bg-light-2: #f2c508;
     --bg-light-3: #f1f5f9;
     
     --text-dark: #ffffff;
@@ -1009,53 +1009,251 @@ body {
     line-height: 1.5;
 }
 
-/* ============================================
-   PARCEIROS
-   ============================================ */
-.partners {
-    padding: 3rem 0;
-    background: var(--bg-primary);
+/* ================================================================
+   INDUSTRIAL 8-MATRIX & VIDEO PLAYER
+   ================================================================ */
+.industrial-matrix-8 {
+    padding: 120px 0;
+    background: var(--bg-body);
+    position: relative;
+}
+
+.matrix-title-ultra {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: var(--text-main);
+    margin-bottom: 20px;
+}
+
+/* O CARD DE ELITE */
+.elite-card {
+    background: var(--bg-card);
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    position: relative;
     overflow: hidden;
-    border-top: 1px solid var(--border-color);
-    border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    display: flex;
+    flex-direction: column;
 }
 
-.partners-marquee {
+.card-tag-num {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    color: rgba(255, 106, 0, 0.05);
+    z-index: 2;
+    transition: 0.5s;
+}
+
+.card-media {
+    height: 180px;
+    width: 100%;
+    position: relative;
     overflow: hidden;
-    white-space: nowrap;
 }
 
-.marquee-content {
-    display: inline-flex;
-    align-items: center;
-    gap: 3rem;
-    animation: marquee 25s linear infinite;
+.card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(1) brightness(0.6);
+    transition: 1s;
 }
 
-@keyframes marquee {
-    from {
-        transform: translateX(0);
-    }
-    to {
-        transform: translateX(-50%);
-    }
-}
-
-.marquee-content img {
+.play-hint {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 50px;
     height: 50px;
-    width: auto;
-    opacity: 0.6;
-    transition: opacity var(--transition-fast);
-    filter: grayscale(1);
+    background: var(--primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    opacity: 0;
+    transition: 0.4s;
 }
 
-.marquee-content img:hover {
+.card-info-modern {
+    padding: 20px;
+    background: var(--bg-card);
+    position: relative;
+    z-index: 3;
+    border-top: 1px solid var(--border-color);
+}
+
+.card-icon-modern {
+    width: 45px;
+    height: 45px;
+    background: var(--primary);
+    color: #fff;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    margin-top: -45px;
+    margin-bottom: 15px;
+    box-shadow: 0 10px 20px var(--primary-glow);
+}
+
+.card-info-modern h4 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+    color: var(--text-main);
+}
+
+.view-btn {
+    font-size: 0.65rem;
+    font-weight: 800;
+    color: var(--primary);
+    letter-spacing: 2px;
+}
+
+/* HOVER EFFECTS */
+.elite-card:hover {
+    transform: translateY(-15px);
+    border-color: var(--primary);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+}
+
+.elite-card:hover .card-media img {
+    filter: grayscale(0) brightness(1);
+    transform: scale(1.1);
+}
+
+.elite-card:hover .play-hint {
     opacity: 1;
-    filter: grayscale(0);
+    transform: translate(-50%, -50%) scale(1);
 }
 
+.elite-card:hover .card-tag-num {
+    color: var(--primary-glow);
+}
+
+/* VIDEO MODAL SYSTEM */
+.ultra-video-modal {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 10000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.ultra-video-modal.active {
+    display: flex;
+}
+
+.modal-backdrop-blur {
+    position: absolute;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.95);
+    backdrop-filter: blur(15px);
+}
+
+.player-container {
+    position: relative;
+    width: 100%;
+    max-width: 1000px;
+    aspect-ratio: 16/9;
+    background: #000;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    animation: modalSlide 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes modalSlide {
+    from { opacity: 0; transform: translateY(50px) scale(0.9); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.video-frame {
+    width: 100%; height: 100%; position: relative;
+}
+
+#industrialPlayer {
+    width: 100%; height: 100%; object-fit: contain;
+}
+
+.player-close {
+    position: absolute; top: -50px; right: 0;
+    background: none; border: none; color: #fff; font-size: 2rem; cursor: pointer;
+}
+
+/* CONTROLS OVERLAY */
+.player-ui-overlay {
+    position: absolute;
+    bottom: 0; left: 0; width: 100%;
+    padding: 40px;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+    color: #fff;
+}
+
+.player-controls-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.ctrl-btn {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #fff;
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.primary-play {
+    width: 80px; height: 80px;
+    background: var(--primary);
+    font-size: 1.5rem;
+}
+
+.ctrl-btn:hover {
+    background: var(--primary);
+    transform: scale(1.1);
+}
+
+.player-progress-bar {
+    width: 100%; height: 4px; background: rgba(255,255,255,0.2);
+    margin-top: 30px; border-radius: 2px; overflow: hidden;
+}
+
+.progress-filled {
+    width: 0%; height: 100%; background: var(--primary);
+}
+
+/* 2x2 MATRIX MOBILE */
+@media (max-width: 991px) {
+    .matrix-grid-modern {
+        display: flex !important; flex-wrap: wrap !important;
+    }
+    .matrix-col {
+        width: 50% !important; padding: 10px !important;
+    }
+    .card-media { height: 130px; }
+    .card-info-modern h4 { font-size: 0.9rem; }
+    .player-ui-overlay { padding: 20px; }
+    .player-controls-main { gap: 15px; }
+    .primary-play { width: 50px; height: 50px; }
+    .ctrl-btn { width: 40px; height: 40px; font-size: 0.8rem; }
+}
 /* ============================================
-   SERVICES
+   SERVICES (8 CARDS CLICÁVEIS)
    ============================================ */
 .services {
     padding: 6rem 0;
@@ -1069,6 +1267,7 @@ body {
     border: 1px solid var(--border-color);
     transition: all var(--transition);
     height: 100%;
+    cursor: pointer;
 }
 
 .service-card:hover {
@@ -1141,6 +1340,257 @@ body {
 
 .service-btn:hover {
     gap: 0.75rem;
+}
+
+/* ============================================
+   MODAL DE SERVIÇOS
+   ============================================ */
+.service-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 10050;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(8px);
+}
+
+.service-modal.active {
+    display: flex;
+}
+
+.service-modal-content {
+    background: var(--bg-card);
+    border-radius: var(--radius-2xl);
+    max-width: 500px;
+    width: 90%;
+    padding: 2rem;
+    position: relative;
+    animation: modalFadeIn 0.3s ease;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-2xl);
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.service-modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: color var(--transition-fast);
+}
+
+.service-modal-close:hover {
+    color: var(--primary);
+}
+
+.service-modal-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.service-modal-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 2rem;
+    color: white;
+}
+
+.service-modal-header h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.service-modal-body p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.service-modal-features h4 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+}
+
+.service-modal-features ul {
+    list-style: none;
+    margin-bottom: 1.5rem;
+}
+
+.service-modal-features ul li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.service-modal-features ul li i {
+    color: var(--primary);
+    font-size: 0.9rem;
+}
+
+.service-modal-price {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.service-modal-footer {
+    text-align: center;
+}
+
+/* ============================================
+   CATÁLOGO DOWNLOAD
+   ============================================ */
+.catalog-download {
+    position: relative;
+    width: 100%;
+    min-height: 500px;
+    background: url('images/catalogue-mockup.jpg') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 4rem 0;
+}
+
+.catalog-download-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.catalog-download-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.7) 100%);
+}
+
+.catalog-download-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 4rem 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.catalog-download-badge {
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 0.3rem 0.8rem;
+    border-radius: var(--radius-full);
+    margin-bottom: 1.5rem;
+}
+
+.catalog-download-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.catalog-download-description {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.catalog-download-info {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.catalog-download-info-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.catalog-download-info-item i {
+    color: var(--primary);
+    font-size: 1.1rem;
+}
+
+.catalog-download-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+.catalog-download-btn {
+    background: var(--primary);
+    color: white;
+}
+
+.catalog-download-btn:hover {
+    background: var(--primary-dark);
+}
+
+.catalog-preview-btn {
+    border-color: white;
+    color: white;
+}
+
+.catalog-preview-btn:hover {
+    background: white;
+    color: var(--primary);
+}
+
+.catalog-download-note {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.catalog-download-note i {
+    margin-right: 0.3rem;
 }
 
 /* ============================================
@@ -1906,6 +2356,10 @@ body {
         transform: none;
         margin: 0 auto;
     }
+    
+    .catalog-download-title {
+        font-size: 2rem;
+    }
 }
 
 @media (max-width: 768px) {
@@ -2037,6 +2491,35 @@ body {
     .desktop-menu {
         display: none;
     }
+    
+    .catalog-download-content {
+        padding: 3rem 1.5rem;
+    }
+    
+    .catalog-download-title {
+        font-size: 1.6rem;
+    }
+    
+    .catalog-download-description {
+        font-size: 0.9rem;
+    }
+    
+    .catalog-download-info {
+        gap: 1rem;
+    }
+    
+    .catalog-download-info-item {
+        font-size: 0.7rem;
+    }
+    
+    .service-modal-content {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+    
+    .service-modal-header h2 {
+        font-size: 1.2rem;
+    }
 }
 
 @media (max-width: 576px) {
@@ -2073,5 +2556,15 @@ body {
         width: 30px;
         height: 30px;
         font-size: 1rem;
+    }
+    
+    .catalog-download-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .catalog-download-buttons .btn-primary,
+    .catalog-download-buttons .btn-outline {
+        justify-content: center;
     }
 }
