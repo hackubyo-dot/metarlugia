@@ -1,12 +1,12 @@
 /**
- * MAIN.JS - ORQUESTRADOR PRINCIPAL DO SISTEMA
+ * MAIN.JS - SISTEMA DE INTELIGÊNCIA FRONTEND (V3.0)
  * Metalurgia Futurística Leonardo Serra
  * 
- * Versão: 1.0.4 (Estável - Full Stack)
- * Ponto de entrada que inicializa todos os módulos e funções globais.
+ * Este arquivo orquestra o comportamento de todos os módulos e 
+ * gerencia a lógica complexa do Modal de Serviços Full-Screen.
  */
 
-// --- IMPORTAÇÃO DOS MÓDULOS ES6 ---
+// --- 1. IMPORTAÇÃO DOS MÓDULOS ES6 ---
 import themeManager from './modules/theme.js';
 import sliderManager from './modules/slider.js';
 import galleryManager from './modules/gallery.js';
@@ -16,56 +16,41 @@ import dashboardManager from './modules/dashboard.js';
 import faqManager from './modules/faq.js';
 
 /**
- * PREVENIR FLASH DE TEMA INCORRETO (Anti-Flicker)
- * Aplica o tema salvo no localStorage antes mesmo do DOM carregar para evitar tela branca.
- */
-(function() {
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-})();
-
-/**
- * INICIALIZAÇÃO SEGURA AO CARREGAR O DOM
+ * INICIALIZAÇÃO GLOBAL DO SISTEMA
  */
 document.addEventListener('DOMContentLoaded', () => {
     
-    // 1. Gerenciador de Temas (Dark/Light)
-    themeManager.init();
+    console.log("🛠️ Motores Metalurgia Futurística: Ativando v3.0...");
 
-    // 2. Sliders (Hero Cinematográfico e Depoimentos)
+    // A. Inicializa Gerenciadores de Comportamento
+    themeManager.init();
     sliderManager.initHero();
     sliderManager.initTestimonials();
-
-    // 3. Portfólio (Galeria, Filtros e Lightbox)
     galleryManager.init();
-
-    // 4. Motor de Vídeos (Modais Industriais e Controles)
     videoManager.init();
-
-    // 5. Comunicação (Formulários e Newsletters)
     contactManager.init();
-
-    // 6. Área Administrativa (Dashboard)
-    dashboardManager.init();
-
-    // 7. Suporte (FAQ Accordions)
     faqManager.init();
 
-    // 8. Inicializa AOS (Animate On Scroll) se a biblioteca estiver carregada
+    // B. Ativa Dashboard se houver permissão
+    if (document.querySelector('.admin-layout')) {
+        dashboardManager.init();
+    }
+
+    // C. Inicializa Biblioteca de Animações (AOS)
     if (typeof AOS !== 'undefined') {
-        AOS.init({ 
-            duration: 800, 
-            easing: 'ease-out-cubic',
-            once: true, 
-            offset: 50 
+        AOS.init({
+            duration: 1200,
+            easing: 'ease-out-quint',
+            once: true,
+            offset: 80
         });
     }
 
-    // 9. Efeito de Scroll no Header (Adiciona fundo ao rolar a página)
+    // D. Motor de Scroll do Header
     const header = document.querySelector('.site-header');
     if (header) {
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
+            if (window.scrollY > 80) {
                 header.classList.add('scrolled');
             } else {
                 header.classList.remove('scrolled');
@@ -73,96 +58,141 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { passive: true });
     }
 
-    console.log("🚀 Sistema Metalurgia Futurística inicializado com sucesso.");
+    // E. Inicializa o Rastreador de Scroll do Modal
+    initModalScrollTracker();
+
+    console.log("🚀 Sistema Full Stack v3.0 pronto e operante.");
 });
 
 /**
- * FUNÇÃO GLOBAL: ABERTURA DO MODAL DE SERVIÇOS
- * Habilita a visualização técnica detalhada. 
- * Resolve o erro de segurança do CSP e garante que o onclick funcione.
- * 
- * @param {number|string} idx - Índice do serviço vindo do banco.
+ * ==========================================================================
+ * 2. LÓGICA DO MODAL DE SERVIÇOS (VERSÃO 3.0 MASTER)
+ * ==========================================================================
+ */
+
+/**
+ * RASTREADOR DE PROGRESSO DE LEITURA
+ * Monitora o scroll da coluna Beta e atualiza a barra superior.
+ */
+function initModalScrollTracker() {
+    const scrollColumn = document.getElementById('modalDataScroll');
+    const progressBar = document.getElementById('serviceScrollProgress');
+
+    if (!scrollColumn || !progressBar) return;
+
+    scrollColumn.addEventListener('scroll', () => {
+        const scrollTop = scrollColumn.scrollTop;
+        const scrollHeight = scrollColumn.scrollHeight - scrollColumn.clientHeight;
+        const progress = (scrollTop / scrollHeight) * 100;
+        
+        progressBar.style.width = `${progress}%`;
+    }, { passive: true });
+}
+
+/**
+ * ABERTURA DO MODAL (ESTRATÉGIA DATA-STORE)
+ * @param {number|string} idx - Índice do serviço
  */
 window.openServiceModal = function(idx) {
     const modal = document.getElementById('serviceModal');
-    const index = parseInt(idx); // Converte para número por segurança
+    const dataStore = document.getElementById('services-data-store');
+    const scrollColumn = document.getElementById('modalDataScroll');
+    const index = parseInt(idx);
 
-    // 1. Verificação Crítica: Modal existe?
-    if (!modal) {
-        console.error("[ServiceModal] Erro: Elemento #serviceModal não encontrado no DOM.");
+    if (!modal || !dataStore) {
+        console.error("[System] Erro: Estrutura do modal ausente.");
         return;
     }
 
-    // 2. Verificação Crítica: Dados foram injetados pelo EJS?
-    if (!window.SERVICES_DATA) {
-        console.error("[ServiceModal] Erro: window.SERVICES_DATA não foi injetada pelo servidor.");
-        alert("Erro técnico: Os dados não foram carregados corretamente. Por favor, recarregue a página.");
-        return;
-    }
-
-    // 3. Verificação Crítica: O índice é válido?
-    const service = window.SERVICES_DATA[index];
-    if (!service) {
-        console.error("[ServiceModal] Erro: Serviço não encontrado para o índice " + index);
-        return;
-    }
-
-    // 4. Preenchimento Dinâmico (Try/Catch para evitar quebra do script)
     try {
-        const titleEl = document.getElementById('serviceModalTitle');
-        const descEl = document.getElementById('serviceModalDescription');
-        const iconEl = document.getElementById('serviceModalIcon');
-        const priceEl = document.getElementById('serviceModalPrice');
+        // Recupera dados seguros do servidor
+        const services = JSON.parse(dataStore.getAttribute('data-services'));
+        const service = services[index];
 
-        if (titleEl) titleEl.innerText = service.name;
-        if (descEl) descEl.innerText = service.full_content || service.description;
+        if (!service) throw new Error("Serviço não localizado no índice: " + index);
+
+        // --- INJEÇÃO DE CONTEÚDO ---
         
-        // Injeção de Ícone Dinâmico
-        if (iconEl) {
-            iconEl.innerHTML = `<i class="fas ${service.icon_class || 'fa-tools'}"></i>`;
+        // 1. Títulos e Tags
+        document.getElementById('serviceModalTitle').innerText = service.name;
+        document.getElementById('serviceModalDescription').innerText = service.full_content || service.description;
+        document.getElementById('serviceModalCategory').innerText = (service.category || 'INDUSTRIAL').toUpperCase();
+        
+        // 2. Imagens Dinâmicas (Desktop + Mobile)
+        const assetUrl = service.image_url || '/images/serv-2.jpeg';
+        const imgDesk = document.getElementById('serviceModalImage');
+        const imgMob = document.getElementById('serviceModalImageMobile');
+        
+        if (imgDesk) imgDesk.src = assetUrl;
+        if (imgMob) imgMob.src = assetUrl;
+
+        // 3. Ícone
+        const iconBox = document.getElementById('serviceModalIcon');
+        if (iconBox) {
+            iconBox.innerHTML = `<i class="fas ${service.icon_class || 'fa-tools'}"></i>`;
         }
 
-        // Formatação de Preço Profissional (Angola - Kwanza KZ)
-        if (priceEl && service.price_start) {
-            const priceValue = parseFloat(service.price_start) || 0;
-            const formattedPrice = new Intl.NumberFormat('pt-AO', { 
-                style: 'currency', 
-                currency: 'AOA' 
-            }).format(priceValue).replace('AOA', 'KZ');
-            
-            priceEl.innerHTML = `A partir de <span>${formattedPrice}</span>`;
+        // 4. Preço em Kwanzas (AOA -> KZ)
+        const priceBox = document.getElementById('serviceModalPrice');
+        if (priceBox) {
+            const val = parseFloat(service.price_start) || 0;
+            const formatted = new Intl.NumberFormat('pt-AO', {
+                style: 'currency',
+                currency: 'AOA'
+            }).format(val).replace('AOA', 'KZ');
+
+            priceBox.innerHTML = `A partir de <span>${formatted}</span>`;
         }
+
+        // --- CONTROLE DE INTERFACE ---
+
+        // Reseta posição de scroll e barra de progresso
+        if (scrollColumn) scrollColumn.scrollTop = 0;
+        const progressBar = document.getElementById('serviceScrollProgress');
+        if (progressBar) progressBar.style.width = "0%";
+
+        // Exibe o modal
+        modal.style.display = 'flex';
         
-        // 5. Exibição da Interface e Trava de Scroll
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        console.log("[ServiceModal] Exibindo detalhes de: " + service.name);
+        // Ativa animações de entrada
+        setTimeout(() => {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Trava scroll do site
+        }, 30);
+
+        console.log(`[System] Modal Enterprise carregado: ${service.name}`);
 
     } catch (err) {
-        console.error("[ServiceModal] Erro crítico ao preencher campos:", err);
+        console.error("[System] Falha ao abrir modal:", err);
+        alert("Ocorreu um problema ao carregar os dados. Por favor, tente atualizar a página.");
     }
 };
 
 /**
- * FUNÇÃO GLOBAL: FECHAMENTO DO MODAL DE SERVIÇOS
+ * FECHAMENTO DO MODAL
  */
 window.closeServiceModal = function() {
     const modal = document.getElementById('serviceModal');
     if (modal) {
         modal.classList.remove('active');
-        document.body.style.overflow = ''; // Libera o scroll do site
+        document.body.style.overflow = ''; // Libera scroll do site
+        
+        // Tempo da animação no CSS (0.6s)
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 600);
     }
 };
 
 /**
- * TRATAMENTO DE ERROS GLOBAIS DE CARREGAMENTO
- * Captura falhas em scripts externos ou módulos para facilitar o debug em produção.
+ * GESTÃO GLOBAL DE ERROS DE MÍDIA
  */
 window.addEventListener('error', (e) => {
-    if (e.target && e.target.tagName === 'SCRIPT') {
-        console.error(`[Main] Falha ao carregar script crítico: ${e.target.src}`);
+    if (e.target.tagName === 'IMG') {
+        console.warn(`[System] Erro ao carregar imagem: ${e.target.src}`);
+        e.target.src = '/images/serv-2.jpeg'; // Fallback industrial
     }
 }, true);
 
-// Exportação do módulo
+// Exportação compatível com ES6
 export default {};
