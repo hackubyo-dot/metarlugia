@@ -1,0 +1,121 @@
+<!-- 
+    ADMIN/FAQ/CREATE.EJS - NOVA PERGUNTA FREQUENTE
+    Metalurgia Futurística Leonardo Serra 
+-->
+
+<div class="container-fluid p-0">
+
+    <!-- Cabeçalho de Navegação -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-1">
+                    <li class="breadcrumb-item"><a href="/admin/faq" class="text-primary text-decoration-none">FAQ</a></li>
+                    <li class="breadcrumb-item active text-white" aria-current="page">Nova Pergunta</li>
+                </ol>
+            </nav>
+            <h2 class="fw-bold mb-0">Adicionar à Base de Dúvidas</h2>
+        </div>
+        <a href="/admin/faq" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i> VOLTAR
+        </a>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-xl-8">
+            <div class="card bg-dark-2 border-secondary shadow-sm">
+                <div class="card-header bg-transparent border-secondary py-3">
+                    <h5 class="mb-0 fw-bold text-primary"><i class="fas fa-question-circle me-2"></i>Conteúdo da Dúvida</h5>
+                </div>
+                <div class="card-body p-4">
+                    <form action="/admin/faq/store" method="POST" id="faqForm">
+                        
+                        <div class="row g-4">
+                            <!-- Pergunta Principal -->
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Pergunta do Cliente</label>
+                                <input type="text" name="question" class="form-control bg-dark border-secondary text-white" 
+                                       placeholder="Ex: Vocês oferecem garantia nos serviços?" required>
+                                <div class="form-text text-muted">Seja claro e objetivo na pergunta.</div>
+                            </div>
+
+                            <!-- Ordem de Exibição -->
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Ordem de Prioridade</label>
+                                <input type="number" name="display_order" class="form-control bg-dark border-secondary text-white" 
+                                       placeholder="Ex: 1" min="1" required>
+                                <div class="form-text text-muted">Números menores aparecem primeiro.</div>
+                            </div>
+
+                            <!-- Resposta Técnica -->
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Resposta Detalhada</label>
+                                <textarea name="answer" class="form-control bg-dark border-secondary text-white" rows="6" 
+                                          placeholder="Descreva a resposta de forma profissional e amigável..." required></textarea>
+                            </div>
+
+                            <!-- Botões de Ação -->
+                            <div class="col-md-12 pt-4 border-top border-secondary mt-4">
+                                <div class="d-flex gap-2">
+                                    <button type="submit" class="btn btn-primary px-5 py-2 fw-bold">
+                                        <i class="fas fa-save me-2"></i> SALVAR PERGUNTA
+                                    </button>
+                                    <a href="/admin/faq" class="btn btn-outline-secondary px-4">CANCELAR</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+            <!-- Card de Dicas de Redação -->
+            <div class="card mt-4 bg-dark-3 border-warning border-opacity-25">
+                <div class="card-body">
+                    <h6 class="fw-bold text-warning mb-2"><i class="fas fa-lightbulb me-2"></i>Dicas para uma boa FAQ:</h6>
+                    <ul class="small text-muted mb-0 ps-3">
+                        <li class="mb-1">Utilize palavras que o seu cliente usaria (linguagem simples).</li>
+                        <li class="mb-1">Mencione prazos específicos e regiões atendidas (ex: Luanda, Viana, Talatona).</li>
+                        <li>Destaque os diferenciais da Metalurgia Futurística na resposta.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    /* Estilização focada na legibilidade dos inputs de texto */
+    .form-control:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 15px rgba(var(--primary-rgb), 0.1);
+        background-color: var(--bg-dark-3) !important;
+    }
+
+    textarea.form-control {
+        line-height: 1.6;
+    }
+</style>
+
+<script>
+    /**
+     * Validação simples de formulário no frontend
+     */
+    document.getElementById('faqForm').addEventListener('submit', function(e) {
+        const question = document.querySelector('input[name="question"]').value;
+        const answer = document.querySelector('textarea[name="answer"]').value;
+
+        if (question.length < 5) {
+            alert('A pergunta parece muito curta. Tente ser mais específico.');
+            e.preventDefault();
+            return;
+        }
+
+        if (answer.length < 10) {
+            alert('A resposta precisa ser mais explicativa para ajudar o cliente.');
+            e.preventDefault();
+            return;
+        }
+    });
+</script>

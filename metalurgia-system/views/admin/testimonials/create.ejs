@@ -1,0 +1,203 @@
+<!-- 
+    ADMIN/TESTIMONIALS/CREATE.EJS - NOVO DEPOIMENTO
+    Metalurgia Futurística Leonardo Serra 
+-->
+
+<div class="container-fluid p-0">
+
+    <!-- Cabeçalho de Navegação -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-1">
+                    <li class="breadcrumb-item"><a href="/admin/testimonials" class="text-primary text-decoration-none">Depoimentos</a></li>
+                    <li class="breadcrumb-item active text-white" aria-current="page">Novo Depoimento</li>
+                </ol>
+            </nav>
+            <h2 class="fw-bold mb-0">Cadastrar Recomendação</h2>
+        </div>
+        <a href="/admin/testimonials" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i> VOLTAR
+        </a>
+    </div>
+
+    <form action="/admin/testimonials/store" method="POST" enctype="multipart/form-data" id="testimonialForm">
+        <div class="row">
+            
+            <!-- Coluna Principal: Conteúdo do Depoimento -->
+            <div class="col-xl-8">
+                <div class="card bg-dark-2 border-secondary shadow-sm mb-4">
+                    <div class="card-header bg-transparent border-secondary py-3">
+                        <h5 class="mb-0 fw-bold text-primary"><i class="fas fa-quote-left me-2"></i>Conteúdo do Relato</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-4">
+                            <!-- Nome do Cliente -->
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Nome do Cliente</label>
+                                <input type="text" name="name" class="form-control bg-dark border-secondary text-white" 
+                                       placeholder="Ex: João Manuel" required>
+                            </div>
+
+                            <!-- Cargo e Empresa -->
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Cargo / Função</label>
+                                <input type="text" name="role" class="form-control bg-dark border-secondary text-white" 
+                                       placeholder="Ex: Diretor de Operações">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Empresa</label>
+                                <input type="text" name="company" class="form-control bg-dark border-secondary text-white" 
+                                       placeholder="Ex: Construtora Luanda Sul">
+                            </div>
+
+                            <!-- O Depoimento -->
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Texto do Depoimento</label>
+                                <textarea name="content" class="form-control bg-dark border-secondary text-white" rows="6" 
+                                          placeholder="Escreva aqui a recomendação deixada pelo cliente..." required></textarea>
+                            </div>
+
+                            <!-- Avaliação por Estrelas -->
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Avaliação (1 a 5 Estrelas)</label>
+                                <div class="rating-select-container p-3 bg-dark rounded border border-secondary d-flex justify-content-between align-items-center">
+                                    <div class="stars-input" id="star_rating_input">
+                                        <i class="fas fa-star text-warning cursor-pointer" data-value="1"></i>
+                                        <i class="fas fa-star text-warning cursor-pointer" data-value="2"></i>
+                                        <i class="fas fa-star text-warning cursor-pointer" data-value="3"></i>
+                                        <i class="fas fa-star text-warning cursor-pointer" data-value="4"></i>
+                                        <i class="fas fa-star text-warning cursor-pointer" data-value="5"></i>
+                                    </div>
+                                    <input type="hidden" name="rating" id="rating_value" value="5">
+                                    <span class="badge bg-primary" id="rating_label">5 Estrelas</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coluna Lateral: Foto e Ações -->
+            <div class="col-xl-4">
+                
+                <!-- Card de Foto -->
+                <div class="card bg-dark-2 border-secondary shadow-sm mb-4">
+                    <div class="card-header bg-transparent border-secondary py-3 text-center">
+                        <h6 class="mb-0 fw-bold text-primary">Foto do Cliente</h6>
+                    </div>
+                    <div class="card-body text-center">
+                        <div id="photo_preview_box" class="testimonial-preview-avatar mb-3">
+                            <i class="fas fa-user fa-3x text-muted opacity-25"></i>
+                        </div>
+                        <label class="btn btn-dark border-secondary w-100 py-2 mb-2">
+                            <i class="fas fa-camera me-2"></i> SELECIONAR FOTO
+                            <input type="file" name="photo_file" id="photo_input" class="hidden" accept="image/*">
+                        </label>
+                        <p class="small text-muted mb-0">Tamanho sugerido: 200x200px (1:1).</p>
+                    </div>
+                </div>
+
+                <!-- Botões de Ação -->
+                <div class="card bg-dark-2 border-secondary shadow-sm">
+                    <div class="card-body">
+                        <button type="submit" class="btn btn-primary w-100 mb-2 py-2 fw-bold">
+                            <i class="fas fa-save me-2"></i> PUBLICAR DEPOIMENTO
+                        </button>
+                        <a href="/admin/testimonials" class="btn btn-outline-secondary w-100">CANCELAR</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+<style>
+    /* Preview do Avatar */
+    .testimonial-preview-avatar {
+        width: 120px;
+        height: 120px;
+        background: var(--bg-dark);
+        border: 2px solid var(--border-color);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        overflow: hidden;
+    }
+
+    .testimonial-preview-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Seletor de Estrelas */
+    .stars-input i {
+        font-size: 1.5rem;
+        transition: transform 0.2s;
+        margin-right: 5px;
+    }
+
+    .stars-input i.far {
+        color: var(--text-muted) !important;
+    }
+
+    .stars-input i:hover {
+        transform: scale(1.2);
+    }
+
+    .cursor-pointer {
+        cursor: pointer;
+    }
+
+    .form-control:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 10px rgba(var(--primary-rgb), 0.1);
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // 1. Preview da Foto
+        const photoInput = document.getElementById('photo_input');
+        const photoPreview = document.getElementById('photo_preview_box');
+
+        photoInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    photoPreview.innerHTML = `<img src="${e.target.result}" alt="Foto do Cliente">`;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // 2. Lógica do Seletor de Estrelas
+        const stars = document.querySelectorAll('#star_rating_input i');
+        const ratingInput = document.getElementById('rating_value');
+        const ratingLabel = document.getElementById('rating_label');
+
+        stars.forEach(star => {
+            star.addEventListener('click', function() {
+                const val = parseInt(this.getAttribute('data-value'));
+                ratingInput.value = val;
+                ratingLabel.innerText = `${val} Estrelas`;
+                
+                // Atualiza visual das estrelas
+                stars.forEach((s, index) => {
+                    if (index < val) {
+                        s.classList.remove('far');
+                        s.classList.add('fas');
+                    } else {
+                        s.classList.remove('fas');
+                        s.classList.add('far');
+                    }
+                });
+            });
+        });
+    });
+</script>

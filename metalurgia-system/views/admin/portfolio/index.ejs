@@ -1,0 +1,174 @@
+<!-- 
+    ADMIN/PORTFOLIO/INDEX.EJS - GESTÃO DE OBRAS E PROJETOS
+    Metalurgia Futurística Leonardo Serra 
+-->
+
+<div class="container-fluid p-0">
+
+    <!-- Cabeçalho de Navegação -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Portfólio de Obras</h2>
+            <p class="text-muted">Gerencie a galeria de projetos executados pela empresa.</p>
+        </div>
+        <a href="/admin/portfolio/create" class="btn btn-primary">
+            <i class="fas fa-plus me-2"></i> ADICIONAR NOVO PROJETO
+        </a>
+    </div>
+
+    <!-- Filtros Rápidos (Opcional para UX) -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card bg-dark-3 border-secondary">
+                <div class="card-body py-2 px-3 d-flex align-items-center gap-3">
+                    <span class="small fw-bold text-muted text-uppercase">Filtrar por:</span>
+                    <div class="btn-group">
+                        <button class="btn btn-sm btn-dark border-secondary active">Todos</button>
+                        <button class="btn btn-sm btn-dark border-secondary">Industrial</button>
+                        <button class="btn btn-sm btn-dark border-secondary">Residencial</button>
+                        <button class="btn btn-sm btn-dark border-secondary">Comercial</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabela de Projetos -->
+    <div class="card bg-dark-2 border-secondary shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-dark table-hover align-middle mb-0">
+                    <thead class="table-light text-dark">
+                        <tr>
+                            <th class="ps-4">Obra</th>
+                            <th>Projeto / Título</th>
+                            <th>Cliente</th>
+                            <th>Categoria</th>
+                            <th>Data</th>
+                            <th class="text-center pe-4">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if (projects && projects.length > 0) { %>
+                            <% projects.forEach(project => { %>
+                                <tr>
+                                    <!-- Miniatura do Projeto -->
+                                    <td class="ps-4">
+                                        <div class="project-thumb-mini">
+                                            <img src="<%= project.main_image_url %>" alt="<%= project.title %>" loading="lazy">
+                                        </div>
+                                    </td>
+
+                                    <!-- Título e Link Amigável -->
+                                    <td>
+                                        <div class="fw-bold text-white"><%= project.title %></div>
+                                        <div class="small text-muted">/portfolio/<%= project.slug %></div>
+                                    </td>
+
+                                    <!-- Cliente -->
+                                    <td>
+                                        <span class="text-secondary">
+                                            <i class="far fa-user me-2"></i><%= project.client || 'N/A' %>
+                                        </span>
+                                    </td>
+
+                                    <!-- Categoria -->
+                                    <td>
+                                        <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-3 py-2">
+                                            <%= project.category || 'Metalurgia' %>
+                                        </span>
+                                    </td>
+
+                                    <!-- Data de Cadastro -->
+                                    <td>
+                                        <span class="small text-muted">
+                                            <%= helpers.formatDateShort(project.created_at) %>
+                                        </span>
+                                    </td>
+
+                                    <!-- Botões de Ação -->
+                                    <td class="text-center pe-4">
+                                        <div class="btn-group">
+                                            <!-- Ver no Site -->
+                                            <a href="/#portfolio" target="_blank" class="btn btn-sm btn-outline-secondary" title="Ver na Galeria">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            <!-- Editar (Leva ao formulário com galeria) -->
+                                            <a href="/admin/portfolio/edit/<%= project.id %>" class="btn btn-sm btn-outline-info" title="Editar Projeto">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <!-- Excluir -->
+                                            <form action="/admin/portfolio/delete/<%= project.id %>" method="POST" class="d-inline">
+                                                <button type="submit" 
+                                                        class="btn btn-sm btn-outline-danger btn-delete-confirm"
+                                                        data-confirm-message="Atenção: A exclusão deste projeto removerá permanentemente a imagem principal e TODAS as fotos da galeria associada. Continuar?"
+                                                        title="Excluir">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <% }); %>
+                        <% } else { %>
+                            <tr>
+                                <td colspan="6" class="text-center py-5">
+                                    <div class="opacity-25 mb-3">
+                                        <i class="fas fa-hammer fa-4x"></i>
+                                    </div>
+                                    <h5 class="text-muted">Nenhum projeto cadastrado no portfólio.</h5>
+                                    <p class="small text-muted">Comece a exibir suas obras de sucesso agora mesmo.</p>
+                                </td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Resumo Técnico de Mídias -->
+    <div class="mt-4 row">
+        <div class="col-12">
+            <div class="alert bg-dark-3 border-secondary text-secondary small d-flex align-items-center">
+                <i class="fas fa-hdd me-3 fa-lg text-primary"></i>
+                <div>
+                    <strong>Gerenciamento de Storage:</strong> O sistema apaga automaticamente os arquivos do Supabase Storage quando um projeto é excluído para otimizar seu espaço. Ao editar, você pode adicionar até 10 fotos por galeria.
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    /* Estilos para a listagem do Portfólio */
+    .project-thumb-mini {
+        width: 60px;
+        height: 60px;
+        border-radius: 10px;
+        overflow: hidden;
+        border: 2px solid var(--bg-dark-3);
+        box-shadow: var(--shadow-sm);
+        transition: all 0.3s;
+    }
+
+    .project-thumb-mini img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    tr:hover .project-thumb-mini {
+        transform: scale(1.1) rotate(-3deg);
+        border-color: var(--primary);
+    }
+
+    .table > :not(caption) > * > * {
+        padding: 1rem 0.5rem;
+    }
+
+    .btn-group .btn {
+        padding: 0.4rem 0.7rem;
+    }
+</style>

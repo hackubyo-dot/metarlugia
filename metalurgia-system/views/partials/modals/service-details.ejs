@@ -1,0 +1,89 @@
+<!-- ==================== MODAL DE DETALHES DO SERVIÇO ==================== -->
+<!-- 
+    Este modal é preenchido dinamicamente pela função window.openServiceModal(index)
+    localizada no arquivo /public/js/main.js
+-->
+<div class="service-modal" id="serviceModal">
+    <div class="service-modal-content">
+        
+        <!-- Botão de Fechar: Chamada para a função global no main.js -->
+        <button class="service-modal-close" onclick="closeServiceModal()" aria-label="Fechar Detalhes">
+            &times;
+        </button>
+
+        <!-- Cabeçalho do Modal -->
+        <div class="service-modal-header">
+            <div class="service-modal-icon" id="serviceModalIcon">
+                <!-- Ícone injetado via JS (main.js) -->
+                <i class="fas fa-tools"></i>
+            </div>
+            <h2 id="serviceModalTitle">Nome do Serviço</h2>
+        </div>
+
+        <!-- Corpo com Conteúdo Técnico -->
+        <div class="service-modal-body">
+            <div class="service-modal-text">
+                <p id="serviceModalDescription">
+                    Carregando especificações técnicas...
+                </p>
+            </div>
+
+            <div class="service-modal-features">
+                <h4>Diferenciais e Garantias:</h4>
+                <ul id="serviceModalFeatures">
+                    <!-- Lista de benefícios padrão ou dinâmicos -->
+                    <li><i class="fas fa-check-circle"></i> Execução sob normas técnicas internacionais</li>
+                    <li><i class="fas fa-check-circle"></i> Matéria-prima com certificado de origem</li>
+                    <li><i class="fas fa-check-circle"></i> Acabamento industrial de alta precisão</li>
+                    <li><i class="fas fa-check-circle"></i> Garantia estrutural de longo prazo</li>
+                </ul>
+            </div>
+
+            <!-- Exibição de Preço Base (Formatado em KZ via main.js) -->
+            <div class="service-modal-price" id="serviceModalPrice">
+                A partir de <span>KZ 0,00</span>
+            </div>
+        </div>
+
+        <!-- Rodapé com Ações -->
+        <div class="service-modal-footer">
+            <a href="#contacto" class="btn-primary" onclick="closeServiceModal()">
+                SOLICITAR ORÇAMENTO <i class="fas fa-paper-plane"></i>
+            </a>
+            <button class="btn-outline-modal" onclick="closeServiceModal()">
+                VOLTAR
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    /**
+     * UI HELPERS - MODAL DE SERVIÇOS
+     * Adiciona interações de fechamento por clique externo e teclado.
+     * A lógica de preenchimento de dados reside no main.js para evitar redundância.
+     */
+    document.addEventListener('DOMContentLoaded', () => {
+        const modal = document.getElementById('serviceModal');
+        if (!modal) return;
+
+        // 1. Fechar ao clicar na área escura (backdrop)
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                if (typeof window.closeServiceModal === 'function') {
+                    window.closeServiceModal();
+                }
+            }
+        });
+
+        // 2. Fechar ao pressionar a tecla Escape (ESC)
+        document.addEventListener('keydown', (event) => {
+            if (event.key === "Escape" && modal.classList.contains('active')) {
+                if (typeof window.closeServiceModal === 'function') {
+                    window.closeServiceModal();
+                }
+            }
+        });
+    });
+</script>

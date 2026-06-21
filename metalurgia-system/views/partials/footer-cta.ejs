@@ -1,0 +1,57 @@
+<!-- ==================== FOOTER CTA (CONVERSÃO FINAL) ==================== -->
+<section class="footer-cta">
+    <div class="container">
+        <div class="footer-cta-content" data-aos="fade-up">
+            
+            <!-- Texto de Impacto -->
+            <div class="footer-cta-text">
+                <h3 class="syncopate">Pronto para transformar seu projeto em realidade?</h3>
+                <p>Solicite um orçamento sem compromisso e descubra a excelência da Metalurgia Futurística.</p>
+            </div>
+
+            <!-- Botões de Ação -->
+            <div class="footer-cta-buttons">
+                <!-- Link direto para o formulário de contato ou WhatsApp -->
+                <a href="/#contacto" class="btn-primary">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    SOLICITAR ORÇAMENTO
+                </a>
+                
+                <!-- Link para explorar serviços -->
+                <a href="/#servicos" class="btn-outline">
+                    VER TODOS OS SERVIÇOS
+                </a>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<style>
+    /**
+     * Ajuste de visibilidade baseado na página atual.
+     * Esconde o CTA final se o usuário já estiver na seção de contato.
+     */
+    @media (min-width: 992px) {
+        /* Lógica para evitar redundância visual no final da home */
+        .home-page #contacto + .footer-cta {
+            display: block; /* Mantém ativo, mas pode ser customizado */
+        }
+    }
+</style>
+
+<script>
+    /**
+     * Script de Redirecionamento Inteligente
+     * Se o usuário clicar em "Solicitar Orçamento" estando em outra página (ex: Blog),
+     * ele será levado para a Home já na âncora correta.
+     */
+    (function() {
+        const ctaBtn = document.querySelector('.footer-cta .btn-primary');
+        const isHomePage = window.location.pathname === '/';
+
+        if (!isHomePage && ctaBtn) {
+            ctaBtn.setAttribute('href', '/#contacto');
+        }
+    })();
+</script>

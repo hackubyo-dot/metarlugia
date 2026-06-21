@@ -1,0 +1,97 @@
+<!-- ================================================================
+     VIRTUAL VIDEO PLAYER INTERFACE (MODAL v7.0)
+     Este componente é ativado via window.openVideoModal()
+     ================================================================ -->
+<div class="ultra-video-modal" id="videoModal">
+    <!-- Fundo desfocado (Backdrop Blur) -->
+    <div class="modal-backdrop-blur"></div>
+
+    <div class="player-container">
+        <!-- Botão de Fechamento -->
+        <button class="player-close" onclick="closeVideoModal()" aria-label="Fechar Player">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <!-- Camada do Vídeo -->
+        <div class="video-frame">
+            <video id="industrialPlayer" playsinline preload="metadata">
+                <source src="" type="video/mp4">
+                Seu navegador não suporta a execução de vídeos.
+            </video>
+            
+            <!-- Interface de Controles Customizada (UI Overlay) -->
+            <div class="player-ui-overlay">
+                
+                <!-- Cabeçalho do Vídeo -->
+                <div class="player-header">
+                    <h3 id="modalVideoTitle" class="syncopate">NOME DO SERVIÇO</h3>
+                    <p id="modalVideoDesc">Descrição técnica do processo industrial.</p>
+                </div>
+                
+                <!-- Controles Principais -->
+                <div class="player-controls-main">
+                    <!-- Retroceder 10s -->
+                    <button class="ctrl-btn secondary" onclick="skipVideo(-10)" title="Voltar 10 segundos">
+                        <i class="fas fa-backward"></i> 
+                        <span>-10s</span>
+                    </button>
+
+                    <!-- Play / Pause Central -->
+                    <button class="ctrl-btn primary-play" id="playBtn" onclick="togglePlay()" title="Reproduzir/Pausar">
+                        <i class="fas fa-play"></i>
+                    </button>
+
+                    <!-- Avançar 10s -->
+                    <button class="ctrl-btn secondary" onclick="skipVideo(10)" title="Avançar 10 segundos">
+                        <span>+10s</span> 
+                        <i class="fas fa-forward"></i>
+                    </button>
+                </div>
+
+                <!-- Barra de Progresso Industrial -->
+                <div class="player-progress-bar">
+                    <div class="progress-filled" id="videoProgress"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /**
+     * Estilos Inline Críticos para o Funcionamento do Player
+     * (Complementares ao services.css)
+     */
+    .ultra-video-modal {
+        transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .player-container {
+        transform: scale(0.9) translateY(30px);
+        transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .ultra-video-modal.active .player-container {
+        transform: scale(1) translateY(0);
+    }
+
+    /* Esconde a UI após inatividade (Opcional via JS futuro) */
+    .player-ui-overlay {
+        transition: opacity 0.3s ease;
+    }
+</style>
+
+<script>
+    /**
+     * Patch de Segurança para o Player
+     * Garante que o vídeo seja limpo se o modal for fechado abruptamente.
+     */
+    window.addEventListener('keydown', function(e) {
+        if (e.key === "Escape") {
+            if (typeof closeVideoModal === 'function') {
+                closeVideoModal();
+            }
+        }
+    });
+</script>

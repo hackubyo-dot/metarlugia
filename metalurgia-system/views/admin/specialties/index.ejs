@@ -1,0 +1,206 @@
+<!-- 
+    ADMIN/SPECIALTIES/INDEX.EJS - GESTÃO DA ELITE 8 MATRIX
+    Metalurgia Futurística Leonardo Serra 
+-->
+
+<div class="container-fluid p-0">
+
+    <!-- Cabeçalho da Página -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Elite 8 Matrix</h2>
+            <p class="text-muted">Gerencie as 8 especialidades interativas com vídeos de processo.</p>
+        </div>
+        <% if (specialties.length < 8) { %>
+            <a href="/admin/specialties/create" class="btn btn-primary">
+                <i class="fas fa-plus me-2"></i> ADICIONAR ESPECIALIDADE
+            </a>
+        <% } else { %>
+            <button class="btn btn-dark border-secondary text-muted" disabled title="Limite de 8 itens atingido para manter o layout da Matrix">
+                <i class="fas fa-lock me-2"></i> LIMITE ATINGIDO (8/8)
+            </button>
+        <% } %>
+    </div>
+
+    <!-- Informativo sobre o Layout -->
+    <div class="alert bg-primary bg-opacity-10 border-primary border-opacity-25 text-primary mb-4">
+        <div class="d-flex align-items-center">
+            <i class="fas fa-th-large me-3 fa-lg"></i>
+            <div>
+                <strong>Nota de Design:</strong> Esta seção é otimizada para exibir exatamente <strong>8 itens</strong> na Home Page. Se você cadastrar menos, o grid se ajustará automaticamente, mas recomendamos manter os 8 slots preenchidos para máxima autoridade visual.
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabela de Especialidades -->
+    <div class="card bg-dark-2 border-secondary shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-dark table-hover align-middle mb-0">
+                    <thead class="table-light text-dark">
+                        <tr>
+                            <th class="ps-4" style="width: 80px;">Posição</th>
+                            <th style="width: 180px;">Vídeo/Thumb</th>
+                            <th>Especialidade</th>
+                            <th>Ícone</th>
+                            <th class="text-center pe-4">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if (specialties && specialties.length > 0) { %>
+                            <% specialties.forEach((spec, index) => { %>
+                                <tr>
+                                    <!-- Ordem -->
+                                    <td class="ps-4">
+                                        <span class="badge bg-dark border border-secondary">
+                                            #<%= spec.display_order || (index + 1) %>
+                                        </span>
+                                    </td>
+
+                                    <!-- Miniatura do Vídeo -->
+                                    <td>
+                                        <div class="spec-video-preview">
+                                            <% if (spec.media_url) { %>
+                                                <video muted loop preload="metadata" class="w-100 h-100 object-fit-cover">
+                                                    <source src="<%= spec.media_url %>" type="video/mp4">
+                                                </video>
+                                                <div class="play-overlay"><i class="fas fa-play fa-xs"></i></div>
+                                            <% } else { %>
+                                                <img src="<%= spec.thumbnail_url || '/images/serv-2.jpeg' %>" class="w-100 h-100 object-fit-cover">
+                                            <% } %>
+                                        </div>
+                                    </td>
+
+                                    <!-- Nome e Descrição -->
+                                    <td>
+                                        <div class="fw-bold text-white"><%= spec.name %></div>
+                                        <div class="small text-muted text-truncate" style="max-width: 300px;">
+                                            <%= spec.description %>
+                                        </div>
+                                    </td>
+
+                                    <!-- Ícone -->
+                                    <td>
+                                        <div class="icon-box-mini">
+                                            <i class="fas <%= spec.icon_class || 'fa-bolt' %>"></i>
+                                        </div>
+                                    </td>
+
+                                    <!-- Ações -->
+                                    <td class="text-center pe-4">
+                                        <div class="btn-group">
+                                            <a href="/admin/specialties/edit/<%= spec.id %>" class="btn btn-sm btn-outline-info" title="Editar Especialidade">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <form action="/admin/specialties/delete/<%= spec.id %>" method="POST" class="d-inline">
+                                                <button type="submit" 
+                                                        class="btn btn-sm btn-outline-danger btn-delete-confirm"
+                                                        data-confirm-message="Deseja remover esta especialidade da Matrix Elite?"
+                                                        title="Excluir">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <% }); %>
+                        <% } else { %>
+                            <tr>
+                                <td colspan="5" class="text-center py-5">
+                                    <div class="opacity-25 mb-3">
+                                        <i class="fas fa-layer-group fa-4x"></i>
+                                    </div>
+                                    <h5 class="text-muted">A Matrix está vazia.</h5>
+                                    <p class="small text-muted">Adicione os 8 pilares da sua engenharia para impressionar seus clientes.</p>
+                                </td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    /* Estilo do preview de vídeo na matriz do admin */
+    .spec-video-preview {
+        width: 140px;
+        height: 80px;
+        border-radius: 8px;
+        overflow: hidden;
+        background: #000;
+        position: relative;
+        border: 1px solid var(--border-color);
+        cursor: pointer;
+    }
+
+    .play-overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(var(--primary-rgb), 0.8);
+        color: #000;
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0.8;
+    }
+
+    .icon-box-mini {
+        width: 35px;
+        height: 35px;
+        background: var(--bg-dark-3);
+        border: 1px solid var(--border-color);
+        color: var(--primary);
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.9rem;
+    }
+
+    tr:hover .spec-video-preview video {
+        filter: brightness(1.2);
+    }
+
+    tr:hover .icon-box-mini {
+        border-color: var(--primary);
+        background: var(--primary);
+        color: #000;
+    }
+
+    .table > :not(caption) > * > * {
+        padding: 1.2rem 0.5rem;
+    }
+</style>
+
+<script>
+    /**
+     * Efeito de Preview de Vídeo ao passar o mouse
+     */
+    document.addEventListener('DOMContentLoaded', () => {
+        const videoContainers = document.querySelectorAll('.spec-video-preview');
+
+        videoContainers.forEach(container => {
+            const video = container.querySelector('video');
+            if (!video) return;
+
+            container.addEventListener('mouseenter', () => {
+                video.play().catch(() => {});
+                container.querySelector('.play-overlay').style.display = 'none';
+            });
+
+            container.addEventListener('mouseleave', () => {
+                video.pause();
+                video.currentTime = 0;
+                container.querySelector('.play-overlay').style.display = 'flex';
+            });
+        });
+    });
+</script>

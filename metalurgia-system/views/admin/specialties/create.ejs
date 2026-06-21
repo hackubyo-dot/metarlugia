@@ -1,0 +1,220 @@
+<!-- 
+    ADMIN/SPECIALTIES/CREATE.EJS - NOVA ESPECIALIDADE ELITE
+    Metalurgia Futurística Leonardo Serra 
+-->
+
+<div class="container-fluid p-0">
+
+    <!-- Cabeçalho de Navegação -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-1">
+                    <li class="breadcrumb-item"><a href="/admin/specialties" class="text-primary text-decoration-none">Elite 8 Matrix</a></li>
+                    <li class="breadcrumb-item active text-white" aria-current="page">Nova Especialidade</li>
+                </ol>
+            </nav>
+            <h2 class="fw-bold mb-0">Adicionar Especialidade</h2>
+        </div>
+        <a href="/admin/specialties" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i> VOLTAR
+        </a>
+    </div>
+
+    <form action="/admin/specialties/store" method="POST" enctype="multipart/form-data" id="specialtyForm">
+        <div class="row">
+            
+            <!-- Coluna Principal: Conteúdo e Mídia -->
+            <div class="col-xl-8">
+                <div class="card bg-dark-2 border-secondary shadow-sm mb-4">
+                    <div class="card-header bg-transparent border-secondary py-3">
+                        <h5 class="mb-0 fw-bold text-primary"><i class="fas fa-microchip me-2"></i>Dados Técnicos</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-4">
+                            <!-- Nome da Especialidade -->
+                            <div class="col-md-8">
+                                <label class="form-label fw-bold">Nome da Especialidade</label>
+                                <input type="text" name="name" class="form-control bg-dark border-secondary text-white" 
+                                       placeholder="Ex: Corte CNC Plasma de Alta Precisão" required>
+                            </div>
+
+                            <!-- Ordem na Matriz -->
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Posição (1 a 8)</label>
+                                <input type="number" name="display_order" class="form-control bg-dark border-secondary text-white" 
+                                       placeholder="Ex: 1" min="1" max="8" required>
+                            </div>
+
+                            <!-- Descrição Técnica (Aparece no Player) -->
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Descrição do Processo</label>
+                                <textarea name="description" class="form-control bg-dark border-secondary text-white" rows="3" 
+                                          placeholder="Explique o que o cliente verá no vídeo do processo..." required></textarea>
+                            </div>
+
+                            <!-- Upload de Vídeo -->
+                            <div class="col-md-12 pt-3 border-top border-secondary">
+                                <label class="form-label fw-bold text-warning"><i class="fas fa-video me-2"></i>Vídeo do Processo (MP4)</label>
+                                <div class="upload-zone-video p-4 text-center" id="video_drop_zone">
+                                    <input type="file" name="video_file" id="video_input" class="hidden" accept="video/mp4" required>
+                                    <div class="cursor-pointer" onclick="document.getElementById('video_input').click()">
+                                        <i class="fas fa-file-video fa-3x mb-3 text-muted"></i>
+                                        <h6>Clique para selecionar o vídeo industrial</h6>
+                                        <p class="small text-muted">Recomendado: MP4, 720p, máximo 15MB para performance.</p>
+                                    </div>
+                                    <div id="video_preview_container" class="mt-3 hidden">
+                                        <video id="video_preview" controls muted class="rounded border border-secondary" style="max-width: 100%; max-height: 200px;"></video>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coluna Lateral: Ícone e Thumbnail -->
+            <div class="col-xl-4">
+                
+                <!-- Card de Ícone -->
+                <div class="card bg-dark-2 border-secondary shadow-sm mb-4">
+                    <div class="card-header bg-transparent border-secondary py-3 text-center">
+                        <h6 class="mb-0 fw-bold text-primary">Ícone da Matrix</h6>
+                    </div>
+                    <div class="card-body text-center">
+                        <div id="spec_icon_preview" class="spec-icon-display mb-3">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <input type="text" name="icon_class" id="spec_icon_input" class="form-control form-control-sm bg-dark border-secondary text-white text-center" 
+                               placeholder="Ex: fa-layer-group" value="fa-bolt">
+                    </div>
+                </div>
+
+                <!-- Card de Thumbnail (Imagem de Capa) -->
+                <div class="card bg-dark-2 border-secondary shadow-sm mb-4">
+                    <div class="card-header bg-transparent border-secondary py-3 text-center">
+                        <h6 class="mb-0 fw-bold text-primary">Imagem de Capa (Thumb)</h6>
+                    </div>
+                    <div class="card-body">
+                        <div id="thumb_preview_box" class="spec-thumb-preview mb-3">
+                            <i class="fas fa-image fa-3x text-muted opacity-25"></i>
+                        </div>
+                        <input type="file" name="thumbnail_file" id="thumb_input" class="form-control form-control-sm bg-dark border-secondary text-white" 
+                               accept="image/*" required>
+                        <div class="form-text small mt-2">Esta imagem aparece antes do vídeo dar play.</div>
+                    </div>
+                </div>
+
+                <!-- Botões de Ação -->
+                <div class="card bg-dark-2 border-secondary shadow-sm">
+                    <div class="card-body">
+                        <button type="submit" class="btn btn-primary w-100 mb-2 py-2 fw-bold">
+                            <i class="fas fa-save me-2"></i> SALVAR NA MATRIX
+                        </button>
+                        <a href="/admin/specialties" class="btn btn-outline-secondary w-100">CANCELAR</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+<style>
+    /* Estilos da área de vídeo */
+    .upload-zone-video {
+        border: 2px dashed var(--border-color);
+        border-radius: var(--radius-lg);
+        background: rgba(0,0,0,0.2);
+        transition: 0.3s;
+    }
+    
+    .upload-zone-video:hover {
+        border-color: var(--primary);
+        background: rgba(var(--primary-rgb), 0.05);
+    }
+
+    /* Preview do ícone */
+    .spec-icon-display {
+        width: 70px;
+        height: 70px;
+        background: var(--bg-dark);
+        border: 1px solid var(--border-color);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        font-size: 2rem;
+        color: var(--primary);
+        box-shadow: 0 0 15px rgba(var(--primary-rgb), 0.1);
+    }
+
+    /* Preview da Thumb */
+    .spec-thumb-preview {
+        width: 100%;
+        aspect-ratio: 16/9;
+        background: var(--bg-dark);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .spec-thumb-preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .hidden { display: none; }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // 1. Preview de Ícone
+        const iconInput = document.getElementById('spec_icon_input');
+        const iconPreview = document.getElementById('spec_icon_display').querySelector('i');
+
+        iconInput.addEventListener('input', (e) => {
+            const val = e.target.value.trim();
+            if (val.startsWith('fa-')) {
+                iconPreview.className = `fas ${val}`;
+            }
+        });
+
+        // 2. Preview de Vídeo
+        const videoInput = document.getElementById('video_input');
+        const videoPreview = document.getElementById('video_preview');
+        const videoPreviewContainer = document.getElementById('video_preview_container');
+
+        videoInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    videoPreview.src = e.target.result;
+                    videoPreviewContainer.classList.remove('hidden');
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // 3. Preview de Thumbnail
+        const thumbInput = document.getElementById('thumb_input');
+        const thumbPreviewBox = document.getElementById('thumb_preview_box');
+
+        thumbInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    thumbPreviewBox.innerHTML = `<img src="${e.target.result}" alt="Thumb Preview">`;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    });
+</script>

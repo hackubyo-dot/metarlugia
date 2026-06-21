@@ -1,0 +1,209 @@
+<!-- 
+    ADMIN/BLOG/EDIT.EJS - ALTERAR ARTIGO EXISTENTE
+    Metalurgia Futurística Leonardo Serra 
+-->
+
+<div class="container-fluid p-0">
+
+    <!-- Cabeçalho de Navegação -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-1">
+                    <li class="breadcrumb-item"><a href="/admin/blog" class="text-primary text-decoration-none">Blog</a></li>
+                    <li class="breadcrumb-item active text-white" aria-current="page">Editar: <%= post.title %></li>
+                </ol>
+            </nav>
+            <h2 class="fw-bold mb-0">Alterar Conteúdo</h2>
+        </div>
+        <a href="/admin/blog" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i> VOLTAR
+        </a>
+    </div>
+
+    <form action="/admin/blog/update/<%= post.id %>" method="POST" enctype="multipart/form-data" id="blogEditForm">
+        <div class="row">
+            
+            <!-- Coluna Principal: Editor e Textos -->
+            <div class="col-xl-9">
+                <div class="card bg-dark-2 border-secondary shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <!-- Título do Artigo -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Título do Artigo</label>
+                            <input type="text" name="title" class="form-control form-control-lg bg-dark border-secondary text-white" 
+                                   value="<%= post.title %>" required>
+                        </div>
+
+                        <!-- Resumo (Excerpt) -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Resumo (Listagem)</label>
+                            <textarea name="excerpt" class="form-control bg-dark border-secondary text-white" rows="2" 
+                                      placeholder="Pequena introdução para atrair leitores..."><%= post.excerpt %></textarea>
+                        </div>
+
+                        <!-- Editor Rico (CKEditor) -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Conteúdo Principal</label>
+                            <div class="editor-container">
+                                <textarea name="content" id="editor"><%= post.content %></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coluna Lateral: Metadados e Mídia -->
+            <div class="col-xl-3">
+                
+                <!-- Card de Imagem de Destaque -->
+                <div class="card bg-dark-2 border-secondary shadow-sm mb-4">
+                    <div class="card-header bg-transparent border-secondary py-3 text-center">
+                        <h6 class="mb-0 fw-bold text-primary">Imagem de Destaque</h6>
+                    </div>
+                    <div class="card-body">
+                        <div id="thumb_preview_box" class="blog-preview-box mb-3">
+                            <% if (post.thumb_url) { %>
+                                <img src="<%= post.thumb_url %>" alt="Destaque atual" id="current_thumb_img">
+                            <% } else { %>
+                                <i class="fas fa-camera fa-2x text-muted opacity-25"></i>
+                            <% } %>
+                        </div>
+                        <input type="file" name="thumb_file" id="thumb_input" class="form-control form-control-sm bg-dark border-secondary text-white" accept="image/*">
+                        <div class="form-text text-muted small mt-2">Selecione para substituir a imagem atual.</div>
+                    </div>
+                </div>
+
+                <!-- Configurações de Publicação -->
+                <div class="card bg-dark-2 border-secondary shadow-sm mb-4">
+                    <div class="card-header bg-transparent border-secondary py-3">
+                        <h6 class="mb-0 fw-bold text-primary">Configurações</h6>
+                    </div>
+                    <div class="card-body">
+                        <!-- Categoria -->
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Categoria</label>
+                            <select name="category" class="form-select form-select-sm bg-dark border-secondary text-white">
+                                <option value="Inovação" <%= post.category === 'Inovação' ? 'selected' : '' %>>Inovação</option>
+                                <option value="Engenharia" <%= post.category === 'Engenharia' ? 'selected' : '' %>>Engenharia</option>
+                                <option value="Projetos" <%= post.category === 'Projetos' ? 'selected' : '' %>>Projetos</option>
+                                <option value="Manutenção" <%= post.category === 'Manutenção' ? 'selected' : '' %>>Manutenção</option>
+                                <option value="Notícias" <%= post.category === 'Notícias' ? 'selected' : '' %>>Notícias</option>
+                            </select>
+                        </div>
+
+                        <!-- Tags -->
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Tags (separadas por vírgula)</label>
+                            <input type="text" name="tags" class="form-control form-control-sm bg-dark border-secondary text-white" 
+                                   value="<%= post.tags ? post.tags.join(', ') : '' %>" placeholder="Ex: aço, solda">
+                        </div>
+
+                        <!-- Data de Publicação -->
+                        <div class="mb-4">
+                            <label class="form-label small fw-bold">Data Original</label>
+                            <input type="datetime-local" name="published_at" id="published_at_input" class="form-control form-control-sm bg-dark border-secondary text-white"
+                                   value="<%= post.published_at ? new Date(post.published_at).toISOString().slice(0, 16) : '' %>">
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary fw-bold">
+                                <i class="fas fa-sync-alt me-2"></i> SALVAR ALTERAÇÕES
+                            </button>
+                            <a href="/admin/blog" class="btn btn-outline-secondary btn-sm">CANCELAR</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Métricas Rápidas -->
+                <div class="card bg-dark-3 border-secondary small">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">Visualizações:</span>
+                            <span class="text-white fw-bold"><%= post.views_count || 0 %></span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span class="text-muted">Última Edição:</span>
+                            <span class="text-white fw-bold"><%= helpers.formatDateShort(post.updated_at) %></span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Editor -->
+<script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/ckeditor.js"></script>
+
+<style>
+    /* Estilos CKEditor e Previews */
+    .ck-editor__editable {
+        min-height: 450px;
+        background-color: #1a1a1a !important;
+        color: #ffffff !important;
+        border-color: var(--border-color) !important;
+    }
+    
+    .ck-toolbar {
+        background-color: var(--bg-dark-3) !important;
+        border-color: var(--border-color) !important;
+    }
+
+    .blog-preview-box {
+        width: 100%;
+        aspect-ratio: 16/10;
+        background: #000;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .blog-preview-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .form-control-lg {
+        font-weight: 800;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // 1. Inicializa o CKEditor com o conteúdo já existente
+        ClassicEditor
+            .create(document.querySelector('#editor'), {
+                toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable', 'undo', 'redo' ]
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+        // 2. Preview de Nova Imagem se selecionada
+        const thumbInput = document.getElementById('thumb_input');
+        const thumbPreviewImg = document.getElementById('current_thumb_img');
+
+        if (thumbInput) {
+            thumbInput.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        if (thumbPreviewImg) {
+                            thumbPreviewImg.src = e.target.result;
+                        } else {
+                            document.getElementById('thumb_preview_box').innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+                        }
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+    });
+</script>

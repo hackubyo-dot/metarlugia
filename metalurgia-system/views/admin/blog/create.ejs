@@ -1,0 +1,203 @@
+<!-- 
+    ADMIN/BLOG/CREATE.EJS - NOVO ARTIGO
+    Metalurgia Futurística Leonardo Serra 
+-->
+
+<div class="container-fluid p-0">
+
+    <!-- Cabeçalho de Navegação -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-1">
+                    <li class="breadcrumb-item"><a href="/admin/blog" class="text-primary text-decoration-none">Blog</a></li>
+                    <li class="breadcrumb-item active text-white" aria-current="page">Novo Artigo</li>
+                </ol>
+            </nav>
+            <h2 class="fw-bold mb-0">Escrever Artigo</h2>
+        </div>
+        <a href="/admin/blog" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i> VOLTAR
+        </a>
+    </div>
+
+    <form action="/admin/blog/store" method="POST" enctype="multipart/form-data" id="blogForm">
+        <div class="row">
+            
+            <!-- Coluna Principal: Conteúdo do Post -->
+            <div class="col-xl-9">
+                <div class="card bg-dark-2 border-secondary shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <!-- Título do Artigo -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Título do Artigo</label>
+                            <input type="text" name="title" class="form-control form-control-lg bg-dark border-secondary text-white" 
+                                   placeholder="Ex: As vantagens do Corte Plasma na Metalurgia Moderna" required>
+                        </div>
+
+                        <!-- Resumo Curto (SEO / Excerpt) -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Resumo (Aparece na listagem)</label>
+                            <textarea name="excerpt" class="form-control bg-dark border-secondary text-white" rows="2" 
+                                      placeholder="Escreva uma breve introdução para atrair o leitor..."></textarea>
+                        </div>
+
+                        <!-- Editor de Conteúdo Rico (CKEditor) -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Conteúdo do Artigo</label>
+                            <div class="editor-container">
+                                <textarea name="content" id="editor"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coluna Lateral: Configurações e Imagem -->
+            <div class="col-xl-3">
+                
+                <!-- Card de Imagem de Destaque -->
+                <div class="card bg-dark-2 border-secondary shadow-sm mb-4">
+                    <div class="card-header bg-transparent border-secondary py-3">
+                        <h6 class="mb-0 fw-bold"><i class="fas fa-image me-2 text-primary"></i>Imagem de Destaque</h6>
+                    </div>
+                    <div class="card-body">
+                        <div id="thumb_preview_box" class="blog-preview-box mb-3">
+                            <i class="fas fa-camera fa-2x text-muted opacity-25"></i>
+                            <p class="small text-muted mt-2">Sem imagem</p>
+                        </div>
+                        <input type="file" name="thumb_file" id="thumb_input" class="form-control form-control-sm bg-dark border-secondary text-white" accept="image/*" required>
+                        <div class="form-text text-muted small mt-2">Resolução recomendada: 800x500px.</div>
+                    </div>
+                </div>
+
+                <!-- Card de Publicação -->
+                <div class="card bg-dark-2 border-secondary shadow-sm mb-4">
+                    <div class="card-header bg-transparent border-secondary py-3">
+                        <h6 class="mb-0 fw-bold"><i class="fas fa-cog me-2 text-primary"></i>Configurações</h6>
+                    </div>
+                    <div class="card-body">
+                        <!-- Categoria -->
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Categoria</label>
+                            <select name="category" class="form-select form-select-sm bg-dark border-secondary text-white">
+                                <option value="Inovação">Inovação</option>
+                                <option value="Engenharia">Engenharia</option>
+                                <option value="Projetos">Projetos</option>
+                                <option value="Manutenção">Manutenção</option>
+                                <option value="Notícias">Notícias</option>
+                            </select>
+                        </div>
+
+                        <!-- Tags -->
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Tags (Separadas por vírgula)</label>
+                            <input type="text" name="tags" class="form-control form-control-sm bg-dark border-secondary text-white" placeholder="Ex: aço, solda, luanda">
+                        </div>
+
+                        <!-- Data de Publicação -->
+                        <div class="mb-4">
+                            <label class="form-label small fw-bold">Data de Publicação</label>
+                            <input type="datetime-local" name="published_at" class="form-control form-control-sm bg-dark border-secondary text-white">
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary fw-bold">
+                                <i class="fas fa-paper-plane me-2"></i> PUBLICAR AGORA
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dica de SEO -->
+                <div class="alert bg-primary bg-opacity-10 border-primary border-opacity-25 text-primary small">
+                    <i class="fas fa-lightbulb me-2"></i>
+                    <strong>Dica:</strong> Use palavras-chave como "Metalurgia em Angola" no título para melhorar o alcance.
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Scripts Necessários para o Editor -->
+<script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/ckeditor.js"></script>
+
+<style>
+    /* Estilização para o container do editor */
+    .ck-editor__editable {
+        min-height: 400px;
+        background-color: #1a1a1a !important;
+        color: #ffffff !important;
+        border-color: var(--border-color) !important;
+    }
+    
+    .ck-toolbar {
+        background-color: var(--bg-dark-3) !important;
+        border-color: var(--border-color) !important;
+    }
+
+    .ck.ck-button:not(.ck-disabled):hover, 
+    .ck.ck-button.ck-on {
+        background: var(--primary) !important;
+        color: #000 !important;
+    }
+
+    .blog-preview-box {
+        width: 100%;
+        aspect-ratio: 16/10;
+        background: var(--bg-dark);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+
+    .blog-preview-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .form-control-lg {
+        font-weight: 700;
+        font-size: 1.5rem;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // 1. Inicializa o CKEditor 5
+        ClassicEditor
+            .create(document.querySelector('#editor'), {
+                toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable', 'undo', 'redo' ],
+                placeholder: 'Comece a escrever o conteúdo técnico do seu artigo aqui...'
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+        // 2. Preview de Imagem de Destaque
+        const thumbInput = document.getElementById('thumb_input');
+        const thumbPreview = document.getElementById('thumb_preview_box');
+
+        thumbInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    thumbPreview.innerHTML = `<img src="${e.target.result}" alt="Thumb Preview">`;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // 3. Define a data/hora atual como padrão no campo de publicação
+        const now = new Date();
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+        document.querySelector('input[name="published_at"]').value = now.toISOString().slice(0, 16);
+    });
+</script>

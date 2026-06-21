@@ -1,0 +1,76 @@
+<!-- ==================== PRELOADER INDUSTRIAL ==================== -->
+<div class="preloader" id="preloader">
+    <div class="preloader-container">
+        <!-- Vídeo de Fundo do Preloader -->
+        <video autoplay muted loop playsinline class="preloader-video">
+            <source src="/images/industrial-welding.mp4" type="video/mp4">
+        </video>
+        
+        <!-- Overlay para escurecer o vídeo e dar contraste -->
+        <div class="preloader-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85);"></div>
+        
+        <div class="preloader-content">
+            <!-- Anel de rotação animado via CSS -->
+            <div class="preloader-ring"></div>
+            
+            <div class="preloader-logo">
+                <img src="/images/logo.png" alt="Metalurgia Futurística Logo">
+            </div>
+            
+            <div class="preloader-text">CARREGANDO SISTEMA</div>
+            
+            <!-- Barra de Progresso -->
+            <div class="preloader-bar">
+                <div class="preloader-progress" id="preloaderProgress"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    /**
+     * Lógica de Simulação de Progresso do Preloader
+     * Garante que o usuário veja movimento enquanto o DOM e os Módulos carregam.
+     */
+    (function() {
+        const progressBar = document.getElementById('preloaderProgress');
+        const preloader = document.getElementById('preloader');
+        let progress = 0;
+
+        // Incremento simulado acelerado
+        const interval = setInterval(() => {
+            progress += Math.random() * 15 + 5;
+            
+            if (progress >= 100) {
+                progress = 100;
+                clearInterval(interval);
+                
+                // Pequeno delay no 100% para satisfação visual
+                setTimeout(() => {
+                    if (preloader) {
+                        preloader.classList.add('hide');
+                        // Remove do DOM após a transição de opacidade do CSS
+                        setTimeout(() => {
+                            preloader.style.display = 'none';
+                        }, 800);
+                    }
+                }, 400);
+            }
+            
+            if (progressBar) {
+                progressBar.style.width = progress + '%';
+            }
+        }, 100);
+
+        // Fallback: Se o carregamento demorar demais por rede lenta, força a saída
+        window.addEventListener('load', () => {
+            if (progress < 100) {
+                progress = 100;
+                if (progressBar) progressBar.style.width = '100%';
+                setTimeout(() => {
+                    preloader.classList.add('hide');
+                }, 500);
+            }
+        });
+    })();
+</script>

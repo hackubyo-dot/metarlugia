@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> | Painel Administrativo</title>
+    
+    <!-- FAVICON -->
+    <link rel="icon" type="image/png" href="/images/favicon.png">
+
+    <!-- FONTES E ICONES -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- CSS FRAMEWORK -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- ESTILO MESTRE (Reutiliza variáveis globais) -->
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <!-- ESTILO ESPECÍFICO DO ADMIN -->
+    <style>
+        :root {
+            --sidebar-width: 280px;
+            --topbar-height: 70px;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* Estrutura da Sidebar */
+        .admin-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--bg-dark-2);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            height: 100vh;
+            z-index: 1050;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-logo {
+            height: 50px;
+            margin-bottom: 1rem;
+        }
+
+        .sidebar-nav {
+            padding: 1.5rem 0;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.85rem 2rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            border-left: 4px solid transparent;
+        }
+
+        .sidebar-nav a:hover, .sidebar-nav a.active {
+            color: var(--primary);
+            background: rgba(var(--primary-rgb), 0.05);
+            border-left-color: var(--primary);
+        }
+
+        .sidebar-nav i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Conteúdo Principal */
+        .admin-main {
+            flex-grow: 1;
+            margin-left: var(--sidebar-width);
+            width: calc(100% - var(--sidebar-width));
+            transition: all 0.3s ease;
+        }
+
+        .admin-topbar {
+            height: var(--topbar-height);
+            background: var(--bg-dark-2);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .admin-content {
+            padding: 2.5rem;
+        }
+
+        /* Perfil na Topbar */
+        .admin-user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            object-fit: cover;
+        }
+
+        /* Widgets do Dashboard */
+        .stat-card {
+            background: var(--bg-dark-3);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-glow);
+            color: var(--primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Responsividade */
+        @media (max-width: 992px) {
+            .sidebar {
+                left: -100%;
+            }
+            .sidebar.active {
+                left: 0;
+            }
+            .admin-main {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body class="admin-layout">
+
+    <!-- ==================== SIDEBAR ==================== -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <img src="/images/logo.png" alt="Metalurgia Logo" class="sidebar-logo">
+            <h6 class="mb-0 syncopate" style="font-size: 0.7rem; color: var(--primary);">GESTOR DE SISTEMA</h6>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="/admin/dashboard" class="<%= currentPath === '/admin/dashboard' ? 'active' : '' %>">
+                <i class="fas fa-chart-line"></i> Dashboard
+            </a>
+            <div class="px-4 py-2 mt-3 text-uppercase text-muted" style="font-size: 0.65rem; letter-spacing: 1px;">Conteúdo Site</div>
+            <a href="/admin/hero" class="<%= currentPath.startsWith('/admin/hero') ? 'active' : '' %>">
+                <i class="fas fa-images"></i> Hero Slider
+            </a>
+            <a href="/admin/services" class="<%= currentPath.startsWith('/admin/services') ? 'active' : '' %>">
+                <i class="fas fa-tools"></i> Serviços
+            </a>
+            <a href="/admin/portfolio" class="<%= currentPath.startsWith('/admin/portfolio') ? 'active' : '' %>">
+                <i class="fas fa-briefcase"></i> Portfólio
+            </a>
+            <a href="/admin/catalogs" class="<%= currentPath.startsWith('/admin/catalogs') ? 'active' : '' %>">
+                <i class="fas fa-file-pdf"></i> Catálogos
+            </a>
+            <a href="/admin/blog" class="<%= currentPath.startsWith('/admin/blog') ? 'active' : '' %>">
+                <i class="fas fa-newspaper"></i> Blog Post
+            </a>
+            
+            <div class="px-4 py-2 mt-3 text-uppercase text-muted" style="font-size: 0.65rem; letter-spacing: 1px;">Interações</div>
+            <a href="/admin/leads" class="<%= currentPath.startsWith('/admin/leads') ? 'active' : '' %>">
+                <i class="fas fa-envelope"></i> Leads (Contatos)
+            </a>
+            <a href="/admin/newsletter" class="<%= currentPath.startsWith('/admin/newsletter') ? 'active' : '' %>">
+                <i class="fas fa-paper-plane"></i> Newsletter
+            </a>
+        </nav>
+
+        <div class="sidebar-footer p-3 border-top border-secondary">
+            <a href="/auth/logout" class="btn btn-outline-danger w-100 btn-sm">
+                <i class="fas fa-sign-out-alt me-2"></i> SAIR DO SISTEMA
+            </a>
+        </div>
+    </aside>
+
+    <!-- ==================== MAIN AREA ==================== -->
+    <div class="admin-main">
+        
+        <!-- Topbar -->
+        <header class="admin-topbar">
+            <button id="sidebarToggle" class="btn btn-dark d-lg-none">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="admin-breadcrumb d-none d-md-block">
+                <span class="text-muted">Painel</span> / <span class="text-white"><%= title %></span>
+            </div>
+
+            <div class="admin-user-menu">
+                <div class="text-end d-none d-sm-block">
+                    <div class="fw-bold" style="font-size: 0.85rem;"><%= user.name %></div>
+                    <div class="text-muted" style="font-size: 0.7rem;"><%= user.email %></div>
+                </div>
+                <img src="<%= user.avatar || '/images/logo.png' %>" alt="Avatar" class="user-avatar">
+            </div>
+        </header>
+
+        <!-- Dynamic Content -->
+        <main class="admin-content">
+            
+            <!-- Alertas Flash -->
+            <% if (success_msg && success_msg.length > 0) { %>
+                <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm mb-4" role="alert">
+                    <i class="fas fa-check-circle me-2"></i> <%= success_msg %>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <% } %>
+
+            <% if (error_msg && error_msg.length > 0) { %>
+                <div class="alert alert-danger alert-dismissible fade show border-0 shadow-sm mb-4" role="alert">
+                    <i class="fas fa-exclamation-triangle me-2"></i> <%= error_msg %>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <% } %>
+
+            <%- body %>
+        </main>
+
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/main.js" type="module"></script>
+    
+    <script>
+        // Toggle Sidebar Mobile
+        const btnToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.querySelector('.sidebar');
+        if(btnToggle) {
+            btnToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+            });
+        }
+    </script>
+</body>
+</html>

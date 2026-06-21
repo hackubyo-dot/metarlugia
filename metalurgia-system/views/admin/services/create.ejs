@@ -1,0 +1,198 @@
+<!-- 
+    ADMIN/SERVICES/CREATE.EJS - CADASTRAR NOVO SERVIÇO
+    Metalurgia Futurística Leonardo Serra 
+-->
+
+<div class="container-fluid p-0">
+
+    <!-- Cabeçalho de Navegação -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-1">
+                    <li class="breadcrumb-item"><a href="/admin/services" class="text-primary text-decoration-none">Serviços</a></li>
+                    <li class="breadcrumb-item active text-white" aria-current="page">Novo Serviço</li>
+                </ol>
+            </nav>
+            <h2 class="fw-bold mb-0">Adicionar Serviço</h2>
+        </div>
+        <a href="/admin/services" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i> VOLTAR
+        </a>
+    </div>
+
+    <form action="/admin/services/store" method="POST" enctype="multipart/form-data" id="serviceForm">
+        <div class="row">
+            
+            <!-- Coluna Principal: Conteúdo -->
+            <div class="col-xl-8">
+                <div class="card bg-dark-2 border-secondary shadow-sm mb-4">
+                    <div class="card-header bg-transparent border-secondary py-3">
+                        <h5 class="mb-0 fw-bold text-primary"><i class="fas fa-info-circle me-2"></i>Detalhes do Serviço</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-4">
+                            <!-- Nome do Serviço -->
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Nome da Especialidade</label>
+                                <input type="text" name="name" class="form-control bg-dark border-secondary text-white" 
+                                       placeholder="Ex: Corte Plasma de Alta Definição" required>
+                            </div>
+
+                            <!-- Descrição Curta (Card) -->
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Descrição Curta (Aparece no Card da Home)</label>
+                                <textarea name="description" class="form-control bg-dark border-secondary text-white" rows="2" 
+                                          placeholder="Resumo técnico rápido para atrair o cliente..." required></textarea>
+                            </div>
+
+                            <!-- Conteúdo Detalhado (Modal) -->
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Descrição Completa (Conteúdo do Modal)</label>
+                                <textarea name="full_content" class="form-control bg-dark border-secondary text-white" rows="6" 
+                                          placeholder="Explique o processo, materiais, prazos e diferenciais técnicos deste serviço específico..."></textarea>
+                            </div>
+
+                            <!-- Categoria e Preço -->
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Categoria</label>
+                                <select name="category" class="form-select bg-dark border-secondary text-white">
+                                    <option value="Industrial">Industrial</option>
+                                    <option value="Residencial">Residencial</option>
+                                    <option value="Comercial">Comercial</option>
+                                    <option value="Usinagem">Usinagem</option>
+                                    <option value="Design">Design</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Preço Inicial (Kwanza)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-dark border-secondary text-primary fw-bold">KZ</span>
+                                    <input type="number" name="price_start" class="form-control bg-dark border-secondary text-white" 
+                                           placeholder="Ex: 250000" step="0.01">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coluna Lateral: Mídia e Ícone -->
+            <div class="col-xl-4">
+                
+                <!-- Card de Ícone -->
+                <div class="card bg-dark-2 border-secondary shadow-sm mb-4">
+                    <div class="card-header bg-transparent border-secondary py-3">
+                        <h6 class="mb-0 fw-bold"><i class="fas fa-icons me-2 text-primary"></i>Ícone Representativo</h6>
+                    </div>
+                    <div class="card-body text-center">
+                        <div id="icon_preview_box" class="icon-preview-large mb-3">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <label class="form-label small fw-bold text-muted">Classe FontAwesome 6</label>
+                        <input type="text" name="icon_class" id="icon_input" class="form-control form-control-sm bg-dark border-secondary text-white text-center" 
+                               placeholder="Ex: fa-hammer" value="fa-tools">
+                        <div class="form-text small mt-2">
+                            Consulte as classes em <a href="https://fontawesome.com/icons" target="_blank" class="text-primary">fontawesome.com</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card de Imagem de Cobertura -->
+                <div class="card bg-dark-2 border-secondary shadow-sm mb-4">
+                    <div class="card-header bg-transparent border-secondary py-3">
+                        <h6 class="mb-0 fw-bold"><i class="fas fa-camera me-2 text-primary"></i>Imagem de Cobertura</h6>
+                    </div>
+                    <div class="card-body">
+                        <div id="service_preview_box" class="service-preview-box mb-3">
+                            <i class="fas fa-image fa-3x text-muted opacity-25"></i>
+                        </div>
+                        <input type="file" name="image_file" id="service_image_input" class="form-control form-control-sm bg-dark border-secondary text-white" 
+                               accept="image/*" required>
+                        <div class="form-text small mt-2">Aparecerá no topo do card e no modal.</div>
+                    </div>
+                </div>
+
+                <!-- Botões de Ação -->
+                <div class="card bg-dark-2 border-secondary shadow-sm">
+                    <div class="card-body">
+                        <button type="submit" class="btn btn-primary w-100 mb-2 py-2 fw-bold">
+                            <i class="fas fa-save me-2"></i> SALVAR SERVIÇO
+                        </button>
+                        <a href="/admin/services" class="btn btn-outline-secondary w-100">CANCELAR</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+<style>
+    /* Preview do ícone */
+    .icon-preview-large {
+        width: 80px;
+        height: 80px;
+        background: var(--bg-dark);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        font-size: 2.5rem;
+        color: var(--primary);
+        transition: all 0.3s;
+    }
+
+    /* Preview da imagem do serviço */
+    .service-preview-box {
+        width: 100%;
+        aspect-ratio: 16/9;
+        background: var(--bg-dark);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+
+    .service-preview-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // 1. Live Icon Preview
+        const iconInput = document.getElementById('icon_input');
+        const iconPreview = document.getElementById('icon_preview_box').querySelector('i');
+
+        iconInput.addEventListener('input', (e) => {
+            const val = e.target.value.trim();
+            if (val.startsWith('fa-')) {
+                iconPreview.className = `fas ${val}`;
+            }
+        });
+
+        // 2. Image Preview
+        const imageInput = document.getElementById('service_image_input');
+        const imagePreviewBox = document.getElementById('service_preview_box');
+
+        imageInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreviewBox.innerHTML = `<img src="${e.target.result}" alt="Service Preview">`;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    });
+</script>

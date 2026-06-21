@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Metalurgia Futurística Admin</title>
+    
+    <!-- FAVICON -->
+    <link rel="icon" type="image/png" href="/images/favicon.png">
+
+    <!-- FONTES E ICONES -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- CSS FRAMEWORK -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- ESTILO BASE -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <style>
+        body {
+            background: radial-gradient(circle at center, #111 0%, #000 100%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 450px;
+            perspective: 1000px;
+        }
+
+        .login-card {
+            background: var(--bg-dark-2);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            padding: 3rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 10;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .login-logo {
+            height: 60px;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 0 10px var(--primary-glow));
+        }
+
+        .login-header h1 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-header p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Estilização dos Inputs */
+        .form-group-custom {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-group-custom i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            transition: color 0.3s;
+        }
+
+        .form-control-admin {
+            width: 100%;
+            padding: 0.85rem 1rem 0.85rem 3rem;
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: #fff;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+
+        .form-control-admin:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .form-control-admin:focus + i {
+            color: var(--primary);
+        }
+
+        /* Botão Industrial */
+        .btn-login {
+            width: 100%;
+            padding: 0.85rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border: none;
+            border-radius: var(--radius-md);
+            color: #000;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px var(--primary-glow-strong);
+            filter: brightness(1.1);
+        }
+
+        .btn-login:active {
+            transform: translateY(0);
+        }
+
+        /* Links e Helpers */
+        .login-footer {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .login-footer a {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .login-footer a:hover {
+            color: var(--primary);
+        }
+
+        /* Engrenagens de Fundo (Decoração) */
+        .bg-gear {
+            position: absolute;
+            color: rgba(255,255,255,0.02);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .gear-1 { font-size: 20rem; top: -10%; left: -10%; animation: rotateGear 20s linear infinite; }
+        .gear-2 { font-size: 15rem; bottom: -5%; right: -5%; animation: rotateGear 15s linear reverse infinite; }
+
+        @keyframes rotateGear {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Alert Box Customizado */
+        .alert-admin {
+            background: rgba(220, 53, 69, 0.1);
+            border: 1px solid rgba(220, 53, 69, 0.2);
+            color: #ff6b6b;
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius-md);
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Decoração Industrial de Fundo -->
+    <i class="fas fa-cog bg-gear gear-1"></i>
+    <i class="fas fa-cog bg-gear gear-2"></i>
+
+    <div class="login-container">
+        <div class="login-card" data-aos="zoom-in">
+            
+            <div class="login-header">
+                <img src="/images/logo.png" alt="Metalurgia Logo" class="login-logo">
+                <h1 class="syncopate">PAINEL DE GESTÃO</h1>
+                <p>Insira suas credenciais para acessar o sistema.</p>
+            </div>
+
+            <!-- Exibição de Erros (Flash Messages) -->
+            <% if (error_msg && error_msg.length > 0) { %>
+                <div class="alert-admin">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span><%= error_msg %></span>
+                </div>
+            <% } %>
+
+            <% if (success_msg && success_msg.length > 0) { %>
+                <div class="alert-admin" style="background: rgba(40, 167, 69, 0.1); border-color: rgba(40, 167, 69, 0.2); color: #2ecc71;">
+                    <i class="fas fa-check-circle"></i>
+                    <span><%= success_msg %></span>
+                </div>
+            <% } %>
+
+            <!-- Formulário de Autenticação -->
+            <form action="/auth/login" method="POST">
+                
+                <div class="form-group-custom">
+                    <input type="email" name="email" class="form-control-admin" placeholder="E-mail Administrativo" required autofocus>
+                    <i class="fas fa-envelope"></i>
+                </div>
+
+                <div class="form-group-custom">
+                    <input type="password" name="password" class="form-control-admin" placeholder="Senha de Acesso" required>
+                    <i class="fas fa-lock"></i>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-4 px-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="remember" style="cursor:pointer">
+                        <label class="form-check-label text-muted small" for="remember" style="cursor:pointer">
+                            Lembrar acesso
+                        </label>
+                    </div>
+                    <a href="/auth/forgot-password" class="small text-primary text-decoration-none">Esqueceu a senha?</a>
+                </div>
+
+                <button type="submit" class="btn-login">
+                    <i class="fas fa-sign-in-alt me-2"></i> ENTRAR NO SISTEMA
+                </button>
+
+            </form>
+
+            <div class="login-footer">
+                <a href="/"><i class="fas fa-arrow-left me-2"></i> Voltar para o Site Oficial</a>
+            </div>
+
+        </div>
+
+        <p class="text-center text-muted mt-4" style="font-size: 0.7rem; opacity: 0.5;">
+            &copy; <%= new Date().getFullYear() %> Metalurgia Futurística Leonardo Serra.<br>
+            Desenvolvido para engenharia de alta precisão.
+        </p>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+        
+        // Efeito simples de foco no input
+        const inputs = document.querySelectorAll('.form-control-admin');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.style.transform = 'scale(1.02)';
+                input.parentElement.style.transition = 'transform 0.3s';
+            });
+            input.addEventListener('blur', () => {
+                input.parentElement.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>

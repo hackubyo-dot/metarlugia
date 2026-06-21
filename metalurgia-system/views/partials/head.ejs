@@ -1,0 +1,72 @@
+<!-- 
+    HEAD.EJS - METADATA & ASSETS 
+    Metalurgia Futurística Leonardo Serra
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<!-- SEO DINÂMICO (Provido pelo Controller) -->
+<title><%= seo.title %></title>
+<meta name="description" content="<%= seo.description %>">
+<meta name="keywords" content="<%= seo.keywords %>">
+<meta name="author" content="Metalurgia Futurística Leonardo Serra">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="<%= seo.canonical %>">
+
+<!-- OPEN GRAPH (Social Media Optimization) -->
+<meta property="og:title" content="<%= seo.og_title %>">
+<meta property="og:description" content="<%= seo.og_description %>">
+<meta property="og:image" content="<%= seo.og_image %>">
+<meta property="og:url" content="<%= seo.og_url %>">
+<meta property="og:type" content="<%= seo.og_type %>">
+<meta property="og:site_name" content="Metalurgia Futurística">
+
+<!-- TWITTER CARD -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="<%= seo.og_title %>">
+<meta name="twitter:description" content="<%= seo.og_description %>">
+<meta name="twitter:image" content="<%= seo.og_image %>">
+
+<!-- FAVICON & BRANDING -->
+<link rel="icon" type="image/png" href="/images/favicon.png">
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<meta name="theme-color" content="#f2c508">
+
+<!-- PRECONNECT (Performance) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<!-- FONTES (Google Fonts) -->
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- ICONES (FontAwesome 6) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<!-- LIBRARIES CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+<!-- CUSTOM STYLES (Modular Bundle) -->
+<link rel="stylesheet" href="/css/style.css">
+
+<!-- THEME ENGINE (Inline para evitar Flicker) -->
+<script>
+    (function() {
+        const savedTheme = localStorage.getItem('ls_theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        // Garante que a transição de cores não ocorra durante o carregamento inicial
+        document.documentElement.style.setProperty('--transition', 'none');
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.documentElement.style.removeProperty('--transition');
+            }, 100);
+        });
+    })();
+</script>
+
+<!-- DADOS ESTRUTURADOS (JSON-LD) -->
+<script type="application/ld+json">
+    <%- seo.schema %>
+</script>

@@ -1,0 +1,239 @@
+<!-- 
+    ADMIN/SPECIALTIES/EDIT.EJS - ALTERAR ESPECIALIDADE ELITE
+    Metalurgia Futurística Leonardo Serra 
+-->
+
+<div class="container-fluid p-0">
+
+    <!-- Cabeçalho de Navegação -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-1">
+                    <li class="breadcrumb-item"><a href="/admin/specialties" class="text-primary text-decoration-none">Elite 8 Matrix</a></li>
+                    <li class="breadcrumb-item active text-white" aria-current="page">Editar: <%= specialty.name %></li>
+                </ol>
+            </nav>
+            <h2 class="fw-bold mb-0">Alterar Especialidade</h2>
+        </div>
+        <a href="/admin/specialties" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i> VOLTAR
+        </a>
+    </div>
+
+    <form action="/admin/specialties/update/<%= specialty.id %>" method="POST" enctype="multipart/form-data" id="specialtyEditForm">
+        <div class="row">
+            
+            <!-- Coluna Principal: Dados e Vídeo -->
+            <div class="col-xl-8">
+                <div class="card bg-dark-2 border-secondary shadow-sm mb-4">
+                    <div class="card-header bg-transparent border-secondary py-3">
+                        <h5 class="mb-0 fw-bold text-primary"><i class="fas fa-edit me-2"></i>Configurações Técnicas</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-4">
+                            <!-- Nome -->
+                            <div class="col-md-8">
+                                <label class="form-label fw-bold">Nome da Especialidade</label>
+                                <input type="text" name="name" class="form-control bg-dark border-secondary text-white" 
+                                       value="<%= specialty.name %>" required>
+                            </div>
+
+                            <!-- Posição -->
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Posição na Matrix (1-8)</label>
+                                <input type="number" name="display_order" class="form-control bg-dark border-secondary text-white" 
+                                       value="<%= specialty.display_order %>" min="1" max="8" required>
+                            </div>
+
+                            <!-- Descrição -->
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Descrição do Processo (Exibida no Vídeo)</label>
+                                <textarea name="description" class="form-control bg-dark border-secondary text-white" rows="3" required><%= specialty.description %></textarea>
+                            </div>
+
+                            <!-- Mídia de Vídeo -->
+                            <div class="col-md-12 pt-3 border-top border-secondary">
+                                <label class="form-label fw-bold text-warning"><i class="fas fa-video me-2"></i>Vídeo Industrial Atual</label>
+                                
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="current-video-box rounded border border-secondary overflow-hidden bg-black">
+                                            <% if (specialty.media_url) { %>
+                                                <video controls muted class="w-100" style="max-height: 200px;">
+                                                    <source src="<%= specialty.media_url %>" type="video/mp4">
+                                                </video>
+                                            <% } else { %>
+                                                <div class="p-4 text-center text-muted small">Sem vídeo cadastrado.</div>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="upload-zone-mini p-3 text-center h-100 d-flex flex-column justify-content-center" onclick="document.getElementById('video_input').click()">
+                                            <input type="file" name="video_file" id="video_input" class="hidden" accept="video/mp4">
+                                            <i class="fas fa-exchange-alt fa-2x mb-2 text-primary"></i>
+                                            <h6 class="mb-1">Substituir Vídeo</h6>
+                                            <p class="small text-muted mb-0">Selecione um novo arquivo MP4 para trocar o atual.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="new_video_preview_container" class="mt-3 hidden">
+                                    <div class="alert alert-info py-2 small mb-0">
+                                        <i class="fas fa-check-circle me-2"></i> Novo vídeo selecionado para upload.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coluna Lateral: Ícone e Thumb -->
+            <div class="col-xl-4">
+                
+                <!-- Card de Ícone -->
+                <div class="card bg-dark-2 border-secondary shadow-sm mb-4">
+                    <div class="card-header bg-transparent border-secondary py-3 text-center">
+                        <h6 class="mb-0 fw-bold text-primary">Ícone Representativo</h6>
+                    </div>
+                    <div class="card-body text-center">
+                        <div id="spec_icon_preview" class="spec-icon-display mb-3">
+                            <i class="fas <%= specialty.icon_class || 'fa-bolt' %>"></i>
+                        </div>
+                        <input type="text" name="icon_class" id="spec_icon_input" class="form-control form-control-sm bg-dark border-secondary text-white text-center" 
+                               value="<%= specialty.icon_class %>">
+                    </div>
+                </div>
+
+                <!-- Card de Thumbnail -->
+                <div class="card bg-dark-2 border-secondary shadow-sm mb-4">
+                    <div class="card-header bg-transparent border-secondary py-3 text-center">
+                        <h6 class="mb-0 fw-bold text-primary">Imagem de Capa Atual</h6>
+                    </div>
+                    <div class="card-body">
+                        <div id="thumb_preview_box" class="spec-thumb-preview mb-3">
+                            <% if (specialty.thumbnail_url) { %>
+                                <img src="<%= specialty.thumbnail_url %>" alt="Thumb Atual">
+                            <% } else { %>
+                                <i class="fas fa-image fa-3x text-muted opacity-25"></i>
+                            <% } %>
+                        </div>
+                        <label class="btn btn-dark border-secondary w-100 btn-sm">
+                            <i class="fas fa-camera me-2"></i> TROCAR THUMBNAIL
+                            <input type="file" name="thumbnail_file" id="thumb_input" class="hidden" accept="image/*">
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Botões de Ação -->
+                <div class="card bg-dark-2 border-secondary shadow-sm">
+                    <div class="card-body">
+                        <button type="submit" class="btn btn-primary w-100 mb-2 py-2 fw-bold">
+                            <i class="fas fa-sync-alt me-2"></i> ATUALIZAR ESPECIALIDADE
+                        </button>
+                        <a href="/admin/specialties" class="btn btn-outline-secondary w-100">CANCELAR</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+<style>
+    /* Estilização específica para a edição da matriz */
+    .current-video-box {
+        background: #000;
+        min-height: 150px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .upload-zone-mini {
+        border: 2px dashed var(--border-color);
+        border-radius: 8px;
+        background: rgba(var(--primary-rgb), 0.02);
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .upload-zone-mini:hover {
+        border-color: var(--primary);
+        background: rgba(var(--primary-rgb), 0.05);
+    }
+
+    .spec-icon-display {
+        width: 70px;
+        height: 70px;
+        background: var(--bg-dark);
+        border: 1px solid var(--border-color);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        font-size: 2rem;
+        color: var(--primary);
+    }
+
+    .spec-thumb-preview {
+        width: 100%;
+        aspect-ratio: 16/9;
+        background: var(--bg-dark);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .spec-thumb-preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .hidden { display: none; }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // 1. Live Icon Preview
+        const iconInput = document.getElementById('spec_icon_input');
+        const iconPreview = document.querySelector('#spec_icon_preview i');
+
+        iconInput.addEventListener('input', (e) => {
+            const val = e.target.value.trim();
+            if (val.startsWith('fa-')) {
+                iconPreview.className = `fas ${val}`;
+            }
+        });
+
+        // 2. Video Preview (Informação de arquivo selecionado)
+        const videoInput = document.getElementById('video_input');
+        const videoInfo = document.getElementById('new_video_preview_container');
+
+        videoInput.addEventListener('change', function() {
+            if (this.files[0]) {
+                videoInfo.classList.remove('hidden');
+            }
+        });
+
+        // 3. Image Preview para Thumbnail
+        const thumbInput = document.getElementById('thumb_input');
+        const thumbPreviewBox = document.getElementById('thumb_preview_box');
+
+        thumbInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    thumbPreviewBox.innerHTML = `<img src="${e.target.result}" alt="Nova Thumb">`;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    });
+</script>

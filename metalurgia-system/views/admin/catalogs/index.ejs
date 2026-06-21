@@ -1,0 +1,162 @@
+<!-- 
+    ADMIN/CATALOGS/INDEX.EJS - GESTÃO DE DOCUMENTOS TÉCNICOS
+    Metalurgia Futurística Leonardo Serra 
+-->
+
+<div class="container-fluid p-0">
+
+    <!-- Cabeçalho da Página -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Catálogos e Documentos</h2>
+            <p class="text-muted">Gerencie os arquivos PDF disponíveis para download no website.</p>
+        </div>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadCatalogModal">
+            <i class="fas fa-file-upload me-2"></i> SUBIR NOVO CATÁLOGO
+        </button>
+    </div>
+
+    <!-- Lista de Catálogos Atuais -->
+    <div class="row g-4">
+        <% if (catalogs && catalogs.length > 0) { %>
+            <% catalogs.forEach(catalog => { %>
+                <div class="col-xl-4 col-md-6">
+                    <div class="card bg-dark-2 border-secondary h-100 catalog-admin-card">
+                        <div class="row g-0 h-100">
+                            <!-- Capa do Catálogo -->
+                            <div class="col-4">
+                                <div class="catalog-cover-preview">
+                                    <img src="<%= catalog.cover_url || '/images/catalogue-mockup.jpg' %>" alt="Capa">
+                                    <div class="catalog-type-badge">PDF</div>
+                                </div>
+                            </div>
+                            <!-- Infos e Ações -->
+                            <div class="col-8">
+                                <div class="card-body d-flex flex-column h-100">
+                                    <h6 class="fw-bold mb-1 text-white text-truncate"><%= catalog.name %></h6>
+                                    <div class="small text-primary fw-bold mb-2">Versão: <%= catalog.version %></div>
+                                    
+                                    <div class="mt-auto">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="small text-muted"><i class="fas fa-weight-hanging me-1"></i> <%= catalog.file_size %></span>
+                                            <span class="small text-muted"><i class="fas fa-download me-1"></i> <%= catalog.download_count || 0 %></span>
+                                        </div>
+                                        
+                                        <div class="d-flex gap-2">
+                                            <a href="<%= catalog.pdf_url %>" target="_blank" class="btn btn-sm btn-outline-light flex-grow-1">
+                                                <i class="fas fa-external-link-alt"></i>
+                                            </a>
+                                            <form action="/admin/catalogs/delete/<%= catalog.id %>" method="POST" class="flex-grow-1">
+                                                <button type="submit" class="btn btn-sm btn-outline-danger w-100 btn-delete-confirm" 
+                                                        data-confirm-message="Excluir este catálogo permanentemente?">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <div class="col-12 text-center py-5">
+                <div class="opacity-25 mb-3">
+                    <i class="fas fa-file-pdf fa-4x"></i>
+                </div>
+                <h5 class="text-muted">Nenhum catálogo disponível.</h5>
+                <p class="small text-muted">Faça o upload do catálogo 2025 para começar.</p>
+            </div>
+        <% } %>
+    </div>
+
+</div>
+
+<!-- ==================== MODAL DE UPLOAD DE CATÁLOGO ==================== -->
+<div class="modal fade" id="uploadCatalogModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark-2 border-secondary text-white">
+            <form action="/admin/catalogs/store" method="POST" enctype="multipart/form-data">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title fw-bold">Novo Catálogo Técnico</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Nome do Documento</label>
+                        <input type="text" name="name" class="form-control bg-dark border-secondary text-white" placeholder="Ex: Tabela de Preços Estruturas 2025" required>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Versão</label>
+                            <input type="text" name="version" class="form-control bg-dark border-secondary text-white" placeholder="Ex: v1.2 ou 2025" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Arquivo PDF</label>
+                            <input type="file" name="pdf_file" class="form-control bg-dark border-secondary text-white" accept="application/pdf" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Imagem de Capa (Opcional)</label>
+                        <input type="file" name="cover_image" class="form-control bg-dark border-secondary text-white" accept="image/*">
+                    </div>
+                    <div class="mb-0">
+                        <label class="form-label fw-bold">Descrição Curta</label>
+                        <textarea name="description" class="form-control bg-dark border-secondary text-white" rows="3" placeholder="Resumo do conteúdo do arquivo..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer border-secondary">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-cloud-upload-alt me-2"></i> INICIAR UPLOAD
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Estilos para os cards de catálogo */
+    .catalog-admin-card {
+        transition: all 0.3s;
+        overflow: hidden;
+    }
+    
+    .catalog-admin-card:hover {
+        border-color: var(--primary);
+        transform: translateY(-5px);
+    }
+
+    .catalog-cover-preview {
+        height: 100%;
+        background: #000;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .catalog-cover-preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.6;
+    }
+
+    .catalog-type-badge {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: var(--primary);
+        color: #000;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-weight: 900;
+        font-size: 0.7rem;
+    }
+
+    .modal-content {
+        box-shadow: 0 0 50px rgba(0,0,0,0.5);
+    }
+</style>

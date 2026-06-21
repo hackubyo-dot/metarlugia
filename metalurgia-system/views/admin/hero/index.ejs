@@ -1,0 +1,188 @@
+<!-- 
+    ADMIN/HERO/INDEX.EJS - GESTÃO DO SLIDER PRINCIPAL
+    Metalurgia Futurística Leonardo Serra 
+-->
+
+<div class="container-fluid p-0">
+
+    <!-- Cabeçalho da Página -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Hero Slider</h2>
+            <p class="text-muted">Gerencie as imagens e vídeos de impacto da página inicial.</p>
+        </div>
+        <a href="/admin/hero/create" class="btn btn-primary">
+            <i class="fas fa-plus me-2"></i> ADICIONAR NOVO SLIDE
+        </a>
+    </div>
+
+    <!-- Tabela de Gestão -->
+    <div class="card bg-dark-2 border-secondary shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-dark table-hover align-middle mb-0">
+                    <thead class="table-light text-dark">
+                        <tr>
+                            <th class="ps-4" style="width: 100px;">Ordem</th>
+                            <th style="width: 200px;">Preview</th>
+                            <th>Título / Subtítulo</th>
+                            <th>Tipo</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center pe-4">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if (slides && slides.length > 0) { %>
+                            <% slides.forEach(slide => { %>
+                                <tr>
+                                    <!-- Ordem de Exibição -->
+                                    <td class="ps-4">
+                                        <span class="badge bg-dark border border-secondary p-2">
+                                            #<%= slide.display_order %>
+                                        </span>
+                                    </td>
+
+                                    <!-- Miniatura de Mídia -->
+                                    <td>
+                                        <div class="media-preview-container" style="width: 150px; height: 85px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color);">
+                                            <% if (slide.media_type === 'video') { %>
+                                                <video muted loop class="w-100 h-100 object-fit-cover">
+                                                    <source src="<%= slide.media_url %>" type="video/mp4">
+                                                </video>
+                                                <div class="media-badge"><i class="fas fa-play"></i></div>
+                                            <% } else { %>
+                                                <img src="<%= slide.media_url %>" alt="Preview" class="w-100 h-100 object-fit-cover">
+                                                <div class="media-badge"><i class="fas fa-image"></i></div>
+                                            <% } %>
+                                        </div>
+                                    </td>
+
+                                    <!-- Informações de Texto -->
+                                    <td>
+                                        <div class="fw-bold text-white"><%= slide.title %></div>
+                                        <div class="small text-muted"><%= slide.subtitle %></div>
+                                    </td>
+
+                                    <!-- Tipo de Mídia -->
+                                    <td>
+                                        <span class="text-uppercase small fw-bold text-secondary">
+                                            <%= slide.media_type %>
+                                        </span>
+                                    </td>
+
+                                    <!-- Toggle de Status (Ativo/Inativo) -->
+                                    <td class="text-center">
+                                        <div class="form-check form-switch d-inline-block">
+                                            <input class="form-check-input status-toggle" 
+                                                   type="checkbox" 
+                                                   role="switch" 
+                                                   data-id="<%= slide.id %>" 
+                                                   data-type="hero"
+                                                   <%= slide.is_active ? 'checked' : '' %>>
+                                        </div>
+                                    </td>
+
+                                    <!-- Ações de Edição e Exclusão -->
+                                    <td class="text-center pe-4">
+                                        <div class="btn-group">
+                                            <a href="/admin/hero/edit/<%= slide.id %>" class="btn btn-sm btn-outline-info" title="Editar">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <form action="/admin/hero/delete/<%= slide.id %>" method="POST" class="d-inline">
+                                                <button type="submit" 
+                                                        class="btn btn-sm btn-outline-danger btn-delete-confirm" 
+                                                        data-confirm-message="Tem certeza que deseja excluir este slide permanentemente? Esta ação removerá o arquivo de imagem/vídeo do servidor."
+                                                        title="Excluir">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <% }); %>
+                        <% } else { %>
+                            <!-- Estado Vazio -->
+                            <tr>
+                                <td colspan="6" class="text-center py-5">
+                                    <div class="mb-3 opacity-25">
+                                        <i class="fas fa-images fa-4x"></i>
+                                    </div>
+                                    <h5 class="text-muted">Nenhum slide cadastrado.</h5>
+                                    <p class="small text-muted">Clique no botão "Adicionar Novo Slide" para começar.</p>
+                                </td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Informativo de Performance -->
+    <div class="mt-4 p-3 bg-dark-3 border border-secondary rounded-3 d-flex align-items-center">
+        <i class="fas fa-info-circle text-info me-3 fa-lg"></i>
+        <p class="small mb-0 text-secondary">
+            <strong>Dica Técnica:</strong> Para vídeos, utilize o formato .MP4 com no máximo 10MB para garantir o carregamento rápido do site. Para imagens, prefira o formato .WEBP ou .JPG otimizado.
+        </p>
+    </div>
+
+</div>
+
+<style>
+    /* Estilos para a listagem do Hero */
+    .media-preview-container {
+        position: relative;
+    }
+    
+    .media-badge {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        background: rgba(0,0,0,0.6);
+        color: var(--primary);
+        width: 24px;
+        height: 24px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+    }
+
+    .table-dark {
+        --bs-table-bg: transparent;
+    }
+
+    .form-check-input:checked {
+        background-color: var(--primary);
+        border-color: var(--primary);
+    }
+
+    .status-toggle {
+        cursor: pointer;
+        width: 2.5rem;
+        height: 1.25rem;
+    }
+
+    .btn-group .btn {
+        padding: 0.4rem 0.8rem;
+    }
+
+    /* Hover no vídeo da tabela */
+    tr:hover video {
+        filter: brightness(1.2);
+    }
+</style>
+
+<script>
+    /**
+     * Efeito visual para dar play nos vídeos ao passar o mouse na tabela
+     */
+    document.querySelectorAll('.media-preview-container video').forEach(video => {
+        video.parentElement.addEventListener('mouseenter', () => video.play());
+        video.parentElement.addEventListener('mouseleave', () => {
+            video.pause();
+            video.currentTime = 0;
+        });
+    });
+</script>

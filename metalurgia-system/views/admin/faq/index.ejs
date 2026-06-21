@@ -1,0 +1,118 @@
+<!-- 
+    ADMIN/FAQ/INDEX.EJS - GESTÃO DE PERGUNTAS FREQUENTES
+    Metalurgia Futurística Leonardo Serra 
+-->
+
+<div class="container-fluid p-0">
+
+    <!-- Cabeçalho da Página -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Dúvidas Frequentes (FAQ)</h2>
+            <p class="text-muted">Gerencie as perguntas que ajudam seus clientes a fechar negócio mais rápido.</p>
+        </div>
+        <a href="/admin/faq/create" class="btn btn-primary">
+            <i class="fas fa-plus me-2"></i> ADICIONAR PERGUNTA
+        </a>
+    </div>
+
+    <!-- Tabela de FAQ -->
+    <div class="card bg-dark-2 border-secondary shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-dark table-hover align-middle mb-0">
+                    <thead class="table-light text-dark">
+                        <tr>
+                            <th class="ps-4" style="width: 80px;">Ordem</th>
+                            <th>Pergunta</th>
+                            <th>Resposta (Prévia)</th>
+                            <th class="text-center pe-4" style="width: 150px;">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if (faqs && faqs.length > 0) { %>
+                            <% faqs.forEach(faq => { %>
+                                <tr>
+                                    <!-- Ordem de Exibição -->
+                                    <td class="ps-4">
+                                        <span class="badge bg-dark border border-secondary text-primary">
+                                            #<%= faq.display_order %>
+                                        </span>
+                                    </td>
+
+                                    <!-- Pergunta -->
+                                    <td>
+                                        <div class="fw-bold text-white"><%= faq.question %></div>
+                                    </td>
+
+                                    <!-- Resposta Truncada -->
+                                    <td>
+                                        <div class="small text-muted text-truncate" style="max-width: 400px;">
+                                            <%= faq.answer %>
+                                        </div>
+                                    </td>
+
+                                    <!-- Ações -->
+                                    <td class="text-center pe-4">
+                                        <div class="btn-group">
+                                            <!-- Ver no Site -->
+                                            <a href="/#faq" target="_blank" class="btn btn-sm btn-outline-secondary" title="Ver no Site">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            <!-- Editar -->
+                                            <a href="/admin/faq/edit/<%= faq.id %>" class="btn btn-sm btn-outline-info" title="Editar">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <!-- Excluir -->
+                                            <form action="/admin/faq/delete/<%= faq.id %>" method="POST" class="d-inline">
+                                                <button type="submit" 
+                                                        class="btn btn-sm btn-outline-danger btn-delete-confirm"
+                                                        data-confirm-message="Deseja excluir esta pergunta permanentemente?"
+                                                        title="Excluir">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <% }); %>
+                        <% } else { %>
+                            <tr>
+                                <td colspan="4" class="text-center py-5">
+                                    <div class="opacity-25 mb-3">
+                                        <i class="fas fa-question-circle fa-4x"></i>
+                                    </div>
+                                    <h5 class="text-muted">Nenhuma pergunta cadastrada.</h5>
+                                    <p class="small text-muted">Ajude seus clientes respondendo as dúvidas mais comuns.</p>
+                                </td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Informativo de UX -->
+    <div class="mt-4 card bg-dark-3 border-info border-opacity-25">
+        <div class="card-body d-flex align-items-center p-3">
+            <i class="fas fa-lightbulb text-info me-3 fa-lg"></i>
+            <p class="small mb-0 text-muted">
+                <strong>Dica:</strong> Uma boa seção de FAQ reduz em até 30% as perguntas repetitivas no seu WhatsApp. Foque em prazos, garantias e formas de pagamento.
+            </p>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    /* Estilos específicos para a tabela de FAQ */
+    .table > :not(caption) > * > * {
+        padding: 1.25rem 0.5rem;
+    }
+    
+    .badge {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-weight: 800;
+    }
+</style>

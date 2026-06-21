@@ -1,0 +1,186 @@
+<!-- 
+    ADMIN/SERVICES/INDEX.EJS - GESTÃO DE SOLUÇÕES INDUSTRIAIS
+    Metalurgia Futurística Leonardo Serra 
+-->
+
+<div class="container-fluid p-0">
+
+    <!-- Cabeçalho de Ações -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Catálogo de Serviços</h2>
+            <p class="text-muted">Gerencie as especialidades e preços exibidos no site.</p>
+        </div>
+        <a href="/admin/services/create" class="btn btn-primary">
+            <i class="fas fa-plus me-2"></i> NOVO SERVIÇO
+        </a>
+    </div>
+
+    <!-- Tabela de Serviços -->
+    <div class="card bg-dark-2 border-secondary shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-dark table-hover align-middle mb-0">
+                    <thead class="table-light text-dark">
+                        <tr>
+                            <th class="ps-4">Ícone</th>
+                            <th>Nome do Serviço</th>
+                            <th>Categoria</th>
+                            <th>Preço Base</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center pe-4">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if (services && services.length > 0) { %>
+                            <% services.forEach(service => { %>
+                                <tr>
+                                    <!-- Ícone e Prévia -->
+                                    <td class="ps-4">
+                                        <div class="d-flex align-items-center">
+                                            <div class="service-icon-preview">
+                                                <i class="fas <%= service.icon_class || 'fa-tools' %>"></i>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <!-- Informações Principais -->
+                                    <td>
+                                        <div class="fw-bold text-white"><%= service.name %></div>
+                                        <div class="small text-muted text-truncate" style="max-width: 250px;">
+                                            <%= service.description %>
+                                        </div>
+                                    </td>
+
+                                    <!-- Categoria -->
+                                    <td>
+                                        <span class="badge bg-dark border border-secondary text-uppercase" style="font-size: 0.65rem;">
+                                            <%= service.category || 'Geral' %>
+                                        </span>
+                                    </td>
+
+                                    <!-- Preço Formatado -->
+                                    <td>
+                                        <span class="text-primary fw-bold">
+                                            <%= helpers.formatCurrency(service.price_start) %>
+                                        </span>
+                                    </td>
+
+                                    <!-- Status (Visível no site) -->
+                                    <td class="text-center">
+                                        <% if (service.is_active) { %>
+                                            <span class="badge bg-success-subtle text-success px-3">Ativo</span>
+                                        <% } else { %>
+                                            <span class="badge bg-danger-subtle text-danger px-3">Inativo</span>
+                                        <% } %>
+                                    </td>
+
+                                    <!-- Botões de Ação -->
+                                    <td class="text-center pe-4">
+                                        <div class="btn-group">
+                                            <!-- Ver no Site -->
+                                            <a href="/#servicos" target="_blank" class="btn btn-sm btn-outline-secondary" title="Ver no Site">
+                                                <i class="fas fa-external-link-alt"></i>
+                                            </a>
+                                            <!-- Editar -->
+                                            <a href="/admin/services/edit/<%= service.id %>" class="btn btn-sm btn-outline-info" title="Editar">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <!-- Excluir -->
+                                            <form action="/admin/services/delete/<%= service.id %>" method="POST" class="d-inline">
+                                                <button type="submit" 
+                                                        class="btn btn-sm btn-outline-danger btn-delete-confirm"
+                                                        data-confirm-message="Deseja realmente remover este serviço? Isso pode afetar a exibição da Matrix Industrial na Home."
+                                                        title="Excluir">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <% }); %>
+                        <% } else { %>
+                            <tr>
+                                <td colspan="6" class="text-center py-5">
+                                    <div class="opacity-25 mb-3">
+                                        <i class="fas fa-concierge-bell fa-4x"></i>
+                                    </div>
+                                    <h5 class="text-muted">Nenhum serviço registrado.</h5>
+                                    <p class="small text-muted">Crie seu primeiro serviço para exibir na Home Page.</p>
+                                </td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Informativo de Orçamentos -->
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card bg-dark-3 border-info border-opacity-25 h-100">
+                <div class="card-body d-flex align-items-center">
+                    <div class="bg-info bg-opacity-10 p-3 rounded-circle me-3">
+                        <i class="fas fa-lightbulb text-info"></i>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mb-1">Dica de Conversão</h6>
+                        <p class="small mb-0 text-muted">Mantenha os "Preços a partir de" atualizados para atrair leads qualificados através do site.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mt-3 mt-md-0">
+            <div class="card bg-dark-3 border-warning border-opacity-25 h-100">
+                <div class="card-body d-flex align-items-center">
+                    <div class="bg-warning bg-opacity-10 p-3 rounded-circle me-3">
+                        <i class="fas fa-icons text-warning"></i>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mb-1">Ícones do Sistema</h6>
+                        <p class="small mb-0 text-muted">Utilize nomes de classes do FontAwesome 6 (ex: fa-hammer, fa-building) para personalizar os cards.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    /* Estilo do preview de ícone na tabela */
+    .service-icon-preview {
+        width: 40px;
+        height: 40px;
+        background: var(--bg-elevated);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary);
+        font-size: 1.1rem;
+        transition: all 0.3s;
+    }
+
+    tr:hover .service-icon-preview {
+        background: var(--primary);
+        color: #000;
+        transform: rotate(-10deg);
+    }
+
+    .table > :not(caption) > * > * {
+        padding: 1.2rem 0.5rem;
+    }
+
+    .badge-success-subtle {
+        background: rgba(25, 135, 84, 0.15);
+        color: #198754;
+    }
+    
+    .badge-danger-subtle {
+        background: rgba(220, 53, 69, 0.15);
+        color: #dc3545;
+    }
+</style>

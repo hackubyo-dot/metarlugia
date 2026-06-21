@@ -1,0 +1,250 @@
+<!-- 
+    ADMIN/PORTFOLIO/CREATE.EJS - NOVO PROJETO
+    Metalurgia Futurística Leonardo Serra 
+-->
+
+<div class="container-fluid p-0">
+
+    <!-- Cabeçalho de Navegação -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-1">
+                    <li class="breadcrumb-item"><a href="/admin/portfolio" class="text-primary text-decoration-none">Portfólio</a></li>
+                    <li class="breadcrumb-item active text-white" aria-current="page">Novo Projeto</li>
+                </ol>
+            </nav>
+            <h2 class="fw-bold mb-0">Adicionar à Galeria</h2>
+        </div>
+        <a href="/admin/portfolio" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i> VOLTAR
+        </a>
+    </div>
+
+    <form action="/admin/portfolio/store" method="POST" enctype="multipart/form-data" id="portfolioForm">
+        <div class="row">
+            
+            <!-- Coluna Principal: Informações -->
+            <div class="col-xl-8">
+                <div class="card bg-dark-2 border-secondary shadow-sm mb-4">
+                    <div class="card-header bg-transparent border-secondary py-3">
+                        <h5 class="mb-0 fw-bold"><i class="fas fa-info-circle me-2 text-primary"></i>Informações Gerais</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-4">
+                            <!-- Título do Projeto -->
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Título do Projeto / Obra</label>
+                                <input type="text" name="title" class="form-control bg-dark border-secondary text-white" 
+                                       placeholder="Ex: Estrutura Metálica Pavilhão Viana" required>
+                                <div class="form-text text-muted">Use nomes descritivos para ajudar no SEO.</div>
+                            </div>
+
+                            <!-- Cliente -->
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Cliente</label>
+                                <input type="text" name="client" class="form-control bg-dark border-secondary text-white" 
+                                       placeholder="Ex: Empresa de Logística X" required>
+                            </div>
+
+                            <!-- Categoria -->
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Categoria</label>
+                                <select name="category" class="form-select bg-dark border-secondary text-white" required>
+                                    <option value="" selected disabled>Selecione uma categoria</option>
+                                    <option value="Industrial">Industrial</option>
+                                    <option value="Residencial">Residencial</option>
+                                    <option value="Comercial">Comercial</option>
+                                    <option value="Serralharia Arte">Serralharia Arte</option>
+                                    <option value="Especial">Projeto Especial</option>
+                                </select>
+                            </div>
+
+                            <!-- Descrição -->
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Descrição da Obra</label>
+                                <textarea name="description" class="form-control bg-dark border-secondary text-white" rows="5" 
+                                          placeholder="Descreva os detalhes técnicos, materiais utilizados e desafios superados..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gestão da Galeria (Múltiplas Fotos) -->
+                <div class="card bg-dark-2 border-secondary shadow-sm">
+                    <div class="card-header bg-transparent border-secondary py-3">
+                        <h5 class="mb-0 fw-bold"><i class="fas fa-images me-2 text-primary"></i>Galeria de Imagens</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <label class="form-label fw-bold">Selecionar Fotos Adicionais</label>
+                        <div class="upload-zone" id="dropzone_gallery">
+                            <input type="file" name="gallery_images" id="gallery_input" class="hidden" multiple accept="image/*">
+                            <div class="text-center py-4 cursor-pointer" onclick="document.getElementById('gallery_input').click()">
+                                <i class="fas fa-cloud-upload-alt fa-3x mb-3 text-muted"></i>
+                                <h5>Clique para selecionar múltiplas imagens</h5>
+                                <p class="small text-muted">Você pode enviar até 10 fotos da obra para criar um carrossel.</p>
+                            </div>
+                        </div>
+
+                        <!-- Grid de Preview da Galeria -->
+                        <div id="gallery_preview" class="row g-3 mt-3">
+                            <!-- Populado via JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coluna Lateral: Imagem de Destaque -->
+            <div class="col-xl-4 mt-4 mt-xl-0">
+                <div class="card bg-dark-2 border-secondary shadow-sm sticky-top" style="top: 100px;">
+                    <div class="card-header bg-transparent border-secondary py-3">
+                        <h5 class="mb-0 fw-bold"><i class="fas fa-star me-2 text-warning"></i>Imagem de Destaque</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="main-image-preview-container mb-3">
+                            <div id="main_preview_box" class="preview-box">
+                                <i class="fas fa-image fa-4x text-muted opacity-25"></i>
+                                <p class="small text-muted mt-2">Nenhuma imagem selecionada</p>
+                            </div>
+                        </div>
+                        
+                        <label class="btn btn-dark border-secondary w-100 py-2">
+                            <i class="fas fa-camera me-2"></i> ESCOLHER FOTO PRINCIPAL
+                            <input type="file" name="main_image" id="main_image_input" class="hidden" accept="image/*" required>
+                        </label>
+                        <div class="form-text text-muted mt-2">Esta será a imagem exibida no grid principal do portfólio.</div>
+
+                        <hr class="border-secondary my-4">
+
+                        <!-- Botões de Ação Final -->
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg fw-bold">
+                                <i class="fas fa-save me-2"></i> PUBLICAR PROJETO
+                            </button>
+                            <a href="/admin/portfolio" class="btn btn-outline-secondary">CANCELAR</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+<style>
+    /* Estilos para a área de upload */
+    .upload-zone {
+        border: 2px dashed var(--border-color);
+        border-radius: var(--radius-lg);
+        background: rgba(0,0,0,0.1);
+        transition: all 0.3s;
+        cursor: pointer;
+    }
+
+    .upload-zone:hover {
+        border-color: var(--primary);
+        background: rgba(var(--primary-rgb), 0.05);
+    }
+
+    .preview-box {
+        width: 100%;
+        aspect-ratio: 4/3;
+        background: var(--bg-dark);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .preview-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Estilo para as fotos da galeria no grid */
+    .gallery-preview-item {
+        position: relative;
+        aspect-ratio: 1/1;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid var(--border-color);
+    }
+
+    .gallery-preview-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .remove-preview {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background: rgba(220, 53, 69, 0.8);
+        color: white;
+        border: none;
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        font-size: 0.7rem;
+        cursor: pointer;
+    }
+</style>
+
+<script>
+    /**
+     * Script de Preview para o Portfólio
+     */
+    document.addEventListener('DOMContentLoaded', () => {
+        // 1. Preview da Imagem de Destaque
+        const mainInput = document.getElementById('main_image_input');
+        const mainPreview = document.getElementById('main_preview_box');
+
+        mainInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    mainPreview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // 2. Preview da Galeria Múltipla
+        const galleryInput = document.getElementById('gallery_input');
+        const galleryPreview = document.getElementById('gallery_preview');
+
+        galleryInput.addEventListener('change', function() {
+            galleryPreview.innerHTML = ''; // Limpa prévia anterior
+            const files = Array.from(this.files);
+
+            if (files.length > 10) {
+                alert('Limite máximo de 10 imagens por galeria atingido.');
+                this.value = '';
+                return;
+            }
+
+            files.forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const col = document.createElement('div');
+                    col.className = 'col-6 col-sm-4 col-md-3';
+                    col.innerHTML = `
+                        <div class="gallery-preview-item">
+                            <img src="${e.target.result}" alt="Galeria ${index}">
+                            <div class="small bg-dark text-white text-center py-1 opacity-75">Foto ${index+1}</div>
+                        </div>
+                    `;
+                    galleryPreview.appendChild(col);
+                }
+                reader.readAsDataURL(file);
+            });
+        });
+    });
+</script>

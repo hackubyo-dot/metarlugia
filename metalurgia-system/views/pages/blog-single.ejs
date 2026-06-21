@@ -1,0 +1,198 @@
+<!-- 
+    BLOG-SINGLE.EJS - LEITURA DE ARTIGO TÉCNICO
+    Metalurgia Futurística Leonardo Serra 
+-->
+
+<article class="blog-post-detail">
+    
+    <!-- 1. CABEÇALHO DO POST (HERO) -->
+    <header class="blog-single-header">
+        <!-- Imagem de fundo com Parallax suave -->
+        <div class="blog-single-bg" style="background-image: url('<%= post.thumb_url || '/images/blog-default.jpg' %>');"></div>
+        <div class="hero-overlay"></div>
+        
+        <div class="container">
+            <div class="blog-header-content">
+                <!-- Categoria -->
+                <nav aria-label="breadcrumb" class="mb-4" data-aos="fade-up">
+                    <span class="blog-category-badge" style="position: static;">
+                        <%= post.category || 'Engenharia' %>
+                    </span>
+                </nav>
+
+                <!-- Título Principal -->
+                <h1 class="blog-single-title syncopate" data-aos="fade-up" data-aos-delay="100">
+                    <%= post.title %>
+                </h1>
+
+                <!-- Meta Informações -->
+                <div class="blog-meta-main" data-aos="fade-up" data-aos-delay="200">
+                    <div class="blog-author">
+                        <img src="<%= (post.author && post.author.avatar_url) ? post.author.avatar_url : '/images/logo.png' %>" 
+                             alt="<%= helpers.authorName(post.author) %>" 
+                             class="blog-author-img">
+                        <span>Por <strong><%= helpers.authorName(post.author) %></strong></span>
+                    </div>
+                    <span class="meta-divider"></span>
+                    <div class="blog-post-date">
+                        <i class="far fa-calendar-alt me-2"></i>
+                        <%= helpers.formatDate(post.published_at) %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. CORPO DO ARTIGO -->
+    <section class="blog-content-area">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 col-xl-8">
+                    
+                    <div class="blog-post-body" data-aos="fade-up">
+                        <!-- O conteúdo do banco é injetado como HTML bruto -->
+                        <%- post.content %>
+                        
+                        <!-- Tags do Artigo -->
+                        <% if (post.tags && post.tags.length > 0) { %>
+                            <div class="post-tags-wrapper mt-5 pt-4 border-top">
+                                <span class="me-3 font-weight-bold"><i class="fas fa-tags me-2"></i>TAGS:</span>
+                                <% post.tags.forEach(tag => { %>
+                                    <span class="tag-item">#<%= tag %></span>
+                                <% }); %>
+                            </div>
+                        <% } %>
+                    </div>
+
+                    <!-- 3. COMPARTILHAMENTO E AÇÕES -->
+                    <div class="post-footer-actions mt-5 d-flex justify-content-between align-items-center" data-aos="fade-up">
+                        <a href="/blog" class="btn-outline">
+                            <i class="fas fa-arrow-left me-2"></i> VOLTAR AO BLOG
+                        </a>
+
+                        <div class="share-buttons">
+                            <span class="me-3 d-none d-md-inline">Compartilhar:</span>
+                            <a href="https://wa.me/?text=Confira este artigo: <%= post.title %> - <%= seo.canonical %>" 
+                               target="_blank" class="share-btn wa" title="Compartilhar no WhatsApp">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/sharing/share-offsite/?url=<%= seo.canonical %>" 
+                               target="_blank" class="share-btn in" title="Compartilhar no LinkedIn">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+</article>
+
+<style>
+    /* Estilos Adicionais Específicos para a Página de Artigo */
+    .blog-single-header {
+        position: relative;
+        min-height: 60vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        background-color: #000;
+    }
+
+    .blog-single-bg {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background-size: cover;
+        background-position: center;
+        opacity: 0.5;
+        filter: blur(2px);
+        z-index: 0;
+    }
+
+    .blog-header-content {
+        position: relative;
+        z-index: 2;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .meta-divider {
+        width: 1px;
+        height: 20px;
+        background: rgba(255,255,255,0.2);
+        display: inline-block;
+    }
+
+    .blog-content-area {
+        margin-top: -80px; /* Sobrepõe levemente o hero */
+        padding-bottom: 100px;
+    }
+
+    .tag-item {
+        display: inline-block;
+        background: var(--bg-elevated);
+        color: var(--text-secondary);
+        padding: 0.3rem 0.8rem;
+        border-radius: var(--radius-sm);
+        font-size: 0.85rem;
+        margin-right: 0.5rem;
+        border: 1px solid var(--border-color);
+        transition: all 0.3s;
+    }
+
+    .tag-item:hover {
+        background: var(--primary);
+        color: #000;
+        border-color: var(--primary);
+    }
+
+    .share-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        margin-left: 0.5rem;
+        transition: transform 0.3s;
+    }
+
+    .share-btn:hover {
+        transform: translateY(-3px);
+        color: #fff;
+    }
+
+    .share-btn.wa { background: #25D366; }
+    .share-btn.in { background: #0077b5; }
+
+    /* Estilização do Conteúdo Dinâmico */
+    .blog-post-body img {
+        border-radius: var(--radius-lg);
+        margin: 2rem 0;
+        box-shadow: var(--shadow-lg);
+        width: 100%;
+    }
+
+    @media (max-width: 768px) {
+        .blog-single-header { min-height: 50vh; padding: 120px 0 100px; }
+        .meta-divider { display: none; }
+        .blog-meta-main { flex-direction: column; gap: 1.5rem; }
+    }
+</style>
+
+<script>
+    /**
+     * Efeito Parallax Simples no Fundo do Artigo
+     */
+    window.addEventListener('scroll', () => {
+        const bg = document.querySelector('.blog-single-bg');
+        if (bg) {
+            let offset = window.pageYOffset;
+            bg.style.backgroundPositionY = (offset * 0.5) + 'px';
+        }
+    });
+</script>

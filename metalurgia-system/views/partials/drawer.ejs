@@ -1,0 +1,94 @@
+<!-- ==================== MOBILE DRAWER (MENU LATERAL) ==================== -->
+<div class="mobile-drawer" id="mobileDrawer">
+    
+    <!-- Cabeçalho do Drawer -->
+    <div class="drawer-header">
+        <div class="drawer-logo">
+            <img src="/images/logo.png" alt="Metalurgia Logo" class="drawer-logo-img">
+            <span>METALURGIA FUTURÍSTICA</span>
+        </div>
+        <!-- Botão para fechar -->
+        <button class="drawer-close" id="drawerClose" aria-label="Fechar Menu">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <!-- Navegação Vertical -->
+    <div class="drawer-nav">
+        <a href="/#home" class="<%= helpers.isActive(currentPath, '/') %>">INÍCIO</a>
+        <a href="/#historia">NOSSA HISTÓRIA</a>
+        <a href="/#servicos">SERVIÇOS</a>
+        <a href="/#portfolio">PORTFÓLIO</a>
+        <a href="/#download">CATÁLOGO</a>
+        <a href="/blog" class="<%= helpers.isActive(currentPath, '/blog') %>">BLOG</a>
+        <a href="/#contacto">CONTATO</a>
+    </div>
+
+    <!-- Rodapé do Drawer com Botão de Ação -->
+    <div class="drawer-footer">
+        <a href="/#contacto" class="btn-primary w-100" id="drawerContactBtn">
+            SOLICITAR ORÇAMENTO
+        </a>
+        
+        <!-- Redes Sociais no Mobile Drawer -->
+        <div class="drawer-social mt-4 text-center" style="display: flex; justify-content: center; gap: 20px;">
+            <a href="#" style="color: var(--text-secondary); font-size: 1.2rem;"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" style="color: var(--text-secondary); font-size: 1.2rem;"><i class="fab fa-instagram"></i></a>
+            <a href="<%= helpers.whatsappLink('Olá, vim pelo site mobile.') %>" style="color: var(--text-secondary); font-size: 1.2rem;"><i class="fab fa-whatsapp"></i></a>
+        </div>
+    </div>
+</div>
+
+<!-- Overlay (Fundo escurecido quando o menu abre) -->
+<div class="drawer-overlay" id="drawerOverlay"></div>
+
+<script>
+    /**
+     * Lógica de Controle do Drawer Mobile
+     */
+    (function() {
+        const mobileToggle = document.getElementById('mobileToggle');
+        const drawerClose = document.getElementById('drawerClose');
+        const mobileDrawer = document.getElementById('mobileDrawer');
+        const drawerOverlay = document.getElementById('drawerOverlay');
+        const drawerLinks = document.querySelectorAll('.drawer-nav a');
+
+        // Função para Abrir
+        const openDrawer = () => {
+            mobileDrawer.classList.add('active');
+            drawerOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Impede scroll no fundo
+        };
+
+        // Função para Fechar
+        const closeDrawer = () => {
+            mobileDrawer.classList.remove('active');
+            drawerOverlay.classList.remove('active');
+            document.body.style.overflow = ''; // Libera scroll
+        };
+
+        // Eventos
+        if (mobileToggle) mobileToggle.addEventListener('click', openDrawer);
+        if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
+        if (drawerOverlay) drawerOverlay.addEventListener('click', closeDrawer);
+
+        // Fecha automaticamente ao clicar em qualquer link
+        drawerLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                // Se for link de âncora na mesma página, fecha o drawer
+                setTimeout(closeDrawer, 300);
+            });
+        });
+
+        // Ajuste de links se não estiver na Home
+        const isHomePage = window.location.pathname === '/';
+        if (!isHomePage) {
+            drawerLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && href.startsWith('#')) {
+                    link.setAttribute('href', '/' + href);
+                }
+            });
+        }
+    })();
+</script>

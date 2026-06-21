@@ -1,0 +1,269 @@
+<!-- 
+    ADMIN/HERO/EDIT.EJS - EDITAR SLIDE EXISTENTE
+    Metalurgia Futurística Leonardo Serra 
+-->
+
+<div class="container-fluid p-0">
+
+    <!-- Cabeçalho de Navegação -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-1">
+                    <li class="breadcrumb-item"><a href="/admin/hero" class="text-primary text-decoration-none">Hero Slider</a></li>
+                    <li class="breadcrumb-item active text-white" aria-current="page">Editar Slide</li>
+                </ol>
+            </nav>
+            <h2 class="fw-bold mb-0">Alterar Slide</h2>
+        </div>
+        <a href="/admin/hero" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i> VOLTAR
+        </a>
+    </div>
+
+    <div class="row">
+        <!-- Coluna do Formulário -->
+        <div class="col-xl-8">
+            <div class="card bg-dark-2 border-secondary shadow-sm">
+                <div class="card-body p-4">
+                    <form action="/admin/hero/update/<%= slide.id %>" method="POST" enctype="multipart/form-data" id="heroEditForm">
+                        
+                        <div class="row g-4">
+                            <!-- Título Principal -->
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Título do Slide</label>
+                                <input type="text" name="title" class="form-control bg-dark border-secondary text-white" 
+                                       value="<%= slide.title %>" required>
+                            </div>
+
+                            <!-- Subtítulo / Badge -->
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Subtítulo (Badge)</label>
+                                <input type="text" name="subtitle" class="form-control bg-dark border-secondary text-white" 
+                                       value="<%= slide.subtitle %>">
+                            </div>
+
+                            <!-- Ordem de Exibição -->
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Ordem de Exibição</label>
+                                <input type="number" name="display_order" class="form-control bg-dark border-secondary text-white" 
+                                       value="<%= slide.display_order %>" min="0">
+                            </div>
+
+                            <!-- Descrição -->
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Descrição</label>
+                                <textarea name="description" class="form-control bg-dark border-secondary text-white" rows="2"><%= slide.description %></textarea>
+                            </div>
+
+                            <!-- Botão -->
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Texto do Botão</label>
+                                <input type="text" name="button_text" class="form-control bg-dark border-secondary text-white" 
+                                       value="<%= slide.button_text %>">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Link do Botão</label>
+                                <input type="text" name="button_link" class="form-control bg-dark border-secondary text-white" 
+                                       value="<%= slide.button_link %>">
+                            </div>
+
+                            <!-- Configuração de Mídia Atual e Nova -->
+                            <div class="col-md-12 pt-3 border-top border-secondary mt-4">
+                                <h5 class="fw-bold mb-3"><i class="fas fa-photo-video me-2 text-primary"></i>Alterar Mídia</h5>
+                                
+                                <div class="row g-3 align-items-end">
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold">Tipo de Mídia Atual</label>
+                                        <select name="media_type" id="media_type" class="form-select bg-dark border-secondary text-white">
+                                            <option value="image" <%= slide.media_type === 'image' ? 'selected' : '' %>>Imagem Estática</option>
+                                            <option value="video" <%= slide.media_type === 'video' ? 'selected' : '' %>>Vídeo (MP4)</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <label class="form-label fw-bold">Substituir Arquivo (Opcional)</label>
+                                        <input type="file" name="media_file" id="media_file" class="form-control bg-dark border-secondary text-white" 
+                                               accept="image/*,video/mp4">
+                                        <div class="form-text text-muted">Deixe vazio para manter a mídia atual.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Status -->
+                            <div class="col-md-12">
+                                <div class="form-check form-switch p-3 bg-dark rounded border border-secondary">
+                                    <input class="form-check-input ms-0 me-3" type="checkbox" name="is_active" value="true" id="is_active" <%= slide.is_active ? 'checked' : '' %>>
+                                    <label class="form-check-label fw-bold" for="is_active">Slide Ativo (Exibir na Home Page)</label>
+                                </div>
+                            </div>
+
+                            <!-- Botões de Ação -->
+                            <div class="col-md-12 pt-4">
+                                <button type="submit" class="btn btn-primary px-5 py-2">
+                                    <i class="fas fa-sync-alt me-2"></i> ATUALIZAR SLIDE
+                                </button>
+                                <a href="/admin/hero" class="btn btn-dark ms-2">CANCELAR</a>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Coluna de Preview Lateral -->
+        <div class="col-xl-4 mt-4 mt-xl-0">
+            <div class="card bg-dark-2 border-secondary shadow-sm sticky-top" style="top: 100px;">
+                <div class="card-header bg-transparent border-secondary py-3">
+                    <h5 class="mb-0 fw-bold"><i class="fas fa-eye me-2 text-info"></i>Mídia Atual</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Preview da Mídia já salva no Banco -->
+                    <div class="preview-hero-box shadow-lg" id="media_preview_container">
+                        <div id="media_preview">
+                            <% if (slide.media_type === 'video') { %>
+                                <video autoplay muted loop playsinline class="preview-video">
+                                    <source src="<%= slide.media_url %>" type="video/mp4">
+                                </video>
+                            <% } else { %>
+                                <img src="<%= slide.media_url %>" alt="Slide atual" class="preview-img">
+                            <% } %>
+                        </div>
+                        <div class="preview-overlay">
+                            <div class="preview-badge" id="preview_subtitle"><%= slide.subtitle %></div>
+                            <h4 class="preview-title" id="preview_title"><%= slide.title %></h4>
+                            <div class="preview-btn" id="preview_button"><%= slide.button_text %></div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 p-3 bg-info bg-opacity-10 border border-info border-opacity-25 rounded">
+                        <p class="small text-info mb-0">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Nota:</strong> Ao subir uma nova mídia, o sistema apagará automaticamente o arquivo antigo do Storage para manter seu banco limpo.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    /* Estilos herdados e customizados para o edit */
+    .preview-hero-box {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16/9;
+        background: #000;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 2px solid var(--border-color);
+    }
+
+    .preview-overlay {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.4);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        z-index: 2;
+    }
+
+    .preview-badge {
+        font-size: 0.5rem;
+        color: var(--primary);
+        font-weight: 900;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 5px;
+    }
+
+    .preview-title {
+        font-size: 1rem;
+        font-weight: 800;
+        color: #fff;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .preview-btn {
+        font-size: 0.6rem;
+        padding: 5px 12px;
+        background: var(--primary);
+        color: #000;
+        border-radius: 4px;
+        font-weight: 800;
+    }
+
+    .preview-img, .preview-video {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        object-fit: cover;
+        z-index: 1;
+    }
+
+    .form-check-input:checked {
+        background-color: var(--primary);
+        border-color: var(--primary);
+    }
+</style>
+
+<script>
+    /**
+     * Script de Live Preview para Edição
+     */
+    document.addEventListener('DOMContentLoaded', () => {
+        const fileInput = document.getElementById('media_file');
+        const mediaPreview = document.getElementById('media_preview');
+        const typeSelect = document.getElementById('media_type');
+        
+        // Sincronização de Textos
+        const inputTitle = document.querySelector('input[name="title"]');
+        const inputSubtitle = document.querySelector('input[name="subtitle"]');
+        const inputButton = document.querySelector('input[name="button_text"]');
+
+        inputTitle.addEventListener('input', e => document.getElementById('preview_title').innerText = e.target.value || 'Título do Slide');
+        inputSubtitle.addEventListener('input', e => document.getElementById('preview_subtitle').innerText = e.target.value || 'Badge');
+        inputButton.addEventListener('input', e => document.getElementById('preview_button').innerText = e.target.value || 'Botão');
+
+        // Lógica de Preview de Novo Arquivo
+        fileInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                const type = typeSelect.value;
+
+                reader.onload = function(e) {
+                    mediaPreview.innerHTML = '';
+                    if (type === 'image') {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.className = 'preview-img';
+                        mediaPreview.appendChild(img);
+                    } else {
+                        const video = document.createElement('video');
+                        video.src = e.target.result;
+                        video.className = 'preview-video';
+                        video.autoplay = true;
+                        video.muted = true;
+                        video.loop = true;
+                        mediaPreview.appendChild(video);
+                    }
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Alerta de Mudança de Tipo
+        typeSelect.addEventListener('change', () => {
+            if (fileInput.value) {
+                alert('O tipo de mídia foi alterado. Por favor, re-selecione o arquivo para conferir o preview.');
+                fileInput.value = '';
+            }
+        });
+    });
+</script>

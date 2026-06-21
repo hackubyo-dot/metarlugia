@@ -1,0 +1,93 @@
+<!-- ==================== LIGHTBOX MODAL (VISUALIZADOR DE PORTFÓLIO) ==================== -->
+<div class="lightbox-modal" id="lightboxModal" role="dialog" aria-modal="true" aria-labelledby="lightboxCaption">
+    
+    <div class="lightbox-container">
+        
+        <!-- Botão de Fechar (Topo Direita) -->
+        <button class="lightbox-close" id="lightboxClose" aria-label="Fechar Visualizador">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <!-- Botão Navegação: Anterior -->
+        <button class="lightbox-prev" id="lightboxPrev" aria-label="Imagem Anterior">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+
+        <!-- Área de Conteúdo Central -->
+        <div class="lightbox-content">
+            <!-- Imagem Principal (URL injetada via gallery.js) -->
+            <img class="lightbox-image" id="lightboxImage" src="" alt="Destaque do Portfólio">
+            
+            <!-- Legenda Dinâmica -->
+            <div class="lightbox-caption" id="lightboxCaption">
+                <!-- Conteúdo populado via JavaScript -->
+                <h4 class="syncopate">Título do Projeto</h4>
+                <p>Nome do Cliente / Categoria</p>
+            </div>
+        </div>
+
+        <!-- Botão Navegação: Próximo -->
+        <button class="lightbox-next" id="lightboxNext" aria-label="Próxima Imagem">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+
+        <!-- Contador de Posição (Ex: 2 / 15) -->
+        <div class="lightbox-counter" id="lightboxCounter">
+            0 / 0
+        </div>
+
+    </div>
+</div>
+
+<style>
+    /**
+     * Estilos de transição e comportamento crítico.
+     * Complementares ao arquivo portfolio.css
+     */
+    .lightbox-modal {
+        display: none; /* Controlado pelo gallery.js */
+        transition: opacity 0.4s ease-in-out;
+    }
+
+    .lightbox-modal.active {
+        display: flex !important;
+    }
+
+    /* Garante que a imagem nunca ultrapasse a tela */
+    .lightbox-image {
+        user-select: none;
+        -webkit-user-drag: none;
+    }
+
+    /* Ajuste de visibilidade dos botões em dispositivos touch */
+    @media (max-width: 768px) {
+        .lightbox-prev, .lightbox-next {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 5px;
+        }
+    }
+</style>
+
+<script>
+    /**
+     * Patch de Segurança e UX para o Lightbox
+     */
+    document.addEventListener('DOMContentLoaded', () => {
+        const lbModal = document.getElementById('lightboxModal');
+        
+        if (lbModal) {
+            // Impede que cliques na imagem fechem o modal (propagação)
+            const lbImg = document.getElementById('lightboxImage');
+            if (lbImg) {
+                lbImg.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                });
+            }
+
+            // Garante que o scroll do body seja restaurado se o modal for removido
+            window.addEventListener('beforeunload', () => {
+                document.body.style.overflow = '';
+            });
+        }
+    });
+</script>

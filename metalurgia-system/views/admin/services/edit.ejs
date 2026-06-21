@@ -1,0 +1,211 @@
+<!-- 
+    ADMIN/SERVICES/EDIT.EJS - ALTERAR SERVIÇO EXISTENTE
+    Metalurgia Futurística Leonardo Serra 
+-->
+
+<div class="container-fluid p-0">
+
+    <!-- Cabeçalho de Navegação -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-1">
+                    <li class="breadcrumb-item"><a href="/admin/services" class="text-primary text-decoration-none">Serviços</a></li>
+                    <li class="breadcrumb-item active text-white" aria-current="page">Editar: <%= service.name %></li>
+                </ol>
+            </nav>
+            <h2 class="fw-bold mb-0">Alterar Serviço</h2>
+        </div>
+        <a href="/admin/services" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i> VOLTAR
+        </a>
+    </div>
+
+    <form action="/admin/services/update/<%= service.id %>" method="POST" enctype="multipart/form-data" id="serviceEditForm">
+        <div class="row">
+            
+            <!-- Coluna Principal: Conteúdo -->
+            <div class="col-xl-8">
+                <div class="card bg-dark-2 border-secondary shadow-sm mb-4">
+                    <div class="card-header bg-transparent border-secondary py-3 d-flex justify-content-between">
+                        <h5 class="mb-0 fw-bold text-primary"><i class="fas fa-edit me-2"></i>Dados do Serviço</h5>
+                        <span class="badge bg-dark border border-secondary text-muted">ID: <%= service.id.substring(0,8) %></span>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-4">
+                            <!-- Nome do Serviço -->
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Nome da Especialidade</label>
+                                <input type="text" name="name" class="form-control bg-dark border-secondary text-white" 
+                                       value="<%= service.name %>" required>
+                            </div>
+
+                            <!-- Descrição Curta -->
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Descrição Curta (Card da Home)</label>
+                                <textarea name="description" class="form-control bg-dark border-secondary text-white" rows="2" required><%= service.description %></textarea>
+                            </div>
+
+                            <!-- Conteúdo Detalhado -->
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Descrição Completa (Conteúdo do Modal)</label>
+                                <textarea name="full_content" class="form-control bg-dark border-secondary text-white" rows="6"><%= service.full_content %></textarea>
+                            </div>
+
+                            <!-- Categoria e Preço -->
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Categoria</label>
+                                <select name="category" class="form-select bg-dark border-secondary text-white">
+                                    <option value="Industrial" <%= service.category === 'Industrial' ? 'selected' : '' %>>Industrial</option>
+                                    <option value="Residencial" <%= service.category === 'Residencial' ? 'selected' : '' %>>Residencial</option>
+                                    <option value="Comercial" <%= service.category === 'Comercial' ? 'selected' : '' %>>Comercial</option>
+                                    <option value="Usinagem" <%= service.category === 'Usinagem' ? 'selected' : '' %>>Usinagem</option>
+                                    <option value="Design" <%= service.category === 'Design' ? 'selected' : '' %>>Design</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Preço Inicial (Kwanza)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-dark border-secondary text-primary fw-bold">KZ</span>
+                                    <input type="number" name="price_start" class="form-control bg-dark border-secondary text-white" 
+                                           value="<%= service.price_start %>" step="0.01">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coluna Lateral: Mídia, Ícone e Status -->
+            <div class="col-xl-4">
+                
+                <!-- Card de Status -->
+                <div class="card bg-dark-2 border-secondary shadow-sm mb-4">
+                    <div class="card-body">
+                        <div class="form-check form-switch p-2">
+                            <input class="form-check-input" type="checkbox" name="is_active" value="true" id="is_active" <%= service.is_active ? 'checked' : '' %>>
+                            <label class="form-check-label fw-bold text-white ms-2" for="is_active">Serviço Ativo no Site</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card de Ícone -->
+                <div class="card bg-dark-2 border-secondary shadow-sm mb-4">
+                    <div class="card-header bg-transparent border-secondary py-3 text-center">
+                        <h6 class="mb-0 fw-bold text-primary">Ícone Atual</h6>
+                    </div>
+                    <div class="card-body text-center">
+                        <div id="icon_preview_box" class="icon-preview-large mb-3">
+                            <i class="fas <%= service.icon_class || 'fa-tools' %>"></i>
+                        </div>
+                        <input type="text" name="icon_class" id="icon_input" class="form-control form-control-sm bg-dark border-secondary text-white text-center" 
+                               value="<%= service.icon_class %>">
+                    </div>
+                </div>
+
+                <!-- Card de Imagem -->
+                <div class="card bg-dark-2 border-secondary shadow-sm mb-4">
+                    <div class="card-header bg-transparent border-secondary py-3 text-center">
+                        <h6 class="mb-0 fw-bold text-primary">Imagem de Capa</h6>
+                    </div>
+                    <div class="card-body">
+                        <div id="service_preview_box" class="service-preview-box mb-3">
+                            <% if (service.image_url) { %>
+                                <img src="<%= service.image_url %>" alt="Imagem atual">
+                            <% } else { %>
+                                <i class="fas fa-image fa-3x text-muted opacity-25"></i>
+                            <% } %>
+                        </div>
+                        <input type="file" name="image_file" id="service_image_input" class="form-control form-control-sm bg-dark border-secondary text-white" 
+                               accept="image/*">
+                        <div class="form-text small mt-2">Selecione um arquivo apenas se desejar trocar a imagem atual.</div>
+                    </div>
+                </div>
+
+                <!-- Botões de Ação -->
+                <div class="card bg-dark-2 border-secondary shadow-sm">
+                    <div class="card-body">
+                        <button type="submit" class="btn btn-primary w-100 mb-2 py-2 fw-bold">
+                            <i class="fas fa-sync-alt me-2"></i> SALVAR ALTERAÇÕES
+                        </button>
+                        <a href="/admin/services" class="btn btn-outline-secondary w-100">CANCELAR</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+<style>
+    /* Estilos sincronizados com a view de criação */
+    .icon-preview-large {
+        width: 80px;
+        height: 80px;
+        background: var(--bg-dark);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        font-size: 2.5rem;
+        color: var(--primary);
+        transition: all 0.3s;
+    }
+
+    .service-preview-box {
+        width: 100%;
+        aspect-ratio: 16/9;
+        background: var(--bg-dark);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+
+    .service-preview-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .form-check-input:checked {
+        background-color: var(--primary);
+        border-color: var(--primary);
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // 1. Live Icon Preview
+        const iconInput = document.getElementById('icon_input');
+        const iconPreview = document.getElementById('icon_preview_box').querySelector('i');
+
+        iconInput.addEventListener('input', (e) => {
+            const val = e.target.value.trim();
+            if (val.startsWith('fa-')) {
+                iconPreview.className = `fas ${val}`;
+            }
+        });
+
+        // 2. Image Preview for New Upload
+        const imageInput = document.getElementById('service_image_input');
+        const imagePreviewBox = document.getElementById('service_preview_box');
+
+        imageInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreviewBox.innerHTML = `<img src="${e.target.result}" alt="Nova Imagem Preview">`;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    });
+</script>

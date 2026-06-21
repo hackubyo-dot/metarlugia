@@ -1,0 +1,143 @@
+<!-- 
+    ERROR.EJS - PÁGINA DE MANUTENÇÃO E ERROS DO SISTEMA
+    Metalurgia Futurística Leonardo Serra 
+-->
+
+<section class="error-page">
+    <div class="container">
+        <div class="row min-vh-100 align-items-center justify-content-center text-center">
+            <div class="col-lg-8" data-aos="zoom-in">
+                
+                <!-- Iconografia Industrial de Erro -->
+                <div class="error-visual mb-5">
+                    <div class="error-gear-container">
+                        <i class="fas fa-cog gear-1"></i>
+                        <i class="fas fa-cog gear-2"></i>
+                        <span class="error-code"><%= errorCode || '!' %></span>
+                    </div>
+                </div>
+
+                <!-- Mensagens Dinâmicas -->
+                <h1 class="section-title syncopate">
+                    <span class="text-gradient"><%= title || 'OPS! OCORREU UM ERRO' %></span>
+                </h1>
+                
+                <p class="section-subtitle mx-auto mb-5">
+                    <%= errorMessage || 'Não conseguimos processar sua solicitação no momento. O sistema pode estar sob manutenção técnica ou a página foi movida.' %>
+                </p>
+
+                <!-- Ações de Recuperação -->
+                <div class="error-actions d-flex gap-3 justify-content-center flex-wrap">
+                    <a href="/" class="btn-primary">
+                        <i class="fas fa-home me-2"></i> VOLTAR AO INÍCIO
+                    </a>
+                    <a href="/#contacto" class="btn-outline">
+                        <i class="fas fa-headset me-2"></i> SUPORTE TÉCNICO
+                    </a>
+                </div>
+
+                <!-- Detalhes para Desenvolvedor (Apenas em ambiente de teste/dev) -->
+                <% if (typeof stack !== 'undefined' && Object.keys(stack).length > 0) { %>
+                    <div class="debug-info mt-5 text-start">
+                        <button class="btn btn-sm btn-dark w-100 mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDebug">
+                            Ver Detalhes Técnicos (Modo Debug)
+                        </button>
+                        <div class="collapse" id="collapseDebug">
+                            <pre class="bg-dark text-danger p-3 rounded"><code><%= stack %></code></pre>
+                        </div>
+                    </div>
+                <% } %>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Estilização específica da Error Page */
+    .error-page {
+        background: radial-gradient(circle at center, var(--bg-dark-2) 0%, var(--bg-dark) 100%);
+        overflow: hidden;
+    }
+
+    .error-visual {
+        position: relative;
+        height: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .error-gear-container {
+        position: relative;
+        font-size: 8rem;
+        color: var(--border-color-2);
+    }
+
+    .gear-1 {
+        position: absolute;
+        top: -40px;
+        left: -60px;
+        animation: spin 8s linear infinite;
+        opacity: 0.3;
+    }
+
+    .gear-2 {
+        position: absolute;
+        bottom: -20px;
+        right: -50px;
+        animation: spin-reverse 6s linear infinite;
+        opacity: 0.2;
+        font-size: 6rem;
+    }
+
+    .error-code {
+        font-size: 10rem;
+        font-weight: 900;
+        color: var(--primary);
+        text-shadow: 0 0 30px var(--primary-glow);
+        position: relative;
+        z-index: 2;
+        letter-spacing: -5px;
+    }
+
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
+    @keyframes spin-reverse {
+        from { transform: rotate(360deg); }
+        to { transform: rotate(0deg); }
+    }
+
+    .debug-info pre {
+        font-size: 0.7rem;
+        max-height: 300px;
+        overflow-y: auto;
+        border: 1px solid var(--border-color);
+    }
+
+    @media (max-width: 576px) {
+        .error-code { font-size: 6rem; }
+        .error-gear-container { font-size: 4rem; }
+        .error-actions { flex-direction: column; }
+        .error-actions .btn-primary, 
+        .error-actions .btn-outline { width: 100%; }
+    }
+</style>
+
+<script>
+    /**
+     * Animação suave para as engrenagens baseada no mouse (Parallax)
+     */
+    document.addEventListener('mousemove', (e) => {
+        const gears = document.querySelectorAll('.error-gear-container i');
+        const x = (window.innerWidth - e.pageX * 2) / 100;
+        const y = (window.innerHeight - e.pageY * 2) / 100;
+
+        gears.forEach(gear => {
+            gear.style.transform = `translateX(${x}px) translateY(${y}px)`;
+        });
+    });
+</script>

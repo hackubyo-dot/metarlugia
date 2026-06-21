@@ -1,0 +1,124 @@
+<!-- ==================== FOOTER PRINCIPAL ==================== -->
+<footer class="footer-new">
+    <div class="container">
+        
+        <!-- Grid Superior: 5 Colunas -->
+        <div class="footer-grid-new">
+            
+            <!-- Coluna 1: Branding -->
+            <div class="footer-col" data-aos="fade-up">
+                <div class="footer-logo-new">
+                    <img src="/images/logo.png" alt="Metalurgia Futurística Logo" class="footer-logo-img">
+                    <span>METALURGIA FUTURÍSTICA</span>
+                </div>
+                <p>
+                    Excelência em metalurgia de precisão e engenharia do aço em Angola. 
+                    Transformamos metal em soluções sólidas que constroem o futuro da indústria nacional.
+                </p>
+            </div>
+
+            <!-- Coluna 2: Links Úteis -->
+            <div class="footer-col" data-aos="fade-up" data-aos-delay="100">
+                <h4>Navegação</h4>
+                <ul>
+                    <li><a href="/#home">Início</a></li>
+                    <li><a href="/#historia">Nossa História</a></li>
+                    <li><a href="/#servicos">Serviços</a></li>
+                    <li><a href="/#portfolio">Portfólio</a></li>
+                </ul>
+            </div>
+
+            <!-- Coluna 3: Especialidades -->
+            <div class="footer-col" data-aos="fade-up" data-aos-delay="200">
+                <h4>Serviços</h4>
+                <ul>
+                    <li><a href="/#servicos">Estruturas Pesadas</a></li>
+                    <li><a href="/#servicos">Corte CNC Plasma</a></li>
+                    <li><a href="/#servicos">Serralheria de Arte</a></li>
+                    <li><a href="/#servicos">Manutenção Industrial</a></li>
+                </ul>
+            </div>
+
+            <!-- Coluna 4: Recursos -->
+            <div class="footer-col" data-aos="fade-up" data-aos-delay="300">
+                <h4>Recursos</h4>
+                <ul>
+                    <li><a href="/#download">Catálogo Técnico</a></li>
+                    <li><a href="/blog">Blog Industrial</a></li>
+                    <li><a href="/#contacto">Solicitar Orçamento</a></li>
+                    <li><a href="/auth/login" rel="nofollow">Acesso Administrativo</a></li>
+                </ul>
+            </div>
+
+            <!-- Coluna 5: Newsletter -->
+            <div class="footer-col" data-aos="fade-up" data-aos-delay="400">
+                <h4>Newsletter</h4>
+                <p class="mb-3" style="font-size: 0.85rem;">Receba atualizações técnicas e novidades industriais.</p>
+                <form class="subscribe-form" id="newsletterForm">
+                    <input type="email" name="email" placeholder="Seu melhor e-mail" required>
+                    <button type="submit" aria-label="Inscrever-se">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+                <p class="privacy-note">
+                    <i class="fas fa-lock"></i> Seus dados estão seguros conosco.
+                </p>
+            </div>
+        </div>
+
+        <!-- Divisor Intermediário: Social e Logo -->
+        <div class="footer-middle">
+            <div class="footer-logo-bottom">
+                <img src="/images/logo.png" alt="Metalurgia Logo" class="footer-bottom-logo">
+                <span class="syncopate ms-2" style="font-weight: 800; font-size: 0.8rem; color: var(--text-muted);">
+                    ANGOLA &bull; LUANDA &bull; VIANA
+                </span>
+            </div>
+            
+            <div class="footer-social-bottom">
+                <a href="#" target="_blank" title="Siga-nos no Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" target="_blank" title="Siga-nos no Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" target="_blank" title="LinkedIn Profissional"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" target="_blank" title="Canal Youtube"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+
+        <!-- Barra Final: Copyright e Legal -->
+        <div class="footer-bottom-new">
+            <p>
+                <a href="#">Política de Privacidade</a>
+                <a href="#">Termos de Uso</a>
+                <a href="#">Cookies</a>
+                <span>
+                    &copy; <span id="currentYear"><%= year %></span> 
+                    <strong>Metalurgia Futurística Leonardo Serra</strong>. 
+                    Todos os direitos reservados.
+                </span>
+            </p>
+        </div>
+
+    </div>
+</footer>
+
+<script>
+    /**
+     * Sincronização do ano atual no rodapé
+     */
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    /**
+     * Ajuste para links internos quando o usuário está em subpáginas (ex: Blog)
+     */
+    (function() {
+        const isHomePage = window.location.pathname === '/';
+        if (!isHomePage) {
+            const internalLinks = document.querySelectorAll('.footer-col ul a, .footer-bottom-new a');
+            internalLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && href.startsWith('#')) {
+                    link.setAttribute('href', '/' + href);
+                }
+            });
+        }
+    })();
+</script>

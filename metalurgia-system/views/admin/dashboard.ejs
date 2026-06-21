@@ -1,0 +1,204 @@
+<!-- 
+    DASHBOARD.EJS - VISÃO GERAL DO SISTEMA
+    Painel de Controle Metalurgia Futurística
+-->
+
+<div class="container-fluid p-0">
+    
+    <!-- Cabeçalho de Boas-vindas -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2 class="fw-bold mb-1">Olá, <%= user.name %>!</h2>
+            <p class="text-muted">Aqui está o que está acontecendo na Metalurgia Futurística hoje.</p>
+        </div>
+    </div>
+
+    <!-- CARDS DE ESTATÍSTICAS (KPIs) -->
+    <div class="row g-4 mb-5">
+        <!-- Serviços Ativos -->
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-tools"></i>
+                </div>
+                <h3 class="fw-bold mb-1"><%= stats.services %></h3>
+                <p class="text-muted mb-0 small text-uppercase fw-bold">Serviços Ativos</p>
+                <div class="mt-3">
+                    <a href="/admin/services" class="btn btn-sm btn-link p-0 text-primary fw-bold text-decoration-none">
+                        Gerenciar <i class="fas fa-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Projetos no Portfólio -->
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="stat-card">
+                <div class="stat-icon" style="background: rgba(13, 110, 253, 0.1); color: #0d6efd;">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+                <h3 class="fw-bold mb-1"><%= stats.projects %></h3>
+                <p class="text-muted mb-0 small text-uppercase fw-bold">Obras no Portfólio</p>
+                <div class="mt-3">
+                    <a href="/admin/portfolio" class="btn btn-sm btn-link p-0 text-primary fw-bold text-decoration-none" style="color: #0d6efd !important;">
+                        Ver Obras <i class="fas fa-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Artigos do Blog -->
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="stat-card">
+                <div class="stat-icon" style="background: rgba(25, 135, 84, 0.1); color: #198754;">
+                    <i class="fas fa-newspaper"></i>
+                </div>
+                <h3 class="fw-bold mb-1"><%= stats.posts %></h3>
+                <p class="text-muted mb-0 small text-uppercase fw-bold">Artigos Publicados</p>
+                <div class="mt-3">
+                    <a href="/admin/blog" class="btn btn-sm btn-link p-0 text-success fw-bold text-decoration-none">
+                        Ir ao Blog <i class="fas fa-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total de Leads -->
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="stat-card">
+                <div class="stat-icon" style="background: rgba(220, 53, 69, 0.1); color: #dc3545;">
+                    <i class="fas fa-envelope-open-text"></i>
+                </div>
+                <h3 class="fw-bold mb-1"><%= stats.leads %></h3>
+                <p class="text-muted mb-0 small text-uppercase fw-bold">Contatos Recebidos</p>
+                <div class="mt-3">
+                    <a href="/admin/leads" class="btn btn-sm btn-link p-0 text-danger fw-bold text-decoration-none">
+                        Ver Leads <i class="fas fa-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEÇÃO DE ATIVIDADES RECENTES -->
+    <div class="row">
+        <!-- Tabela de Contatos Recentes -->
+        <div class="col-lg-8">
+            <div class="card bg-dark-2 border-secondary h-100">
+                <div class="card-header bg-transparent border-secondary py-3 d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0 fw-bold"><i class="fas fa-paper-plane me-2 text-primary"></i>Contatos Recentes</h5>
+                    <a href="/admin/leads" class="btn btn-sm btn-outline-secondary">Ver Todos</a>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-dark table-hover mb-0 align-middle">
+                            <thead class="table-light text-dark">
+                                <tr>
+                                    <th class="ps-4">Nome</th>
+                                    <th>E-mail</th>
+                                    <th>Data</th>
+                                    <th>Status</th>
+                                    <th class="text-center">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if (recentLeads && recentLeads.length > 0) { %>
+                                    <% recentLeads.forEach(lead => { %>
+                                        <tr class="lead-row <%= lead.is_read ? '' : 'unread fw-bold' %>">
+                                            <td class="ps-4"><%= lead.name %></td>
+                                            <td><%= lead.email %></td>
+                                            <td><%= helpers.formatDateShort(lead.created_at) %></td>
+                                            <td>
+                                                <% if (!lead.is_read) { %>
+                                                    <span class="badge bg-danger">Novo</span>
+                                                <% } else { %>
+                                                    <span class="badge bg-secondary">Lido</span>
+                                                <% } %>
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="/admin/leads" class="btn btn-sm btn-primary" title="Visualizar">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <% }); %>
+                                <% } else { %>
+                                    <tr>
+                                        <td colspan="5" class="text-center py-5 text-muted">
+                                            Nenhum contato recebido recentemente.
+                                        </td>
+                                    </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shortcuts / Quick Actions -->
+        <div class="col-lg-4 mt-4 mt-lg-0">
+            <div class="card bg-dark-2 border-secondary h-100">
+                <div class="card-header bg-transparent border-secondary py-3">
+                    <h5 class="mb-0 fw-bold"><i class="fas fa-bolt me-2 text-warning"></i>Ações Rápidas</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-3">
+                        <a href="/admin/blog/create" class="btn btn-dark border-secondary text-start p-3 d-flex align-items-center">
+                            <div class="bg-primary text-dark rounded-circle p-2 me-3" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-plus"></i>
+                            </div>
+                            <div>
+                                <div class="fw-bold">Novo Artigo</div>
+                                <div class="small text-muted">Escrever para o blog</div>
+                            </div>
+                        </a>
+
+                        <a href="/admin/portfolio/create" class="btn btn-dark border-secondary text-start p-3 d-flex align-items-center">
+                            <div class="bg-info text-dark rounded-circle p-2 me-3" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-hammer"></i>
+                            </div>
+                            <div>
+                                <div class="fw-bold">Adicionar Projeto</div>
+                                <div class="small text-muted">Atualizar portfólio de obras</div>
+                            </div>
+                        </a>
+
+                        <a href="/admin/hero/create" class="btn btn-dark border-secondary text-start p-3 d-flex align-items-center">
+                            <div class="bg-warning text-dark rounded-circle p-2 me-3" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-image"></i>
+                            </div>
+                            <div>
+                                <div class="fw-bold">Alterar Slider</div>
+                                <div class="small text-muted">Trocar imagens/vídeos da Home</div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="mt-5 p-4 bg-primary text-dark rounded-3">
+                        <h6 class="fw-bold mb-2">Dica de SEO</h6>
+                        <p class="small mb-0">Mantenha seu blog atualizado pelo menos 2 vezes por mês para melhorar sua posição no Google Angola.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    /* Estilos locais para refinamento do Dashboard */
+    .lead-row.unread {
+        background-color: rgba(var(--primary-rgb), 0.03);
+    }
+    .table > :not(caption) > * > * {
+        padding: 1rem 0.5rem;
+    }
+    .card {
+        border-radius: var(--radius-lg);
+    }
+    .btn-dark:hover {
+        background-color: var(--bg-dark-3);
+        border-color: var(--primary);
+    }
+</style>

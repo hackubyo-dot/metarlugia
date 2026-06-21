@@ -1,0 +1,190 @@
+<!-- 
+    ADMIN/BLOG/INDEX.EJS - GESTÃO DE CONTEÚDO EDITORIAL
+    Metalurgia Futurística Leonardo Serra 
+-->
+
+<div class="container-fluid p-0">
+
+    <!-- Cabeçalho da Página -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Blog Industrial</h2>
+            <p class="text-muted">Escreva e gerencie artigos técnicos para atrair novos clientes.</p>
+        </div>
+        <a href="/admin/blog/create" class="btn btn-primary">
+            <i class="fas fa-pen-nib me-2"></i> ESCREVER NOVO ARTIGO
+        </a>
+    </div>
+
+    <!-- Tabela de Artigos -->
+    <div class="card bg-dark-2 border-secondary shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-dark table-hover align-middle mb-0">
+                    <thead class="table-light text-dark">
+                        <tr>
+                            <th class="ps-4">Thumb</th>
+                            <th>Título do Artigo</th>
+                            <th>Categoria</th>
+                            <th>Autor</th>
+                            <th class="text-center">Leituras</th>
+                            <th>Data</th>
+                            <th class="text-center pe-4">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if (posts && posts.length > 0) { %>
+                            <% posts.forEach(post => { %>
+                                <tr>
+                                    <!-- Imagem de Destaque -->
+                                    <td class="ps-4">
+                                        <div class="blog-thumb-mini">
+                                            <img src="<%= post.thumb_url || '/images/blog-default.jpg' %>" alt="Post Thumb">
+                                        </div>
+                                    </td>
+
+                                    <!-- Título e Resumo -->
+                                    <td>
+                                        <div class="fw-bold text-white"><%= post.title %></div>
+                                        <div class="small text-muted text-truncate" style="max-width: 300px;">
+                                            <%= post.excerpt || 'Sem resumo disponível.' %>
+                                        </div>
+                                    </td>
+
+                                    <!-- Categoria -->
+                                    <td>
+                                        <span class="badge bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-25">
+                                            <%= post.category || 'Notícias' %>
+                                        </span>
+                                    </td>
+
+                                    <!-- Autor (Relação com Profiles) -->
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="author-initials me-2">
+                                                <%= helpers.authorName(post.author).charAt(0) %>
+                                            </div>
+                                            <span class="small"><%= helpers.authorName(post.author) %></span>
+                                        </div>
+                                    </td>
+
+                                    <!-- Visualizações -->
+                                    <td class="text-center">
+                                        <div class="view-pill">
+                                            <i class="far fa-eye me-1"></i> <%= post.views_count || 0 %>
+                                        </div>
+                                    </td>
+
+                                    <!-- Data de Publicação -->
+                                    <td>
+                                        <span class="small text-muted">
+                                            <%= helpers.formatDateShort(post.published_at) %>
+                                        </span>
+                                    </td>
+
+                                    <!-- Ações -->
+                                    <td class="text-center pe-4">
+                                        <div class="btn-group">
+                                            <!-- Ver no Site -->
+                                            <a href="/blog/<%= post.slug %>" target="_blank" class="btn btn-sm btn-outline-secondary" title="Visualizar Artigo">
+                                                <i class="fas fa-external-link-alt"></i>
+                                            </a>
+                                            <!-- Editar -->
+                                            <a href="/admin/blog/edit/<%= post.id %>" class="btn btn-sm btn-outline-info" title="Editar Artigo">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <!-- Excluir -->
+                                            <form action="/admin/blog/delete/<%= post.id %>" method="POST" class="d-inline">
+                                                <button type="submit" 
+                                                        class="btn btn-sm btn-outline-danger btn-delete-confirm"
+                                                        data-confirm-message="Deseja realmente excluir este artigo? O conteúdo não poderá ser recuperado."
+                                                        title="Excluir">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <% }); %>
+                        <% } else { %>
+                            <tr>
+                                <td colspan="7" class="text-center py-5">
+                                    <div class="opacity-25 mb-3">
+                                        <i class="fas fa-newspaper fa-4x"></i>
+                                    </div>
+                                    <h5 class="text-muted">Nenhuma notícia publicada.</h5>
+                                    <p class="small text-muted">Aproveite para escrever seu primeiro conteúdo técnico.</p>
+                                </td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card Informativo -->
+    <div class="mt-4 card bg-dark-3 border-primary border-opacity-25">
+        <div class="card-body p-4">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h5 class="fw-bold text-primary mb-2">Por que investir no Blog?</h5>
+                    <p class="text-secondary small mb-0">
+                        Artigos técnicos ajudam no ranqueamento do Google Angola. Escrever sobre "Corte Plasma", "Engenharia de Estruturas" ou "Obras em Luanda" atrai potenciais clientes que buscam soluções no Google.
+                    </p>
+                </div>
+                <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                    <a href="/admin/blog/create" class="btn btn-primary btn-sm">COMEÇAR AGORA</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    /* Miniatura do post na tabela */
+    .blog-thumb-mini {
+        width: 80px;
+        height: 50px;
+        border-radius: 6px;
+        overflow: hidden;
+        border: 1px solid var(--border-color);
+    }
+
+    .blog-thumb-mini img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Avatar simplificado para autor */
+    .author-initials {
+        width: 24px;
+        height: 24px;
+        background: var(--bg-elevated);
+        color: var(--primary);
+        border: 1px solid var(--primary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+        font-weight: 800;
+    }
+
+    /* Pílula de visualizações */
+    .view-pill {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.25rem 0.75rem;
+        background: rgba(255,255,255,0.05);
+        border-radius: var(--radius-full);
+        font-size: 0.8rem;
+        color: var(--text-muted);
+    }
+
+    .table > :not(caption) > * > * {
+        padding: 1rem 0.5rem;
+    }
+</style>

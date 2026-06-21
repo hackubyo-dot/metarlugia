@@ -1,0 +1,195 @@
+<!-- 
+    ADMIN/ABOUT/EDIT.EJS - GESTÃO DA NARRATIVA INSTITUCIONAL
+    Metalurgia Futurística Leonardo Serra 
+-->
+
+<div class="container-fluid p-0">
+
+    <!-- Cabeçalho de Navegação -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-1">
+                    <li class="breadcrumb-item"><a href="/admin/dashboard" class="text-primary text-decoration-none">Dashboard</a></li>
+                    <li class="breadcrumb-item active text-white" aria-current="page">Nossa História</li>
+                </ol>
+            </nav>
+            <h2 class="fw-bold mb-0">Editar Nossa História</h2>
+        </div>
+        <a href="/admin/dashboard" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i> VOLTAR
+        </a>
+    </div>
+
+    <form action="/admin/about/update" method="POST" enctype="multipart/form-data" id="aboutForm">
+        <div class="row">
+            
+            <!-- Coluna Principal: Conteúdo Textual -->
+            <div class="col-xl-7">
+                <div class="card bg-dark-2 border-secondary shadow-sm mb-4">
+                    <div class="card-header bg-transparent border-secondary py-3">
+                        <h5 class="mb-0 fw-bold text-primary"><i class="fas fa-pen-fancy me-2"></i>Conteúdo do Site</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-4">
+                            <!-- Título da Seção -->
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Título Principal</label>
+                                <input type="text" name="title" class="form-control bg-dark border-secondary text-white" 
+                                       value="<%= about.title %>" placeholder="Ex: Da paixão pelo aço à excelência..." required>
+                                <div class="form-text text-muted">A palavra "aço" receberá automaticamente o efeito de gradiente no site.</div>
+                            </div>
+
+                            <!-- Anos de Experiência -->
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Anos de Experiência</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-dark border-secondary text-primary"><i class="fas fa-calendar-check"></i></span>
+                                    <input type="number" name="years_experience" class="form-control bg-dark border-secondary text-white" 
+                                           value="<%= about.years_experience %>" min="1">
+                                </div>
+                            </div>
+
+                            <!-- Texto Institucional -->
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Texto da História (Parágrafo Único)</label>
+                                <textarea name="content" class="form-control bg-dark border-secondary text-white" rows="8" 
+                                          placeholder="Conte como a Metalurgia Futurística começou..." required><%= about.content %></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coluna Lateral: Visual e Foto -->
+            <div class="col-xl-5">
+                
+                <!-- Preview Visual -->
+                <div class="card bg-dark-2 border-secondary shadow-sm mb-4">
+                    <div class="card-header bg-transparent border-secondary py-3">
+                        <h6 class="mb-0 fw-bold text-primary"><i class="fas fa-image me-2"></i>Foto Institucional</h6>
+                    </div>
+                    <div class="card-body text-center">
+                        <!-- Simulador do Glow Circle da Home -->
+                        <div class="about-preview-container mb-4">
+                            <div class="glow-circle-preview">
+                                <div class="circle-inner-preview">
+                                    <img src="<%= about.image_url || '/images/about-industrial-man.jpeg' %>" id="about_preview_img" alt="Leonardo Serra">
+                                </div>
+                            </div>
+                            <div class="floating-badge-preview">
+                                <i class="fas fa-trophy"></i>
+                                <span>+<span id="preview_years"><%= about.years_experience %></span> anos</span>
+                            </div>
+                        </div>
+
+                        <label class="btn btn-dark border-secondary w-100 py-2 mb-3">
+                            <i class="fas fa-camera me-2"></i> ALTERAR FOTO
+                            <input type="file" name="about_image" id="about_image_input" class="hidden" accept="image/*">
+                        </label>
+                        <p class="small text-muted">A foto será recortada automaticamente em formato circular no site.</p>
+                    </div>
+                </div>
+
+                <!-- Botões de Ação -->
+                <div class="card bg-dark-2 border-secondary shadow-sm">
+                    <div class="card-body">
+                        <button type="submit" class="btn btn-primary btn-lg w-100 mb-2 fw-bold">
+                            <i class="fas fa-save me-2"></i> ATUALIZAR HISTÓRIA
+                        </button>
+                        <a href="/admin/dashboard" class="btn btn-outline-secondary w-100">CANCELAR</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+<style>
+    /* Container de preview simulando a Home Page */
+    .about-preview-container {
+        position: relative;
+        height: 300px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #000;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .glow-circle-preview {
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(242, 197, 8, 0.2), transparent 70%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .circle-inner-preview {
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 3px solid var(--primary);
+    }
+
+    .circle-inner-preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .floating-badge-preview {
+        position: absolute;
+        bottom: 40px;
+        right: 40px;
+        background: var(--primary);
+        color: #000;
+        padding: 5px 12px;
+        border-radius: 50px;
+        font-size: 0.7rem;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    .form-control:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 10px rgba(242, 197, 8, 0.2);
+    }
+</style>
+
+<script>
+    /**
+     * Script de Live Preview para Seção Sobre
+     */
+    document.addEventListener('DOMContentLoaded', () => {
+        const imageInput = document.getElementById('about_image_input');
+        const previewImg = document.getElementById('about_preview_img');
+        const yearsInput = document.querySelector('input[name="years_experience"]');
+        const previewYears = document.getElementById('preview_years');
+
+        // Sincroniza anos de experiência
+        yearsInput.addEventListener('input', (e) => {
+            previewYears.innerText = e.target.value || '0';
+        });
+
+        // Sincroniza preview de imagem
+        imageInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    });
+</script>

@@ -1,0 +1,268 @@
+<!-- 
+    ADMIN/PORTFOLIO/EDIT.EJS - ALTERAR PROJETO E GALERIA
+    Metalurgia Futurística Leonardo Serra 
+-->
+
+<div class="container-fluid p-0">
+
+    <!-- Cabeçalho de Navegação -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-1">
+                    <li class="breadcrumb-item"><a href="/admin/portfolio" class="text-primary text-decoration-none">Portfólio</a></li>
+                    <li class="breadcrumb-item active text-white" aria-current="page">Editar: <%= project.title %></li>
+                </ol>
+            </nav>
+            <h2 class="fw-bold mb-0">Alterar Detalhes da Obra</h2>
+        </div>
+        <a href="/admin/portfolio" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i> VOLTAR
+        </a>
+    </div>
+
+    <form action="/admin/portfolio/update/<%= project.id %>" method="POST" enctype="multipart/form-data" id="portfolioEditForm">
+        <div class="row">
+            
+            <!-- Coluna Principal: Informações e Galeria Atual -->
+            <div class="col-xl-8">
+                
+                <!-- Dados Gerais -->
+                <div class="card bg-dark-2 border-secondary shadow-sm mb-4">
+                    <div class="card-header bg-transparent border-secondary py-3">
+                        <h5 class="mb-0 fw-bold text-primary"><i class="fas fa-info-circle me-2"></i>Informações da Obra</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-4">
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Título do Projeto</label>
+                                <input type="text" name="title" class="form-control bg-dark border-secondary text-white" 
+                                       value="<%= project.title %>" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Cliente</label>
+                                <input type="text" name="client" class="form-control bg-dark border-secondary text-white" 
+                                       value="<%= project.client %>" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Categoria</label>
+                                <select name="category" class="form-select bg-dark border-secondary text-white" required>
+                                    <option value="Industrial" <%= project.category === 'Industrial' ? 'selected' : '' %>>Industrial</option>
+                                    <option value="Residencial" <%= project.category === 'Residencial' ? 'selected' : '' %>>Residencial</option>
+                                    <option value="Comercial" <%= project.category === 'Comercial' ? 'selected' : '' %>>Comercial</option>
+                                    <option value="Serralharia Arte" <%= project.category === 'Serralharia Arte' ? 'selected' : '' %>>Serralharia Arte</option>
+                                    <option value="Especial" <%= project.category === 'Especial' ? 'selected' : '' %>>Projeto Especial</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Descrição da Obra</label>
+                                <textarea name="description" class="form-control bg-dark border-secondary text-white" rows="4"><%= project.description %></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gestão da Galeria de Fotos -->
+                <div class="card bg-dark-2 border-secondary shadow-sm mb-4">
+                    <div class="card-header bg-transparent border-secondary py-3">
+                        <h5 class="mb-0 fw-bold text-primary"><i class="fas fa-images me-2"></i>Galeria do Projeto</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        
+                        <!-- Fotos Atuais -->
+                        <h6 class="fw-bold mb-3 text-muted text-uppercase small">Fotos na Nuvem (<%= gallery.length %>)</h6>
+                        <div class="row g-3 mb-5">
+                            <% if (gallery && gallery.length > 0) { %>
+                                <% gallery.forEach(img => { %>
+                                    <div class="col-6 col-sm-4 col-md-3 gallery-edit-item" id="gallery-img-<%= img.id %>">
+                                        <div class="gallery-thumb-container">
+                                            <img src="<%= img.image_url %>" alt="Obra">
+                                            <button type="button" class="btn-remove-gallery-img" 
+                                                    data-image-id="<%= img.id %>"
+                                                    title="Remover foto permanentemente">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                <% }); %>
+                            <% } else { %>
+                                <div class="col-12">
+                                    <p class="small text-muted italic">Nenhuma foto adicional na galeria deste projeto.</p>
+                                </div>
+                            <% } %>
+                        </div>
+
+                        <!-- Upload de Novas Fotos -->
+                        <h6 class="fw-bold mb-3 text-muted text-uppercase small">Adicionar Novas Fotos</h6>
+                        <div class="upload-zone" id="dropzone_gallery">
+                            <input type="file" name="gallery_images" id="gallery_input" class="hidden" multiple accept="image/*">
+                            <div class="text-center py-4 cursor-pointer" onclick="document.getElementById('gallery_input').click()">
+                                <i class="fas fa-plus-circle fa-2x mb-2 text-primary"></i>
+                                <p class="mb-0 fw-bold">Clique para selecionar novas fotos</p>
+                                <p class="small text-muted">Aparecerão no carrossel após salvar.</p>
+                            </div>
+                        </div>
+                        <div id="new_gallery_preview" class="row g-2 mt-3"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coluna Lateral: Imagem de Destaque e Ações -->
+            <div class="col-xl-4">
+                
+                <!-- Imagem Principal -->
+                <div class="card bg-dark-2 border-secondary shadow-sm mb-4 sticky-top" style="top: 100px;">
+                    <div class="card-header bg-transparent border-secondary py-3">
+                        <h6 class="mb-0 fw-bold text-warning"><i class="fas fa-star me-2"></i>Imagem de Destaque</h6>
+                    </div>
+                    <div class="card-body">
+                        <div id="main_preview_box" class="main-preview-edit mb-3">
+                            <img src="<%= project.main_image_url %>" alt="Destaque atual" id="current_main_img">
+                        </div>
+                        
+                        <label class="btn btn-dark border-secondary w-100 mb-3">
+                            <i class="fas fa-exchange-alt me-2"></i> TROCAR IMAGEM
+                            <input type="file" name="main_image" id="main_image_input" class="hidden" accept="image/*">
+                        </label>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg fw-bold">
+                                <i class="fas fa-sync-alt me-2"></i> ATUALIZAR PROJETO
+                            </button>
+                            <a href="/admin/portfolio" class="btn btn-outline-secondary">DESCARTAR ALTERAÇÕES</a>
+                        </div>
+
+                        <div class="mt-4 p-3 bg-dark-3 rounded border border-secondary">
+                            <h6 class="small fw-bold text-primary mb-2"><i class="fas fa-lightbulb me-2"></i>Dica do Sistema</h6>
+                            <p class="small text-muted mb-0">Você pode remover fotos antigas clicando no "X" vermelho. A exclusão é imediata no Storage!</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+<style>
+    /* Container das thumbs da galeria com botão de remover */
+    .gallery-thumb-container {
+        position: relative;
+        aspect-ratio: 1/1;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 2px solid var(--bg-dark-3);
+        transition: all 0.3s;
+    }
+
+    .gallery-thumb-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .btn-remove-gallery-img {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background: #dc3545;
+        color: white;
+        border: none;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+        cursor: pointer;
+        opacity: 0;
+        transform: scale(0.8);
+        transition: all 0.2s;
+        z-index: 5;
+    }
+
+    .gallery-thumb-container:hover {
+        border-color: #dc3545;
+    }
+
+    .gallery-thumb-container:hover .btn-remove-gallery-img {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    /* Preview da imagem principal */
+    .main-preview-edit {
+        width: 100%;
+        aspect-ratio: 4/3;
+        background: #000;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid var(--border-color);
+    }
+
+    .main-preview-edit img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .upload-zone {
+        border: 2px dashed var(--border-color);
+        border-radius: 8px;
+        background: rgba(255,255,255,0.02);
+        transition: 0.3s;
+    }
+
+    .upload-zone:hover {
+        border-color: var(--primary);
+        background: rgba(var(--primary-rgb), 0.05);
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // 1. Preview de Nova Imagem Principal
+        const mainInput = document.getElementById('main_image_input');
+        const mainPreviewImg = document.getElementById('current_main_img');
+
+        mainInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    mainPreviewImg.src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // 2. Preview de Novas Fotos para a Galeria
+        const galleryInput = document.getElementById('gallery_input');
+        const newGalleryPreview = document.getElementById('new_gallery_preview');
+
+        galleryInput.addEventListener('change', function() {
+            newGalleryPreview.innerHTML = '';
+            const files = Array.from(this.files);
+
+            files.forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const col = document.createElement('div');
+                    col.className = 'col-4 col-md-2';
+                    col.innerHTML = `
+                        <div class="gallery-thumb-container border-primary">
+                            <img src="${e.target.result}">
+                            <div class="small bg-primary text-dark text-center py-1 fw-bold" style="font-size: 0.6rem">NOVA</div>
+                        </div>
+                    `;
+                    newGalleryPreview.appendChild(col);
+                }
+                reader.readAsDataURL(file);
+            });
+        });
+    });
+</script>
