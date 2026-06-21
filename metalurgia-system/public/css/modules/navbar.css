@@ -1,0 +1,230 @@
+/**
+ * NAVBAR.CSS
+ * Estilização do sistema de navegação e cabeçalho fixo.
+ */
+
+/* ============================================
+   CONTAINER DO CABEÇALHO
+   ============================================ */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    transition: all var(--transition);
+}
+
+/* Estado do Header ao rolar a página */
+.site-header.scrolled {
+    background: rgba(var(--bg-primary), 0.8);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    box-shadow: var(--shadow-lg);
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* ============================================
+   TOPBAR (BARRA SUPERIOR INFORMATIVA)
+   ============================================ */
+.topbar {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.75rem;
+    background: rgba(0, 0, 0, 0.05);
+    transition: all var(--transition);
+}
+
+.site-header.scrolled .topbar {
+    margin-top: -50px; /* Esconde a topbar suavemente ao rolar */
+    opacity: 0;
+    pointer-events: none;
+}
+
+.topbar-info {
+    display: flex;
+    gap: 2rem;
+}
+
+.topbar-info span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.topbar-info i {
+    color: var(--primary);
+    font-size: 0.9rem;
+}
+
+.topbar-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1.5rem;
+}
+
+.topbar-social {
+    display: flex;
+    gap: 1.25rem;
+}
+
+.topbar-social a {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    transition: color var(--transition-fast);
+}
+
+.topbar-social a:hover {
+    color: var(--primary);
+}
+
+/* Botão de Tema na Topbar */
+.theme-toggle {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    color: var(--text-primary);
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+}
+
+.theme-toggle:hover {
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+/* ============================================
+   NAVBAR PRINCIPAL
+   ============================================ */
+.navbar {
+    padding: 1.25rem 0;
+    transition: all var(--transition);
+}
+
+.site-header.scrolled .navbar {
+    padding: 0.85rem 0;
+}
+
+.navbar-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* Logo */
+.logo {
+    flex-shrink: 0;
+    z-index: 10;
+}
+
+.logo-img {
+    height: 55px;
+    width: auto;
+    transition: height var(--transition);
+}
+
+.site-header.scrolled .logo-img {
+    height: 45px;
+}
+
+/* Menu Desktop Centralizado */
+.desktop-menu {
+    display: flex;
+    gap: 2.5rem;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.desktop-menu .nav-link {
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.5rem 0;
+    position: relative;
+    transition: color var(--transition-fast);
+}
+
+/* Efeito de Underline Animado */
+.desktop-menu .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary);
+    transition: width var(--transition);
+    border-radius: var(--radius-full);
+}
+
+.desktop-menu .nav-link:hover::after,
+.desktop-menu .nav-link.active::after {
+    width: 100%;
+}
+
+.desktop-menu .nav-link:hover,
+.desktop-menu .nav-link.active {
+    color: var(--primary);
+}
+
+/* Ações da Direita */
+.navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+/* Toggle Mobile (Hambúrguer) */
+.mobile-toggle {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-color);
+    width: 45px;
+    height: 45px;
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    transition: all var(--transition-fast);
+}
+
+.mobile-toggle span {
+    width: 24px;
+    height: 2px;
+    background: var(--text-primary);
+    transition: all var(--transition-fast);
+    border-radius: 10px;
+}
+
+.mobile-toggle:hover {
+    border-color: var(--primary);
+}
+
+.mobile-toggle:hover span {
+    background: var(--primary);
+}
+
+/* Estilo para quando o drawer estiver aberto (via JS) */
+.mobile-toggle.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+.mobile-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+.mobile-toggle.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}

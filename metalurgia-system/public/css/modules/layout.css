@@ -1,0 +1,281 @@
+/**
+ * LAYOUT.CSS
+ * Componentes globais e estrutura de seções.
+ */
+
+/* ============================================
+   TYPOGRAPHY & GRADIENTS
+   ============================================ */
+.text-gradient {
+    background: linear-gradient(135deg, var(--primary) 0%, #ff9a3c 50%, var(--primary) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    display: inline-block;
+}
+
+.text-gradient-light {
+    background: linear-gradient(135deg, #fff 0%, #ffd6a8 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.syncopate {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* ============================================
+   SECTION HEADERS
+   ============================================ */
+.section-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+}
+
+.tag-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--primary);
+    border-radius: 50%;
+    display: inline-block;
+    animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+        box-shadow: 0 0 0 0 var(--primary-glow-strong);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(0.8);
+        box-shadow: 0 0 10px 4px var(--primary-glow);
+    }
+}
+
+.section-title {
+    font-size: clamp(2rem, 5vw, 2.5rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+}
+
+.section-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 700px;
+    margin-bottom: 3rem;
+}
+
+.mb-100 { margin-bottom: 100px; }
+
+/* ============================================
+   BUTTONS (DESIGN SYSTEM)
+   ============================================ */
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #000 !important; /* Texto preto para contraste com dourado */
+    padding: 1rem 2rem;
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all var(--transition);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transition: 0.5s;
+    z-index: -1;
+}
+
+.btn-primary:hover::before {
+    left: 100%;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px -5px var(--primary-glow-strong);
+    color: #000;
+}
+
+.btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    background: transparent;
+    color: var(--text-primary);
+    padding: 1rem 2rem;
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-decoration: none;
+    border: 2px solid var(--border-color-2);
+    transition: all var(--transition);
+}
+
+.btn-outline:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateY(-3px);
+    background: rgba(var(--primary-rgb), 0.05);
+}
+
+/* ============================================
+   PRELOADER SYSTEM
+   ============================================ */
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.preloader.hide {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.preloader-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.preloader-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.4;
+}
+
+.preloader-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 10;
+    width: 100%;
+    max-width: 300px;
+}
+
+.preloader-ring {
+    width: 100px;
+    height: 100px;
+    border: 2px solid rgba(var(--primary-rgb), 0.1);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    margin: 0 auto 2rem;
+    animation: spin 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.preloader-logo img {
+    width: 80px;
+    margin-bottom: 1.5rem;
+    filter: drop-shadow(0 0 10px var(--primary-glow));
+}
+
+.preloader-text {
+    font-size: 0.75rem;
+    letter-spacing: 0.4em;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+}
+
+.preloader-bar {
+    width: 100%;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.preloader-progress {
+    width: 0%;
+    height: 100%;
+    background: var(--primary);
+    box-shadow: 0 0 15px var(--primary);
+    transition: width 0.4s ease;
+}
+
+/* ============================================
+   FLOATING INTERFACE
+   ============================================ */
+.floating-interface-wrap {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 999;
+}
+
+.theme-float-btn {
+    width: 55px;
+    height: 55px;
+    background: var(--bg-card);
+    color: var(--primary);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: var(--shadow-lg);
+    transition: all var(--transition);
+}
+
+.theme-float-btn:hover {
+    transform: scale(1.1) rotate(15deg);
+    border-color: var(--primary);
+}
+
+/* Controle de ícones via Data-Theme */
+[data-theme="dark"] .fa-sun { display: block; }
+[data-theme="dark"] .fa-moon { display: none; }
+[data-theme="light"] .fa-sun { display: none; }
+[data-theme="light"] .fa-moon { display: block; }

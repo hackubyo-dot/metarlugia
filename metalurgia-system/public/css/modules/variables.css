@@ -1,0 +1,95 @@
+/**
+ * VARIABLES.CSS
+ * Definição central do design system da Metalurgia Futurística.
+ * Controla cores, temas, espaçamentos e sombras de todo o ecossistema.
+ */
+
+:root {
+    /* --- CORES DE MARCA (BRANDING) --- */
+    --primary: #f2c508;
+    --primary-rgb: 242, 197, 8;
+    --primary-dark: #e05a00;
+    --primary-light: #f2c508;
+    --primary-glow: rgba(242, 197, 8, 0.25);
+    --primary-glow-strong: rgba(242, 197, 8, 0.4);
+    
+    /* --- PALETA NEUTRA BASE --- */
+    --bg-dark: #0a0a0a;
+    --bg-dark-2: #111111;
+    --bg-dark-3: #1a1a1a;
+    --bg-light: #ffffff;
+    --bg-light-2: #f8f9fa;
+    --bg-light-3: #f1f5f9;
+    
+    /* --- TIPOGRAFIA --- */
+    --text-dark: #ffffff;
+    --text-dark-2: #a1a1aa;
+    --text-dark-3: #71717a;
+    --text-light: #0f172a;
+    --text-light-2: #475569;
+    --text-light-3: #94a3b8;
+    
+    /* --- BORDAS --- */
+    --border-dark: rgba(255, 255, 255, 0.08);
+    --border-dark-2: rgba(255, 255, 255, 0.15);
+    --border-light: rgba(0, 0, 0, 0.08);
+    --border-light-2: rgba(0, 0, 0, 0.15);
+    
+    /* --- SOMBRAS (SHADOW SYSTEM) --- */
+    --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --shadow-2xl: 0 35px 60px -15px rgba(0, 0, 0, 0.3);
+    --shadow-glow: 0 0 30px rgba(242, 197, 8, 0.3);
+    
+    /* --- ARREDONDAMENTOS (RADIUS) --- */
+    --radius-sm: 0.5rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.5rem;
+    --radius-2xl: 2rem;
+    --radius-full: 9999px;
+    
+    /* --- TRANSIÇÕES --- */
+    --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* --- FONTES --- */
+    --font-main: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* ============================================
+   TEMA ESCURO (PADRÃO)
+   ============================================ */
+[data-theme="dark"] {
+    --bg-primary: var(--bg-dark);
+    --bg-secondary: var(--bg-dark-2);
+    --bg-card: var(--bg-dark-3);
+    --bg-elevated: var(--bg-dark-2);
+    --text-primary: var(--text-dark);
+    --text-secondary: var(--text-dark-2);
+    --text-muted: var(--text-dark-3);
+    --border-color: var(--border-dark);
+    --border-color-2: var(--border-dark-2);
+    --card-bg: rgba(26, 26, 26, 0.8);
+    --story-card-bg: rgba(26, 26, 26, 0.6);
+}
+
+/* ============================================
+   TEMA CLARO
+   ============================================ */
+[data-theme="light"] {
+    --bg-primary: var(--bg-light);
+    --bg-secondary: var(--bg-light-2);
+    --bg-card: var(--bg-light);
+    --bg-elevated: var(--bg-light-3);
+    --text-primary: var(--text-light);
+    --text-secondary: var(--text-light-2);
+    --text-muted: var(--text-light-3);
+    --border-color: var(--border-light);
+    --border-color-2: var(--border-light-2);
+    --card-bg: rgba(255, 255, 255, 0.8);
+    --story-card-bg: rgba(255, 255, 255, 0.9);
+}

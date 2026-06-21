@@ -1,0 +1,214 @@
+/**
+ * CATALOG.CSS
+ * Estilização da seção de download de catálogos técnicos.
+ */
+
+/* ================================================================
+   1. SEÇÃO DE DOWNLOAD (CONTAINER)
+   ================================================================ */
+.catalog-download {
+    position: relative;
+    width: 100%;
+    min-height: 600px;
+    background: url('../../images/catalogue-mockup.jpg') center/cover no-repeat fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 100px 0;
+    overflow: hidden;
+}
+
+/* Camada de Gradiente para Legibilidade */
+.catalog-download-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        135deg, 
+        rgba(0, 0, 0, 0.95) 0%, 
+        rgba(0, 0, 0, 0.8) 50%, 
+        rgba(var(--primary-rgb), 0.1) 100%
+    );
+    z-index: 1;
+}
+
+/* Conteúdo Central */
+.catalog-download-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 80px 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.catalog-download-badge {
+    display: inline-block;
+    background: var(--primary);
+    color: #000;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    padding: 0.5rem 1.5rem;
+    border-radius: var(--radius-full);
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    box-shadow: 0 0 20px var(--primary-glow);
+}
+
+.catalog-download-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+}
+
+.catalog-download-description {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 3rem;
+    line-height: 1.7;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ================================================================
+   2. SPECS & INFO (CARDS DE INFORMAÇÃO)
+   ================================================================ */
+.catalog-download-info {
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+    margin-bottom: 4rem;
+    flex-wrap: wrap;
+}
+
+.catalog-download-info-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 120px;
+    transition: transform 0.3s ease;
+}
+
+.catalog-download-info-item:hover {
+    transform: translateY(-5px);
+}
+
+.catalog-download-info-item i {
+    font-size: 1.5rem;
+    color: var(--primary);
+    background: rgba(255, 255, 255, 0.05);
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid rgba(var(--primary-rgb), 0.2);
+}
+
+.catalog-download-info-item span {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* ================================================================
+   3. BOTÕES E NOTAS DE RODAPÉ
+   ================================================================ */
+.catalog-download-buttons {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+/* Customização dos botões para esta seção */
+.catalog-download-btn {
+    min-width: 250px;
+}
+
+.catalog-preview-btn {
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    min-width: 250px;
+}
+
+.catalog-preview-btn:hover {
+    background: #fff;
+    color: #000;
+    border-color: #fff;
+}
+
+.catalog-download-note {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.catalog-download-note i {
+    color: #22c55e; /* Verde para indicar segurança */
+}
+
+/* ================================================================
+   4. RESPONSIVIDADE
+   ================================================================ */
+@media (max-width: 768px) {
+    .catalog-download {
+        margin: 60px 0;
+        min-height: auto;
+        background-attachment: scroll; /* Melhora performance mobile */
+    }
+
+    .catalog-download-content {
+        padding: 60px 15px;
+    }
+
+    .catalog-download-info {
+        gap: 1.5rem;
+    }
+
+    .catalog-download-info-item i {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+
+    .catalog-download-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .catalog-download-btn, 
+    .catalog-preview-btn {
+        width: 100%;
+        min-width: unset;
+    }
+}
+
+@media (max-width: 480px) {
+    .catalog-download-title {
+        font-size: 1.75rem;
+    }
+    
+    .catalog-download-description {
+        font-size: 0.95rem;
+    }
+
+    .catalog-download-info-item {
+        min-width: 45%;
+    }
+}

@@ -1,0 +1,102 @@
+/**
+ * RESET.CSS
+ * Limpeza de estilos padrão e configurações base do documento.
+ */
+
+/* 1. RESET BÁSICO */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 2. CONFIGURAÇÕES DO DOCUMENTO */
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    /* Ajuste para dispositivos móveis com notch (iPhone X+) */
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    transition: background-color var(--transition), color var(--transition);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* 3. SELEÇÃO DE TEXTO */
+::selection {
+    background-color: var(--primary);
+    color: var(--bg-dark);
+}
+
+/* 4. SCROLLBAR CUSTOMIZADA (WEBKIT) */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color-2);
+    border-radius: var(--radius-full);
+    border: 2px solid var(--bg-secondary);
+    transition: background var(--transition);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
+}
+
+/* Para Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-color-2) var(--bg-secondary);
+}
+
+/* 5. ELEMENTOS DE MÍDIA */
+img, video {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* 6. LINKS E BOTÕES BASE */
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background: none;
+}
+
+/* 7. REMOÇÃO DE ESTILOS DE INPUT NO SAFARI/CHROME */
+input, textarea, select {
+    font-family: inherit;
+    background: none;
+    border: none;
+    outline: none;
+}
+
+/* 8. UTILITÁRIOS GLOBAIS DE VISIBILIDADE */
+.hidden {
+    display: none !important;
+}
+
+.no-scroll {
+    overflow: hidden !important;
+}
