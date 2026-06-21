@@ -1,0 +1,434 @@
+/**
+ * SERVICE-MODAL.CSS - ARQUITETURA VISUAL SUPREME (V5.0)
+ * Metalurgia Futurística Leonardo Serra
+ * 
+ * DESIGN: Industrial Premium / Enterprise UI
+ * FUNCIONALIDADES: Scroll Independente, Reading Tracker, Glassmorphism, 
+ *                  Animações Cinematográficas e Otimização Mobile.
+ */
+
+/* ==========================================================================
+   1. SISTEMA DE ANIMAÇÕES (MICRO-INTERAÇÕES)
+   ========================================================================== */
+@keyframes modalReveal {
+    from { opacity: 0; transform: translateY(40px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(60px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes imageZoom {
+    from { transform: scale(1); }
+    to { transform: scale(1.2); }
+}
+
+@keyframes pulseGlow {
+    0% { box-shadow: 0 0 0 0 rgba(242, 197, 8, 0.4); }
+    70% { box-shadow: 0 0 0 15px rgba(242, 197, 8, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(242, 197, 8, 0); }
+}
+
+/* ==========================================================================
+   2. FUNDAÇÃO E OVERLAY (READING TRACKER)
+   ========================================================================== */
+.service-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 99999;
+    display: none; /* Controlado via Main.js */
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    opacity: 0;
+    transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.service-modal.active {
+    display: flex;
+    opacity: 1;
+}
+
+.service-modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.97);
+    backdrop-filter: blur(25px) saturate(160%);
+    -webkit-backdrop-filter: blur(25px) saturate(160%);
+    z-index: 1;
+}
+
+/* Barra de Progresso de Leitura */
+.modal-reading-tracker {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.03);
+    z-index: 1000;
+}
+
+.tracker-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #e05a00, var(--primary));
+    box-shadow: 0 0 20px var(--primary);
+    transition: width 0.2s ease-out;
+}
+
+/* ==========================================================================
+   3. CONTENTOR MESTRE (ESTRUTURA RÍGIDA)
+   ========================================================================== */
+.service-modal-container {
+    width: 100%;
+    max-width: 1600px;
+    height: 90vh;
+    background: #0d0d0d;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    z-index: 10;
+    overflow: hidden;
+    box-shadow: 0 100px 150px -40px rgba(0, 0, 0, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+.service-modal.active .service-modal-container {
+    animation: modalReveal 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+
+.service-modal-content-wrapper {
+    flex: 1;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* ==========================================================================
+   4. COLUNA VISUAL (LADO ESQUERDO FIXO)
+   ========================================================================== */
+.modal-visual-engine {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: #000;
+    overflow: hidden;
+}
+
+.modal-visual-engine img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.6) contrast(1.1);
+}
+
+.service-modal.active .modal-visual-engine img {
+    animation: imageZoom 20s ease-out forwards;
+}
+
+.visual-vignette-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, transparent 50%, #0d0d0d 100%),
+                radial-gradient(circle at center, transparent 10%, rgba(0,0,0,0.8) 100%);
+    z-index: 1;
+}
+
+.visual-noise {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://grainy-gradients.vercel.app/noise.svg');
+    opacity: 0.12;
+    z-index: 2;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+}
+
+/* Badge Premium */
+.modal-badge-premium {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(var(--primary-rgb), 0.3);
+    padding: 18px 30px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    z-index: 5;
+}
+
+.modal-badge-premium img { width: 45px; height: auto; filter: drop-shadow(0 0 10px var(--primary)); }
+.badge-texts .t-1 { display: block; font-size: 0.65rem; font-weight: 800; color: #71717a; letter-spacing: 4px; text-transform: uppercase; }
+.badge-texts .t-2 { display: block; font-size: 1.1rem; font-weight: 900; color: #fff; margin-top: 4px; }
+
+/* Visual Specs Footer */
+.visual-specs-footer {
+    position: absolute;
+    bottom: 50px;
+    left: 50px;
+    display: flex;
+    gap: 40px;
+    z-index: 5;
+}
+
+.v-spec { display: flex; flex-direction: column; }
+.v-val { font-size: 2rem; font-weight: 950; color: var(--primary); line-height: 1; }
+.v-lab { font-size: 0.65rem; font-weight: 800; color: #71717a; letter-spacing: 2px; text-transform: uppercase; margin-top: 8px; }
+.v-divider { width: 1px; height: 50px; background: rgba(255,255,255,0.1); }
+
+/* ==========================================================================
+   5. MOTOR DE SCROLL (LADO DIREITO)
+   ========================================================================== */
+.modal-scroll-engine {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: #0d0d0d;
+    position: relative;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) transparent;
+}
+
+.modal-scroll-engine::-webkit-scrollbar { width: 5px; }
+.modal-scroll-engine::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+
+.scroll-content-padding {
+    padding: 100px 80px;
+}
+
+/* Header */
+.service-header-box {
+    margin-bottom: 80px;
+}
+
+.meta-info-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.modal-icon-circle {
+    width: 75px;
+    height: 75px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    border-radius: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2rem;
+    color: #000;
+    box-shadow: 0 15px 35px rgba(242, 197, 8, 0.2);
+}
+
+.category-tag-premium {
+    padding: 10px 24px;
+    background: rgba(242, 197, 8, 0.08);
+    border: 1px solid rgba(242, 197, 8, 0.2);
+    color: var(--primary);
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 900;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.syncopate-title {
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    font-weight: 950;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 35px;
+    letter-spacing: -2px;
+}
+
+.separator-premium { display: flex; align-items: center; gap: 15px; }
+.separator-premium .line { width: 100px; height: 5px; background: var(--primary); border-radius: 5px; }
+.separator-premium .dot { width: 12px; height: 12px; background: var(--primary); border-radius: 50%; animation: pulseGlow 2s infinite; }
+
+/* Blocos de Texto */
+.detail-block { margin-bottom: 80px; }
+.detail-subtitle {
+    font-size: 0.9rem;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: 4px;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}
+
+.text-content-premium p {
+    font-size: 1.25rem;
+    line-height: 2.1;
+    color: #a1a1aa;
+    text-align: justify;
+}
+
+/* Grid de Diferenciais */
+.features-premium-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.fp-item {
+    background: rgba(255, 255, 255, 0.02);
+    padding: 35px;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    gap: 20px;
+    transition: 0.4s;
+}
+
+.fp-item:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: var(--primary);
+    transform: translateY(-8px);
+}
+
+.fp-item i { color: var(--primary); font-size: 1.4rem; margin-top: 5px; }
+.fp-item strong { display: block; color: #fff; font-size: 1.2rem; margin-bottom: 6px; }
+.fp-item span { font-size: 0.95rem; color: #71717a; line-height: 1.6; }
+
+/* ==========================================================================
+   6. PAINEL DE CONVERSÃO (PREÇO E CTAs)
+   ========================================================================== */
+.conversion-panel { margin-top: 100px; }
+
+.price-premium-card {
+    background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 100%);
+    padding: 60px;
+    border-radius: 35px;
+    border: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.price-header { font-size: 0.9rem; font-weight: 800; color: var(--primary); letter-spacing: 3px; margin-bottom: 25px; }
+.price-main { font-size: 1.5rem; color: #fff; font-weight: 700; }
+.price-main span { font-size: 4.5rem; color: var(--primary); font-weight: 950; display: block; margin-top: 10px; letter-spacing: -3px; }
+.price-disclaimer { font-size: 0.85rem; color: #52525b; margin-top: 25px; font-style: italic; }
+
+.modal-buttons-stack { display: flex; flex-direction: column; gap: 20px; }
+
+.btn-modal-primary {
+    height: 85px; background: var(--primary); color: #000;
+    display: flex; align-items: center; justify-content: center;
+    gap: 20px; border-radius: 18px; font-weight: 900; font-size: 1.2rem;
+    text-transform: uppercase; letter-spacing: 1px; transition: 0.4s;
+    box-shadow: 0 25px 50px rgba(var(--primary-rgb), 0.25);
+}
+
+.btn-modal-primary:hover { transform: translateY(-8px); background: #fff; box-shadow: 0 35px 60px rgba(0,0,0,0.5); }
+
+.buttons-row { display: flex; gap: 20px; }
+.btn-modal-outline {
+    flex: 1; height: 70px; background: transparent;
+    border: 2px solid rgba(255,255,255,0.15); color: #fff;
+    border-radius: 18px; font-weight: 800; transition: 0.3s; text-transform: uppercase;
+}
+.btn-modal-outline:hover { background: #fff; color: #000; border-color: #fff; }
+
+.btn-modal-whatsapp {
+    width: 70px; height: 70px; background: #25D366;
+    border-radius: 18px; display: flex; align-items: center; justify-content: center;
+    font-size: 2.2rem; color: #fff; transition: 0.4s;
+}
+.btn-modal-whatsapp:hover { transform: scale(1.1) rotate(10deg); box-shadow: 0 20px 40px rgba(37, 211, 102, 0.4); }
+
+.modal-info-footer { text-align: center; margin-top: 80px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.05); }
+.modal-info-footer p { font-size: 0.8rem; color: #52525b; letter-spacing: 1px; margin-bottom: 10px; }
+
+/* ==========================================================================
+   7. CONTROLES GLOBAIS (BOTÃO FECHAR)
+   ========================================================================== */
+.service-modal-close {
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    width: 80px;
+    height: 80px;
+    background: transparent;
+    border: none;
+    z-index: 10001;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-icon-wrap { position: relative; z-index: 2; color: #fff; font-size: 2rem; transition: 0.5s; }
+
+.close-circle-svg { position: absolute; inset: 0; transform: rotate(-90deg); }
+.close-circle-svg circle {
+    fill: rgba(255, 255, 255, 0.05);
+    stroke: var(--primary);
+    stroke-width: 2px;
+    stroke-dasharray: 302;
+    stroke-dashoffset: 302;
+    transition: 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.service-modal-close:hover .close-circle-svg circle { stroke-dashoffset: 0; }
+.service-modal-close:hover .close-icon-wrap { transform: rotate(180deg) scale(0.8); color: var(--primary); }
+
+/* ==========================================================================
+   8. RESPONSIVIDADE (ADAPTAÇÃO TOTAL)
+   ========================================================================== */
+@media (max-width: 1400px) {
+    .modal-scroll-engine { padding: 80px 50px; }
+    .syncopate-title { font-size: 3rem; }
+}
+
+@media (max-width: 991px) {
+    .service-modal { padding: 0; }
+    .service-modal-container { height: 100vh; border-radius: 0; border: none; max-height: 100vh; }
+    .modal-visual-engine { display: none; }
+    
+    .modal-scroll-engine { padding: 120px 25px 60px; }
+    
+    .mobile-media-box {
+        width: 100%; height: 380px; position: relative;
+        margin-bottom: 50px; border-radius: 25px;
+        overflow: hidden; border: 1px solid rgba(255,255,255,0.1);
+    }
+    .mobile-media-box img { width: 100%; height: 100%; object-fit: cover; }
+    .m-overlay { position: absolute; inset: 0; background: linear-gradient(to top, #0d0d0d 15%, transparent 100%); }
+
+    .features-premium-grid { grid-template-columns: 1fr; gap: 20px; }
+    
+    .service-modal-close { top: 25px; right: 25px; width: 60px; height: 60px; }
+    .close-icon-wrap { font-size: 1.5rem; }
+    
+    .price-main span { font-size: 3.5rem; }
+}
+
+@media (max-width: 480px) {
+    .scroll-content-padding { padding: 0; }
+    .syncopate-title { font-size: 2.2rem; }
+    .price-premium-card { padding: 40px 20px; }
+    .btn-modal-primary { height: 75px; font-size: 1.05rem; }
+    .buttons-row { flex-direction: column; }
+    .btn-modal-whatsapp { width: 100%; }
+}
+
+/* Suporte para Safe Area (iPhone X+) */
+@supports (padding: env(safe-area-inset-top)) {
+    .modal-scroll-engine { 
+        padding-top: calc(100px + env(safe-area-inset-top)); 
+        padding-bottom: calc(60px + env(safe-area-inset-bottom));
+    }
+}
