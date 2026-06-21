@@ -18,6 +18,7 @@
 @import url('./modules/blog.css');
 @import url('./modules/contact.css');    /* NOVO */
 @import url('./modules/footer.css');
+@import url('./modules/service-modal.css'); /* <--- ADICIONE ESTA LINHA */
 
 /* 3. Responsividade */
 @import url('./modules/responsive.css');
